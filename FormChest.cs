@@ -261,10 +261,10 @@ namespace FF12RNGHelper
             double.TryParse(textBox6.Text, out chestGilAmount2);
 
             // Use these variables to check for first instance of chest and contents
-            bool chestFound1 = false;
+            bool chestSpawn1 =false, chestFound1 = false;
             uint chestFoundPos1 = 0, chestItemPos1 = 0;
 
-            bool chestFound2 = false;
+			bool chestSpawn2 = false, chestFound2 = false;
             uint chestFoundPos2 = 0, chestItemPos2 = 0;
 
             UInt32 aVal1 = displayRNG.genrand();
@@ -308,16 +308,26 @@ namespace FF12RNGHelper
                 
                 if ( chestCheck(aVal1, chestSpawnChance1, true) )
                 {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-                    if (j >= healVals.Count && !chestFound1)
-                        chestFoundPos1 = j - (uint)healVals.Count - chestRNGPosition1;
+					int chestFirstChance = healVals.Count + (int)chestRNGPosition1;
+					
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
+					if (j >= chestFirstChance && !chestSpawn1)
+					{
+						chestFoundPos1 = j - (uint)healVals.Count - chestRNGPosition1;
+						chestSpawn1 = true;
+					}
                 }
-                if ( chestCheck(aVal1, chestSpawnChance2, true))
-                {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-                    if (j >= healVals.Count && !chestFound2)
-                        chestFoundPos2 = j - (uint)healVals.Count - chestRNGPosition2;
-                }
+				if (chestCheck(aVal1, chestSpawnChance2, true))
+				{
+					int chestFirstChance = healVals.Count + (int)chestRNGPosition1;
+
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
+					if (j >= chestFirstChance && !chestSpawn2)
+					{
+						chestFoundPos2 = j - (uint)healVals.Count - chestRNGPosition2;
+						chestSpawn2 = true;
+					}
+				}
 
                 // This is a big conditional to see what is in both chests.
                 // There may be a better way, but this was fast to write and doesn't call the RNG.
