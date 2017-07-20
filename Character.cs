@@ -4,6 +4,8 @@
 // MVID: 11070DA2-2CBB-49ED-8F82-7EE610A4DB07
 // Assembly location: C:\Users\TyCobb\Downloads\FF12RNGHelper.exe
 
+using System;
+
 namespace FF12RNGHelper
 {
   public class Character

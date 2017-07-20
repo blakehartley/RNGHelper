@@ -19,3 +19,6 @@ About the RNG Algorithm Used:
 
 While the PS2 version used the old 1998 version of the Mersenne Twister algorithm, the PS4 remake uses the "new" (or at least newer) 2002 version of the MT algorithm. You can find links to the original source for these algorithms in the RNG1998.cs and RNG2002.cs files respectively.
 Both the PS2 and PS4 initialize their respective algorithms with the same seed of 4537 (I'm so glad I didnt have to brute force the seed for FF12:TZA). The PS4/FF12:TZA seems to reinitialize the PRNG whenever you restart the app, so you dont need to restart the PS4 hardware to reset the PRNG.
+
+Roosta's updates:
+Created two more forms for manipulating chests and rare game spawns. Added functionality to allow for multiple character heals while searching
