@@ -1,95 +1,128 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: FF12RNGHelper.CharacterGroup
-// Assembly: FF12RNGHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 11070DA2-2CBB-49ED-8F82-7EE610A4DB07
-// Assembly location: C:\Users\TyCobb\Downloads\FF12RNGHelper.exe
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FF12RNGHelper
 {
-	public class CharacterGroup
-	{
-	protected List<Character> characters;
-	protected int charIndex;
-
-	public CharacterGroup()
-	{
-		this.characters = new List<Character>();
-		this.charIndex = 0;
-	}
-
-	public void ClearCharacters()
-	{
-		this.characters.Clear();
-	}
-
-	public int CharacterCount()
-	{
-		return this.characters.Count;
-	}
-
-	public void AddCharacter(Character c)
-	{
-		this.characters.Add(c);
-	}
-
-	public void ResetIndex()
-	{
-		this.charIndex = 0;
-	}
-
-    public int GetIndex()
-	{
-		return this.charIndex;
-	}
-
-    public void SetIndex(int i)
-	{
-		this.charIndex = i;
-	}
-	
-	public void IncrimentIndex()
-	{
-		this.charIndex = (this.charIndex + 1) % this.CharacterCount();
-	}
-
-	public int GetHealValue(uint rngValue)
-	{
-		int healValue = this.characters[this.charIndex].GetHealValue(rngValue);
-		IncrimentIndex();
-		/*if (this.charIndex == this.characters.Count - 1)
-		this.charIndex = 0;
-		else
-		++this.charIndex;*/
-		return healValue;
-	}
-
-	public int PeekHealValue(uint rngValue)
-	{
-		int healValue = this.characters[this.charIndex].GetHealValue(rngValue);
-		/*if (this.index == this.characters.Count - 1)
-			this.index = 0;
-		else
-			++this.index;*/
-		return healValue;
-	}
-
-	public int HealMax()
+    /// <summary>
+    /// This class encapsulates a group of characters casting spells
+    /// in order by index.
+    /// </summary>
+    public class CharacterGroup
     {
-      return this.characters[this.charIndex].HealMax();
-    }
+        // private members
+        private List<Character> characters;
+        private int charIndex;
 
-    public int HealMin()
-    {
-      return this.characters[this.charIndex].HealMin();
-    }
+        public CharacterGroup()
+        {
+            characters = new List<Character>();
+            charIndex = 0;
+        }
 
-    public bool ValidateHealValue(uint value)
-    {
-      if (value <= this.characters[this.charIndex].HealMax())
-        return value >= this.characters[this.charIndex].HealMin();
-      return false;
+        /// <summary>
+        /// Clear the character list
+        /// </summary>
+        public void ClearCharacters()
+        {
+            characters.Clear();
+        }
+
+        /// <summary>
+        /// Get the character count
+        /// </summary>
+        public int CharacterCount()
+        {
+            return characters.Count;
+        }
+
+        /// <summary>
+        /// Add a character to the group
+        /// </summary>
+        /// <param name="newCharacter">The character to add</param>
+        public void AddCharacter(Character newCharacter)
+        {
+            characters.Add(newCharacter);
+        }
+
+        /// <summary>
+        /// Resets the spell casting order starting with the first
+        /// character
+        /// </summary>
+        public void ResetIndex()
+        {
+            charIndex = 0;
+        }
+
+        /// <summary>
+        /// Get the current index of the character casting a spell
+        /// </summary>
+        public int GetIndex()
+        {
+            return charIndex;
+        }
+
+        /// <summary>
+        /// Set the current index of the character casting a spell
+        /// </summary>
+        /// <param name="i"></param>
+        public void SetIndex(int i)
+        {
+            charIndex = i;
+        }
+
+        /// <summary>
+        /// Increment the index of the character casting a spell
+        /// </summary>
+        public void IncrimentIndex()
+        {
+            charIndex = (charIndex + 1) % CharacterCount();
+        }
+
+        /// <summary>
+        /// Cast the next spell. Get the value of the heal
+        /// </summary>
+        /// <param name="rngValue">RNG value supplied by PRNG</param>
+        public int GetHealValue(uint rngValue)
+        {
+            int healValue = characters[charIndex].GetHealValue(rngValue);
+            IncrimentIndex();
+            return healValue;
+        }
+
+        /// <summary>
+        /// Get the value of the next heal without casting
+        /// </summary>
+        /// <param name="rngValue">RNG value supplied by PRNG</param>
+        public int PeekHealValue(uint rngValue)
+        {
+            return characters[charIndex].GetHealValue(rngValue);
+        }
+
+        /// <summary>
+        /// Get the maximum possible value of the current characters 
+        /// next spell
+        /// </summary>
+        public int HealMax()
+        {
+            return characters[charIndex].HealMax();
+        }
+
+        /// <summary>
+        /// Get the minimum possible value of the current characters 
+        /// next spell
+        /// </summary>
+        public int HealMin()
+        {
+            return characters[charIndex].HealMin();
+        }
+
+        /// <summary>
+        /// Verify if a heal value is within range of what the current
+        /// character is capable of
+        /// </summary>
+        /// <param name="value"></param>
+        public bool ValidateHealValue(int value)
+        {
+            return value <= HealMax() && value >= HealMin();
+        }
     }
-  }
 }
