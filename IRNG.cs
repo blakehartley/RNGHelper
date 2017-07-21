@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FF12RNGHelper
 {
-    public interface IRNG
+    public interface IRNG : IDeepCloneable<IRNG>
     {
         void sgenrand();
         void sgenrand(UInt32 s);
