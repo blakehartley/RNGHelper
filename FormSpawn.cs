@@ -93,8 +93,7 @@ namespace FF12RNGHelper
 				int startIndex = this.ddlSpellPow1.SelectedItem.ToString().IndexOf("(") + 1;
 				int length = this.ddlSpellPow1.SelectedItem.ToString().IndexOf(")") - startIndex;
 				double spellpower = double.Parse(this.ddlSpellPow1.SelectedItem.ToString().Substring(startIndex, length));
-				double serenitymult = this.cbSerenity1.Checked ? 1.5 : 1.0;
-				this.group.AddCharacter(new Character(level, magic, spellpower, serenitymult));
+				this.group.AddCharacter(new Character(level, magic, spellpower, cbSerenity1.Checked));
 			}
 			if (this.tbLevel2.Text != string.Empty && this.tbMagic2.Text != string.Empty)
 			{
@@ -103,8 +102,7 @@ namespace FF12RNGHelper
 				int startIndex = this.ddlSpellPow2.SelectedItem.ToString().IndexOf("(") + 1;
 				int length = this.ddlSpellPow2.SelectedItem.ToString().IndexOf(")") - startIndex;
 				double spellpower = double.Parse(this.ddlSpellPow2.SelectedItem.ToString().Substring(startIndex, length));
-				double serenitymult = this.cbSerenity2.Checked ? 1.5 : 1.0;
-				this.group.AddCharacter(new Character(level, magic, spellpower, serenitymult));
+				this.group.AddCharacter(new Character(level, magic, spellpower, cbSerenity2.Checked));
 			}
 			if (this.tbLevel3.Text == string.Empty || this.tbMagic3.Text == string.Empty)
 				return;
@@ -113,8 +111,7 @@ namespace FF12RNGHelper
 			int startIndex1 = this.ddlSpellPow3.SelectedItem.ToString().IndexOf("(") + 1;
 			int length1 = this.ddlSpellPow3.SelectedItem.ToString().IndexOf(")") - startIndex1;
 			double spellpower1 = double.Parse(this.ddlSpellPow3.SelectedItem.ToString().Substring(startIndex1, length1));
-			double serenitymult1 = this.cbSerenity3.Checked ? 1.5 : 1.0;
-			this.group.AddCharacter(new Character(level1, magic1, spellpower1, serenitymult1));
+			this.group.AddCharacter(new Character(level1, magic1, spellpower1, cbSerenity3.Checked));
 		}
 
 		private long ParseNumRows()

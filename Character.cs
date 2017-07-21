@@ -1,44 +1,73 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: FF12RNGHelper.Character
-// Assembly: FF12RNGHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 11070DA2-2CBB-49ED-8F82-7EE610A4DB07
-// Assembly location: C:\Users\TyCobb\Downloads\FF12RNGHelper.exe
-
-using System;
+﻿using System;
 
 namespace FF12RNGHelper
 {
-  public class Character
-  {
-    public double Level { get; set; }
-
-    public double Magic { get; set; }
-
-    public double SpellPower { get; set; }
-
-    public double SerenityMult { get; set; }
-
-    public Character(double level, double magic, double spellpower, double serenitymult)
+    /// <summary>
+    /// The character class encapsulates all of the necessary information required
+    /// to calculate the damage of a single spell whose power is determined at
+    /// creation.
+    /// </summary>
+    // TO-DO: Fix the naming as this class really encapsulates a single instance 
+    //        of a spell cast.
+    public class Character
     {
-      this.Level = level;
-      this.Magic = magic;
-      this.SpellPower = spellpower;
-      this.SerenityMult = serenitymult;
-    }
+        //Constants
+        private const double MaxBonusMultiplier = 0.125; // Goku-mode.
+        private const double MinBonusMultiplier = 0; // Not much of a bonus. :(
 
-    public int GetHealValue(uint rngValue)
-    {
-      return (int) ((this.SpellPower + (double) rngValue % (this.SpellPower * 12.5) / 100.0) * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
-    }
+        private const double NoSerenityBoost = 1.0;
+        private const double SerenityBoost = 1.5;
 
-    public int HealMax()
-    {
-      return (int) (this.SpellPower * 1.125 * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
-    }
+        // Character Info
+        private double Level;
+        private double Magic;
+        private double SpellPower;
+        private double SerenityMult;
+        
+        public Character(double level, double magic, double spellpower, bool serenity)
+        {
+            Level = level;
+            Magic = magic;
+            SpellPower = spellpower;
+            SerenityMult = serenity ? SerenityBoost : NoSerenityBoost;
+        }
 
-    public int HealMin()
-    {
-      return (int) (this.SpellPower * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
+        /// <summary>
+        /// Calculates the HP value of the next spell based on the RNG value.
+        /// </summary>
+        /// <param name="rngValue">RNG value from PRNG</param>
+        public int GetHealValue(uint rngValue)
+        {
+            double bonusSpellPower = (double)rngValue % (SpellPower * 12.5) / 100.0;
+            return calculateHeal(bonusSpellPower);
+        }
+
+        /// <summary>
+        /// Calculates the highest possible heal value based on current stats.
+        /// </summary>
+        public int HealMax()
+        {
+            double bonusSpellPower = MaxBonusMultiplier * SpellPower;
+            return calculateHeal(bonusSpellPower);
+        }
+
+        /// <summary>
+        /// Calculates the lowest possible heal value based on current stats.
+        /// </summary>
+        /// <returns></returns>
+        public int HealMin()
+        {
+            return calculateHeal(MinBonusMultiplier);
+        }
+
+        /// <summary>
+        /// Calculates the value of the spell based on stats and bonus spell power based on PRNG.
+        /// </summary>
+        /// <param name="bonusSpellPower">Bonus spell power to be added to base spell power.</param>
+        /// <returns></returns>
+        private int calculateHeal(double bonusSpellPower)
+        {
+            return (int) ((SpellPower + bonusSpellPower) * (2.0 + Magic * (Level + Magic) / 256.0) * SerenityMult);
+        }
     }
-  }
 }
