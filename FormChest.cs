@@ -12,12 +12,12 @@ namespace FF12RNGHelper
 {
     public partial class FormChest : Form
     {
-        IRNG searchRNG;
-        IRNG dispRNG;
-        UInt64 index;	// Current index in the PRNG list
-        CircularBuffer<UInt32> searchBuff;	// buffer of PRNG numbers
-        List<UInt32> healVals;  // List of heal values input by user
-		CharacterGroup group = new CharacterGroup();
+        private IRNG searchRNG;
+        private IRNG dispRNG;
+        private int index;	// Current index in the PRNG list
+        private CircularBuffer<uint> searchBuff;	// buffer of PRNG numbers
+        private List<int> healVals;  // List of heal values input by user
+		private CharacterGroup group = new CharacterGroup();
 
 		System.Diagnostics.Stopwatch aStopwatch = new System.Diagnostics.Stopwatch();
 
@@ -25,11 +25,13 @@ namespace FF12RNGHelper
         {
             InitializeComponent();
 
+            index = 0;
+
             ddlSpellPow1.SelectedIndex = 0;
 			ddlSpellPow2.SelectedIndex = 0;
 			ddlSpellPow3.SelectedIndex = 0;
 			cbPlatform.SelectedIndex = 0;
-            healVals = new List<UInt32>();
+            healVals = new List<int>();
             searchRNG = new RNG1998();
             dispRNG = new RNG1998();
             toolStripStatusLabelPercent.Text = "";
@@ -117,10 +119,10 @@ namespace FF12RNGHelper
 			this.group.AddCharacter(new Character(level1, magic1, spellpower1, serenitymult1));
 		}
 
-		private long ParseNumRows()
+		private int ParseNumRows()
 		{
-			long numRows;
-			long.TryParse(tbNumRows.Text, out numRows);
+			int numRows;
+			int.TryParse(tbNumRows.Text, out numRows);
 			if (numRows < 30)
 				numRows = 30;
 			if (numRows > 10000)
@@ -137,36 +139,36 @@ namespace FF12RNGHelper
             LoadCharacters();
 
 			healVals.Clear();
-            searchBuff = new CircularBuffer<UInt32>(100);
+            searchBuff = new CircularBuffer<uint>(100);
             searchRNG.sgenrand();
             searchBuff.Add(searchRNG.genrand());
             index = 0;
-            if (!FindNext(UInt32.Parse(tbLastHeal.Text)))
+            if (!FindNext(int.Parse(tbLastHeal.Text)))
             {
                 btnContinue.Enabled = false;
                 MessageBox.Show("Impossible Heal Value entered.");
                 return;
             }
-			long numRows = ParseNumRows();
-			displayRNG(index, index + (ulong) numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index, index + numRows);
         }
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
             DateTime begint = DateTime.Now;
 			group.IncrimentIndex();
-            if(!FindNext(UInt32.Parse(tbLastHeal.Text)))
+            if(!FindNext(int.Parse(tbLastHeal.Text)))
             {
                 MessageBox.Show("Impossible Heal Value entered.");
                 return;
             }
             DateTime endt = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endt - begint).ToString();
-			long numRows = ParseNumRows();
-			displayRNG(index-(ulong)healVals.Count+1, index + (ulong) numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index - healVals.Count + 1, index +  numRows);
         }
 
-        private bool FindNext(uint value)
+        private bool FindNext(int value)
         {
             // Do a range check before trying this out to avoid entering an infinite loop.
             if(value > group.HealMax() || value < group.HealMin())
@@ -213,17 +215,17 @@ namespace FF12RNGHelper
 			return true;
         }
 
-        UInt32 randToPercent(UInt32 toConvert)
+        double randToPercent(uint toConvert)
         {
             return toConvert % 100;
         }
 
-        private void displayRNG(UInt64 end)
+        private void displayRNG(int end)
         {
             displayRNG(0, end);
         }
 
-        private bool chestCheck(UInt32 PRNG, double chestChance, bool flip)
+        private bool chestCheck(uint PRNG, double chestChance, bool flip)
         {
             if (flip)
                 return (randToPercent(PRNG) < chestChance);
@@ -231,7 +233,7 @@ namespace FF12RNGHelper
                 return (randToPercent(PRNG) > chestChance);
         }
 
-        private void displayRNG(UInt64 start, UInt64 end)
+        private void displayRNG(int start, int end)
         {
             IRNG displayRNG;
             if (cbPlatform.SelectedItem as string == "PS2")
@@ -246,109 +248,109 @@ namespace FF12RNGHelper
             dataGridView1.Rows.Clear();
             //Consume RNG seeds before our desired index
             //This can take obscene amounts of time.
-            DateTime startt = DateTime.Now;
-            for (UInt64 i = 0; i < start; i++)
+            DateTime startTime = DateTime.Now;
+            for (int i = 0; i < start; i++)
             {
                 displayRNG.genrand();
             }
-            DateTime endtt = DateTime.Now;
-            toolStripStatusLabelPercent.Text = (endtt - startt).Milliseconds.ToString();
+            DateTime endTime = DateTime.Now;
+            toolStripStatusLabelPercent.Text = (endTime - startTime).Milliseconds.ToString();
 
             // Chest/Item 1:
             double chestSpawnChance1, chestGilChance1, chestItemChance1, chestGilAmount1;
-            uint chestRNGPosition1;
+            int chestRNGPosition1;
 
             double.TryParse(textBox1.Text, out chestSpawnChance1);
-            uint.TryParse(textBox2.Text, out chestRNGPosition1);
+            int.TryParse(textBox2.Text, out chestRNGPosition1);
             double.TryParse(textBox3.Text, out chestGilChance1);
             double.TryParse(textBox4.Text, out chestItemChance1);
             double.TryParse(textBox5.Text, out chestGilAmount1);
 
             // Chest/Item 2:
             double chestSpawnChance2, chestGilChance2, chestItemChance2, chestGilAmount2;
-            uint chestRNGPosition2;
+            int chestRNGPosition2;
 
             double.TryParse(textBox10.Text, out chestSpawnChance2);
-            uint.TryParse(textBox9.Text, out chestRNGPosition2);
+            int.TryParse(textBox9.Text, out chestRNGPosition2);
             double.TryParse(textBox8.Text, out chestGilChance2);
             double.TryParse(textBox7.Text, out chestItemChance2);
             double.TryParse(textBox6.Text, out chestGilAmount2);
 
             // Use these variables to check for first instance of chest and contents
             bool chestSpawn1 =false, chestFound1 = false;
-            uint chestFoundPos1 = 0, chestItemPos1 = 0;
+            int chestFoundPos1 = 0, chestItemPos1 = 0;
 
 			bool chestSpawn2 = false, chestFound2 = false;
-            uint chestFoundPos2 = 0, chestItemPos2 = 0;
+            int chestFoundPos2 = 0, chestItemPos2 = 0;
 
-            UInt32 aVal1 = displayRNG.genrand();
-            UInt32 aVal2 = displayRNG.genrand();
+            uint aVal1 = displayRNG.genrand();
+            uint aVal2 = displayRNG.genrand();
 
 			// We want to preserve the character index, since this loop is just for display:
 			int indexStatic = group.GetIndex();
 			group.ResetIndex();
 
 			//group.ResetIndex();
-            for (UInt64 i = start; i < end; i++)
+            for (int index = start; index < end; index++)
             {
                 // Index starting at 0
-                uint j = (uint)i - (uint)start;
+                int loopIndex = index - start;
 
-				// Get the heal value once:
-				uint healNow = group.GetHealValue(aVal1);
-				uint healNext = group.PeekHealValue(aVal2);
+                // Get the heal value once:
+                int currentHeal = group.GetHealValue(aVal1);
+                int nextHeal = group.PeekHealValue(aVal2);
 
 				// Put the next expected heal in the text box
-				if (i == start + (ulong)healVals.Count - 1)
+				if (index == start + healVals.Count - 1)
 				{
-					tbLastHeal.Text = healNext.ToString();
+					tbLastHeal.Text = nextHeal.ToString();
 					//tbAppear1.Text = group.HealMin().ToString();
 					//tbItem1.Text = group.HealMax().ToString();
 				}
 
 				// Advance the RNG before starting the loop in case we want to skip an entry
-				UInt32 aVal1_temp = aVal1;
-				UInt32 aVal2_temp = aVal2;
+				uint aVal1_temp = aVal1;
+				uint aVal2_temp = aVal2;
 				aVal1 = aVal2;
 				aVal2 = displayRNG.genrand();
 
 				// Skip the entry if it's too long ago
-				if (j < healVals.Count - 5)
+				if (loopIndex < healVals.Count - 5)
 					continue;
 				
 				//Start actually displaying
 				dataGridView1.Rows.Add();
 
                 // Color consumed RNG green
-                if (i < start + (ulong)healVals.Count)
+                if (index < start + healVals.Count)
                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
 
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = i;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = index;
                 //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal1;
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = healNow;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = currentHeal;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(aVal1_temp);
 
                 // Check if the chests are in a position offset by a fixed amount
                 
                 if ( chestCheck(aVal1_temp, chestSpawnChance1, true) )
                 {
-					int chestFirstChance = healVals.Count + (int)chestRNGPosition1;
+					int chestFirstChance = healVals.Count + chestRNGPosition1;
 					
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-					if (j >= chestFirstChance && !chestSpawn1)
+					if (loopIndex >= chestFirstChance && !chestSpawn1)
 					{
-						chestFoundPos1 = j - (uint)healVals.Count - chestRNGPosition1;
+						chestFoundPos1 = loopIndex - healVals.Count - chestRNGPosition1;
 						chestSpawn1 = true;
 					}
                 }
 				if (chestCheck(aVal1_temp, chestSpawnChance2, true))
 				{
-					int chestFirstChance = healVals.Count + (int)chestRNGPosition1;
+					int chestFirstChance = healVals.Count + chestRNGPosition1;
 
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-					if (j >= chestFirstChance && !chestSpawn2)
+					if (loopIndex >= chestFirstChance && !chestSpawn2)
 					{
-						chestFoundPos2 = j - (uint)healVals.Count - chestRNGPosition2;
+						chestFoundPos2 = loopIndex - healVals.Count - chestRNGPosition2;
 						chestSpawn2 = true;
 					}
 				}
@@ -367,9 +369,9 @@ namespace FF12RNGHelper
                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = (object)"Item 1";
 
                         // Check if the items are in this position
-                        if ((checkBox1.Checked && j >= healVals.Count) && !chestFound1)
+                        if ((checkBox1.Checked && loopIndex >= healVals.Count) && !chestFound1)
                         {
-                            chestItemPos1 = j - (uint)healVals.Count;
+                            chestItemPos1 = loopIndex - healVals.Count;
                             chestFound1 = true;
                         }
                     }
@@ -378,9 +380,9 @@ namespace FF12RNGHelper
                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = (object)"Item 2";
 
                         // Check if the items are in this position
-                        if ((!checkBox1.Checked && j >= healVals.Count) && !chestFound1)
+                        if ((!checkBox1.Checked && loopIndex >= healVals.Count) && !chestFound1)
                         {
-                            chestItemPos1 = j - (uint)healVals.Count;
+                            chestItemPos1 = loopIndex - healVals.Count;
                             chestFound1 = true;
                         }
                     }
@@ -396,9 +398,9 @@ namespace FF12RNGHelper
                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (object)"Item 1";
 
                         // Check if the items are in this position
-                        if ((checkBox2.Checked && j >= healVals.Count) && !chestFound2)
+                        if ((checkBox2.Checked && loopIndex >= healVals.Count) && !chestFound2)
                         {
-                            chestItemPos2 = j - (uint)healVals.Count;
+                            chestItemPos2 = loopIndex - healVals.Count;
                             chestFound2 = true;
                         }
                     }
@@ -407,9 +409,9 @@ namespace FF12RNGHelper
                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (object)"Item 2";
 
                         // Check if the items are in this position
-                        if ((!checkBox2.Checked && j >= healVals.Count) && !chestFound2)
+                        if ((!checkBox2.Checked && loopIndex >= healVals.Count) && !chestFound2)
                         {
-                            chestItemPos2 = j - (uint)healVals.Count;
+                            chestItemPos2 = loopIndex - healVals.Count;
                             chestFound2 = true;
                         }
                     }
@@ -448,8 +450,8 @@ namespace FF12RNGHelper
 
         private void tbLastHeal_Validating(object sender, CancelEventArgs e)
         {
-            UInt32 tempVal;
-            if (!UInt32.TryParse(tbLastHeal.Text, out tempVal))
+            int tempVal;
+            if (!int.TryParse(tbLastHeal.Text, out tempVal))
             {
                 tbLastHeal.Text = "0";
             }
@@ -484,12 +486,12 @@ namespace FF12RNGHelper
             {
                 //We made it!
                 dataGridView1.Rows.Clear();
-                Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>)e.Result;
+                Tuple<int, int> inputArgs = (Tuple<int, int>)e.Result;
                 
-                for (UInt64 i = inputArgs.Item1; i < inputArgs.Item2; i++)
+                for (int i = inputArgs.Item1; i < inputArgs.Item2; i++)
                 {
                     //Start actually displaying
-                    UInt32 aVal = dispRNG.genrand();
+                    uint aVal = dispRNG.genrand();
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = i;
                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal;
@@ -532,8 +534,8 @@ namespace FF12RNGHelper
 
         private void FormChest_Load(object sender, EventArgs e)
         {
-			long numRows = ParseNumRows();
-			displayRNG(index - (ulong)healVals.Count + 1, index + (ulong) numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index - healVals.Count + 1, index + numRows);
         }
 
         private void stealToolStripMenuItem_Click(object sender, EventArgs e)
@@ -568,17 +570,17 @@ namespace FF12RNGHelper
 			for (int i = 0; i < consume; i++)
 			{
 				group.IncrimentIndex();
-				if (!FindNext(UInt32.Parse(tbLastHeal.Text)))
+				if (!FindNext(int.Parse(tbLastHeal.Text)))
 				{
 					MessageBox.Show("Impossible Heal Value entered.");
 					return;
 				}
-				displayRNG(index - (ulong)healVals.Count + 1, index +1);
+				displayRNG(index - healVals.Count + 1, index +1);
 			}
 			DateTime endt = DateTime.Now;
 			toolStripStatusLabelPercent.Text = (endt - begint).ToString();
-			long numRows = ParseNumRows();
-			displayRNG(index - (ulong)healVals.Count + 1, index + (ulong)numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index - healVals.Count + 1, index + numRows);
 		}
 
 		private void btnClear_Click(object sender, EventArgs e)

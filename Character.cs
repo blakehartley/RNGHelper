@@ -26,19 +26,19 @@ namespace FF12RNGHelper
       this.SerenityMult = serenitymult;
     }
 
-    public uint GetHealValue(uint rngValue)
+    public int GetHealValue(uint rngValue)
     {
-      return (uint) ((this.SpellPower + (double) rngValue % (this.SpellPower * 12.5) / 100.0) * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
+      return (int) ((this.SpellPower + (double) rngValue % (this.SpellPower * 12.5) / 100.0) * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
     }
 
-    public uint HealMax()
+    public int HealMax()
     {
-      return (uint) (this.SpellPower * 1.125 * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
+      return (int) (this.SpellPower * 1.125 * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
     }
 
-    public uint HealMin()
+    public int HealMin()
     {
-      return (uint) (this.SpellPower * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
+      return (int) (this.SpellPower * (2.0 + this.Magic * (this.Level + this.Magic) / 256.0) * this.SerenityMult);
     }
   }
 }
