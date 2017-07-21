@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FF12RNGHelper
 {
-    public partial class FormChest : Form
+    public partial class FormSpawn : Form
     {
         IRNG searchRNG;
         IRNG dispRNG;
@@ -21,7 +21,7 @@ namespace FF12RNGHelper
 
 		System.Diagnostics.Stopwatch aStopwatch = new System.Diagnostics.Stopwatch();
 
-        public FormChest()
+        public FormSpawn()
         {
             InitializeComponent();
 
@@ -223,12 +223,12 @@ namespace FF12RNGHelper
             displayRNG(0, end);
         }
 
-        private bool chestCheck(UInt32 PRNG, double chestChance, bool flip)
+        private bool rareCheck(double chance, double min, double max)
         {
-            if (flip)
-                return (randToPercent(PRNG) < chestChance);
-            else
-                return (randToPercent(PRNG) > chestChance);
+			if (chance > min && chance < max)
+				return true;
+			else
+				return false;
         }
 
         private void displayRNG(UInt64 start, UInt64 end)
@@ -254,32 +254,40 @@ namespace FF12RNGHelper
             DateTime endtt = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endtt - startt).Milliseconds.ToString();
 
-            // Chest/Item 1:
-            double chestSpawnChance1, chestGilChance1, chestItemChance1, chestGilAmount1;
-            uint chestRNGPosition1;
+			// Rare 1:
+			double spawnMin1, spawnMax1;
+            uint rareRNGPosition1;
 
-            double.TryParse(textBox1.Text, out chestSpawnChance1);
-            uint.TryParse(textBox2.Text, out chestRNGPosition1);
-            double.TryParse(textBox3.Text, out chestGilChance1);
-            double.TryParse(textBox4.Text, out chestItemChance1);
-            double.TryParse(textBox5.Text, out chestGilAmount1);
+            double.TryParse(tbMin1.Text, out spawnMin1);
+			double.TryParse(tbMax1.Text, out spawnMax1);
+			uint.TryParse(tbRNG1.Text, out rareRNGPosition1);
 
-            // Chest/Item 2:
-            double chestSpawnChance2, chestGilChance2, chestItemChance2, chestGilAmount2;
-            uint chestRNGPosition2;
+			rareRNGPosition1++;
 
-            double.TryParse(textBox10.Text, out chestSpawnChance2);
-            uint.TryParse(textBox9.Text, out chestRNGPosition2);
-            double.TryParse(textBox8.Text, out chestGilChance2);
-            double.TryParse(textBox7.Text, out chestItemChance2);
-            double.TryParse(textBox6.Text, out chestGilAmount2);
+			// Convert to fraction:
+			spawnMin1 /= 100.0;
+			spawnMax1 /= 100.0;
 
-            // Use these variables to check for first instance of chest and contents
-            bool chestSpawn1 =false, chestFound1 = false;
-            uint chestFoundPos1 = 0, chestItemPos1 = 0;
+			// Rare 2:
+			double spawnMin2, spawnMax2;
+			uint rareRNGPosition2;
 
-			bool chestSpawn2 = false, chestFound2 = false;
-            uint chestFoundPos2 = 0, chestItemPos2 = 0;
+			double.TryParse(tbMin2.Text, out spawnMin2);
+			double.TryParse(tbMax2.Text, out spawnMax2);
+			uint.TryParse(tbRNG2.Text, out rareRNGPosition2);
+
+			rareRNGPosition2++;
+
+			// Convert to fraction:
+			spawnMin2 /= 100.0;
+			spawnMax2 /= 100.0;
+
+			// Use these variables to check for first instance of chest and contents
+			bool rareSpawn1 = false;
+			uint rareFoundPos1 = 0;
+
+			bool rareSpawn2 = false;
+			uint rareFoundPos2 = 0;
 
             UInt32 aVal1 = displayRNG.genrand();
             UInt32 aVal2 = displayRNG.genrand();
@@ -298,6 +306,9 @@ namespace FF12RNGHelper
 				uint healNow = group.GetHealValue(aVal1);
 				uint healNext = group.PeekHealValue(aVal2);
 
+				// Get chance to spawn rare game
+				float spawnChance = (float)aVal1 / 4294967296;
+
 				// Put the next expected heal in the text box
 				if (i == start + (ulong)healVals.Count - 1)
 				{
@@ -315,112 +326,55 @@ namespace FF12RNGHelper
 				// Skip the entry if it's too long ago
 				if (j < healVals.Count - 5)
 					continue;
-				
+
 				//Start actually displaying
 				dataGridView1.Rows.Add();
-
-                // Color consumed RNG green
-                if (i < start + (ulong)healVals.Count)
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
 
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = i;
                 //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal1;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = healNow;
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(aVal1_temp);
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = spawnChance;
+				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = aVal1_temp.ToString("N0");
 
-                // Check if the chests are in a position offset by a fixed amount
-                
-                if ( chestCheck(aVal1_temp, chestSpawnChance1, true) )
+				// Check if the chests are in a position offset by a fixed amount
+
+				if ( rareCheck(spawnChance, spawnMin1, spawnMax1) )
                 {
-					int chestFirstChance = healVals.Count + (int)chestRNGPosition1;
-					
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-					if (j >= chestFirstChance && !chestSpawn1)
+					int chestFirstChance = healVals.Count + (int)rareRNGPosition1;
+
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightBlue;
+					if (j >= chestFirstChance && !rareSpawn1)
 					{
-						chestFoundPos1 = j - (uint)healVals.Count - chestRNGPosition1;
-						chestSpawn1 = true;
+						rareFoundPos1 = j - (uint)healVals.Count - rareRNGPosition1;
+						rareSpawn1 = true;
 					}
                 }
-				if (chestCheck(aVal1_temp, chestSpawnChance2, true))
+				if ( rareCheck(spawnChance, spawnMin2, spawnMax2) )
 				{
-					int chestFirstChance = healVals.Count + (int)chestRNGPosition1;
+					int chestFirstChance = healVals.Count + (int)rareRNGPosition2;
 
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-					if (j >= chestFirstChance && !chestSpawn2)
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Crimson;
+					if (j >= chestFirstChance && !rareSpawn2)
 					{
-						chestFoundPos2 = j - (uint)healVals.Count - chestRNGPosition2;
-						chestSpawn2 = true;
+						rareFoundPos2 = j - (uint)healVals.Count - rareRNGPosition2;
+						rareSpawn2 = true;
 					}
 				}
+				if (rareCheck(spawnChance, spawnMin1, spawnMax1) && rareCheck(spawnChance, spawnMin2, spawnMax2))
+				{
+					int chestFirstChance = healVals.Count + (int)rareRNGPosition2;
 
-                // This is a big conditional to see what is in both chests.
-                // There may be a better way, but this was fast to write and doesn't call the RNG.
-                // Calculate the contents of the chest. First, gil:
-                if ( chestCheck(aVal1_temp, chestGilChance1, true) )
-                {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = 1 + (aVal2_temp % chestGilAmount1);
-                } // Otherwise, what item is it, and where is the first desired item
-                else
-                {
-                    if (chestCheck(aVal2_temp, chestItemChance1, true))
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = (object)"Item 1";
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.MediumPurple;
+				}
 
-                        // Check if the items are in this position
-                        if ((checkBox1.Checked && j >= healVals.Count) && !chestFound1)
-                        {
-                            chestItemPos1 = j - (uint)healVals.Count;
-                            chestFound1 = true;
-                        }
-                    }
-                    else
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = (object)"Item 2";
+				// Color consumed RNG green
+				if (i < start + (ulong)healVals.Count)
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
+			}
 
-                        // Check if the items are in this position
-                        if ((!checkBox1.Checked && j >= healVals.Count) && !chestFound1)
-                        {
-                            chestItemPos1 = j - (uint)healVals.Count;
-                            chestFound1 = true;
-                        }
-                    }
-                }
-                if (chestCheck(aVal1_temp, chestGilChance2, true))
-                {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = 1 + (aVal2_temp % chestGilAmount2);
-                } // Otherwise, what item is it, and where is the first desired item
-                else
-                {
-                    if (chestCheck(aVal2_temp, chestItemChance2, true))
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (object)"Item 1";
+			tbAppear1.Text = rareFoundPos1.ToString();
 
-                        // Check if the items are in this position
-                        if ((checkBox2.Checked && j >= healVals.Count) && !chestFound2)
-                        {
-                            chestItemPos2 = j - (uint)healVals.Count;
-                            chestFound2 = true;
-                        }
-                    }
-                    else
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (object)"Item 2";
-
-                        // Check if the items are in this position
-                        if ((!checkBox2.Checked && j >= healVals.Count) && !chestFound2)
-                        {
-                            chestItemPos2 = j - (uint)healVals.Count;
-                            chestFound2 = true;
-                        }
-                    }
-                }
-            }
-
-			tbAppear1.Text = chestFoundPos1.ToString();
-			tbItem1.Text = chestItemPos1.ToString();
-
-			tbAppear2.Text = chestFoundPos2.ToString();
-            tbItem2.Text = chestItemPos2.ToString();
+			tbAppear2.Text = rareFoundPos2.ToString();
 
             tbLastHeal.Focus();
             tbLastHeal.SelectAll();
@@ -542,21 +496,21 @@ namespace FF12RNGHelper
             this.FindForm().Hide();
         }
 
-        private void tbLastHeal_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                e.Handled = true;
+		private void tbLastHeal_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == (char)Keys.Enter)
+			{
+				e.Handled = true;
 				if (btnContinue.Enabled == false)
 					btnBegin_Click(sender, e);
 				else
 					btnContinue_Click(sender, e);
-            }
-        }
+			}
+		}
 
 		private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			new FormSpawn().Show();
+			new FormChest().Show();
 			this.FindForm().Hide();
 		}
 

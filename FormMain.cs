@@ -395,10 +395,16 @@ namespace FF12RNGHelper
             new FormChest().Show();
             this.FindForm().Hide();
         }
-    }
 
-    //Fairly basic circular buffer. The last thing I want to do is run out of memory while churning through random numbers.
-    public class CircularBuffer<T>
+		private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			new FormSpawn().Show();
+			this.FindForm().Hide();
+		}
+	}
+
+	//Fairly basic circular buffer. The last thing I want to do is run out of memory while churning through random numbers.
+	public class CircularBuffer<T>
     {
         private T[] buffer;
         private int nextFree;
