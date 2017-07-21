@@ -54,9 +54,9 @@ namespace FF12RNGHelper
 		this.charIndex = (this.charIndex + 1) % this.CharacterCount();
 	}
 
-	public uint GetHealValue(uint rngValue)
+	public int GetHealValue(uint rngValue)
 	{
-		uint healValue = this.characters[this.charIndex].GetHealValue(rngValue);
+		int healValue = this.characters[this.charIndex].GetHealValue(rngValue);
 		IncrimentIndex();
 		/*if (this.charIndex == this.characters.Count - 1)
 		this.charIndex = 0;
@@ -65,9 +65,9 @@ namespace FF12RNGHelper
 		return healValue;
 	}
 
-	public uint PeekHealValue(uint rngValue)
+	public int PeekHealValue(uint rngValue)
 	{
-		uint healValue = this.characters[this.charIndex].GetHealValue(rngValue);
+		int healValue = this.characters[this.charIndex].GetHealValue(rngValue);
 		/*if (this.index == this.characters.Count - 1)
 			this.index = 0;
 		else
@@ -75,12 +75,12 @@ namespace FF12RNGHelper
 		return healValue;
 	}
 
-	public uint HealMax()
+	public int HealMax()
     {
       return this.characters[this.charIndex].HealMax();
     }
 
-    public uint HealMin()
+    public int HealMin()
     {
       return this.characters[this.charIndex].HealMin();
     }

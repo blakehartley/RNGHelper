@@ -303,8 +303,8 @@ namespace FF12RNGHelper
                 uint j = (uint)i - (uint)start;
 
 				// Get the heal value once:
-				uint healNow = group.GetHealValue(aVal1);
-				uint healNext = group.PeekHealValue(aVal2);
+				int healNow = group.GetHealValue(aVal1);
+				int healNext = group.PeekHealValue(aVal2);
 
 				// Get chance to spawn rare game
 				float spawnChance = (float)aVal1 / 4294967296;
