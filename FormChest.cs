@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace FF12RNGHelper
         private List<int> healVals;  // List of heal values input by user
         private CharacterGroup group = new CharacterGroup();
 
-        System.Diagnostics.Stopwatch aStopwatch = new System.Diagnostics.Stopwatch();
+        Stopwatch aStopwatch = new Stopwatch();
 
         public FormChest()
         {
@@ -182,8 +183,18 @@ namespace FF12RNGHelper
 
             // Otherwise, continue moving through the RNG to find the next matching position
             bool match;
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             do
             {
+                // Quit if it's taking too long.
+                if (timer.Elapsed.TotalSeconds > 60)
+                {
+                    timer.Stop();
+                    group.SetIndex(indexStatic);
+                    return false;
+                }
+
                 // Reset the index to start the scan again
                 group.ResetIndex();
                 match = true;
