@@ -12,8 +12,9 @@ namespace FF12RNGHelper
         UInt32 genrand();
 
         RNGState saveState();
-        void loadState(int inmti, UInt32[] inmt);
+        void loadState(int inmti, UInt32[] inmt, int position);
         void loadState(RNGState state);
+        int getPosition();
     }
 
     /// <summary>
@@ -30,6 +31,8 @@ namespace FF12RNGHelper
         /// The mt state array.
         /// </summary>
         public UInt32[] mt;
+
+        public int position;
 
     }
 }
