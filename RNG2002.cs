@@ -70,6 +70,7 @@ namespace FF12RNGHelper
 
         private UInt32[] mt = new UInt32[N]; /* the array for the state vector  */
         private Int32 mti = N + 1; /* mti==N+1 means mt[N] is not initialized */
+        private int position = 0; // position in the RNG. For debuggin purposes
 
         public RNG2002(UInt32 seed = DEFAULT_SEED)
         {
@@ -96,6 +97,7 @@ namespace FF12RNGHelper
                 mt[mti] &= 0xffffffff;
                 /* for >32 bit machines */
             }
+            position = 0;
         }
 
         private UInt32[] mag01 = { 0x0U, MATRIX_A }; //Moved out of below method.
@@ -138,6 +140,7 @@ namespace FF12RNGHelper
             y ^= (y << 15) & 0xefc60000U;
             y ^= (y >> 18);
 
+            position++;
             return y;
         }
 
@@ -152,7 +155,8 @@ namespace FF12RNGHelper
             return new RNGState
             {
                 mti = this.mti,
-                mt = this.mt.Clone() as uint[]
+                mt = this.mt.Clone() as uint[],
+                position = this.position
             };
         }
 
@@ -161,10 +165,11 @@ namespace FF12RNGHelper
         /// </summary>
         /// <param name="inmti">Input mti</param>
         /// <param name="inmt">Input mt</param>
-        public void loadState(int mti, UInt32[] mt)
+        public void loadState(int mti, UInt32[] mt, int position)
         {
             this.mti = mti;
             mt.CopyTo(this.mt, 0);
+            this.position = position;
         }
 
         /// <summary>
@@ -175,6 +180,7 @@ namespace FF12RNGHelper
         {
             mti = inputState.mti;
             inputState.mt.CopyTo(mt, 0);
+            position = inputState.position;
         }
 
         /// <summary>
@@ -194,6 +200,11 @@ namespace FF12RNGHelper
         object IDeepCloneable.DeepClone()
         {
             return DeepClone();
+        }
+
+        public int getPosition()
+        {
+            return position;
         }
     }
 }
