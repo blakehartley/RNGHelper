@@ -49,7 +49,14 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="CharacterGroup.cs" />
+    <Compile Include="Steal.cs" />
     <Compile Include="Chest.cs" />
+    <Compile Include="FormSteal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSteal.Designer.cs">
+      <DependentUpon>FormSteal.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RNG1998.cs" />
     <Compile Include="RNG2002.cs" />
+    <EmbeddedResource Include="FormSteal.resx">
+      <DependentUpon>FormSteal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChest.resx">
       <DependentUpon>FormChest.cs</DependentUpon>
     </EmbeddedResource>
