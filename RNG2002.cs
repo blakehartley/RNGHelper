@@ -177,6 +177,9 @@ namespace FF12RNGHelper
             inputState.mt.CopyTo(mt, 0);
         }
 
+        /// <summary>
+        /// Return a deep copy
+        /// </summary>
         public IRNG DeepClone()
         {
             RNG2002 newRNG = new RNG2002();
@@ -185,6 +188,9 @@ namespace FF12RNGHelper
             return newRNG;
         }
 
+        /// <summary>
+        /// Return a deep copy
+        /// </summary>
         object IDeepCloneable.DeepClone()
         {
             return DeepClone();

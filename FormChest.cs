@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +17,7 @@ namespace FF12RNGHelper
         private IRNG searchRNG;
         private IRNG dispRNG;
         private int index;	// Current index in the PRNG list
-        private CircularBuffer<uint> searchBuff;	// buffer of PRNG numbers
+        private List<uint> searchBuff;	// buffer of PRNG numbers
         private List<int> healVals;  // List of heal values input by user
         private CharacterGroup group = new CharacterGroup();
 
@@ -134,7 +135,7 @@ namespace FF12RNGHelper
             LoadCharacters();
 
             healVals.Clear();
-            searchBuff = new CircularBuffer<uint>(100);
+            searchBuff = new List<uint>();
             searchRNG.sgenrand();
             searchBuff.Add(searchRNG.genrand());
             index = 0;
@@ -201,7 +202,7 @@ namespace FF12RNGHelper
                 for (int i = 0; i < healVals.Count; i++)
                 {
                     // index of first heal:
-                    long index0 = (long)index - healVals.Count + 1;
+                    int index0 = index - healVals.Count + 1;
 
                     if (group.GetHealValue(searchBuff[index0 + i]) != healVals[i])
                     {
@@ -262,24 +263,10 @@ namespace FF12RNGHelper
             toolStripStatusLabelPercent.Text = (endTime - startTime).Milliseconds.ToString();
 
             // Chest/Item 1:
-            double chestSpawnChance1, chestGilChance1, chestItemChance1, chestGilAmount1;
-            int chestRNGPosition1;
-
-            double.TryParse(textBox1.Text, out chestSpawnChance1);
-            int.TryParse(textBox2.Text, out chestRNGPosition1);
-            double.TryParse(textBox3.Text, out chestGilChance1);
-            double.TryParse(textBox4.Text, out chestItemChance1);
-            double.TryParse(textBox5.Text, out chestGilAmount1);
+            Chest chest1 = new Chest(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text);
 
             // Chest/Item 2:
-            double chestSpawnChance2, chestGilChance2, chestItemChance2, chestGilAmount2;
-            int chestRNGPosition2;
-
-            double.TryParse(textBox10.Text, out chestSpawnChance2);
-            int.TryParse(textBox9.Text, out chestRNGPosition2);
-            double.TryParse(textBox8.Text, out chestGilChance2);
-            double.TryParse(textBox7.Text, out chestItemChance2);
-            double.TryParse(textBox6.Text, out chestGilAmount2);
+            Chest chest2 = new Chest(textBox10.Text, textBox9.Text, textBox8.Text, textBox7.Text, textBox6.Text);
 
             // Use these variables to check for first instance of chest and contents
             bool chestSpawn1 = false, chestFound1 = false;
@@ -309,8 +296,6 @@ namespace FF12RNGHelper
                 if (index == start + healVals.Count - 1)
                 {
                     tbLastHeal.Text = nextHeal.ToString();
-                    //tbAppear1.Text = group.HealMin().ToString();
-                    //tbItem1.Text = group.HealMax().ToString();
                 }
 
                 // Advance the RNG before starting the loop in case we want to skip an entry
@@ -331,95 +316,41 @@ namespace FF12RNGHelper
                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
 
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = index;
-                //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal1;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = currentHeal;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(aVal1_temp);
 
                 // Check if the chests are in a position offset by a fixed amount
-
-                if (chestCheck(aVal1_temp, chestSpawnChance1, true))
+                if (chest1.checkSpawn(aVal1_temp))
                 {
-                    int chestFirstChance = healVals.Count + chestRNGPosition1;
-
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-                    if (loopIndex >= chestFirstChance && !chestSpawn1)
-                    {
-                        chestFoundPos1 = loopIndex - healVals.Count - chestRNGPosition1;
-                        chestSpawn1 = true;
-                    }
+                    handleChestSpawn(chest1, loopIndex, 3, ref chestFoundPos1, ref chestSpawn1); 
                 }
-                if (chestCheck(aVal1_temp, chestSpawnChance2, true))
-                {
-                    int chestFirstChance = healVals.Count + chestRNGPosition1;
 
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
-                    if (loopIndex >= chestFirstChance && !chestSpawn2)
-                    {
-                        chestFoundPos2 = loopIndex - healVals.Count - chestRNGPosition2;
-                        chestSpawn2 = true;
-                    }
+                if (chest2.checkSpawn(aVal1_temp))
+                {
+                    handleChestSpawn(chest2, loopIndex, 4, ref chestFoundPos2, ref chestSpawn2);
                 }
 
                 // This is a big conditional to see what is in both chests.
                 // There may be a better way, but this was fast to write and doesn't call the RNG.
                 // Calculate the contents of the chest. First, gil:
-                if (chestCheck(aVal1_temp, chestGilChance1, true))
+                if (chest1.checkIfGil(aVal1_temp))
                 {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = 1 + (aVal2_temp % chestGilAmount1);
-                } // Otherwise, what item is it, and where is the first desired item
+                    handleGilReward(chest1, aVal2_temp, 3);
+                } 
+                // Otherwise, what item is it, and where is the first desired item
                 else
                 {
-                    if (chestCheck(aVal2_temp, chestItemChance1, true))
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = (object)"Item 1";
-
-                        // Check if the items are in this position
-                        if ((checkBox1.Checked && loopIndex >= healVals.Count) && !chestFound1)
-                        {
-                            chestItemPos1 = loopIndex - healVals.Count;
-                            chestFound1 = true;
-                        }
-                    }
-                    else
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = (object)"Item 2";
-
-                        // Check if the items are in this position
-                        if ((!checkBox1.Checked && loopIndex >= healVals.Count) && !chestFound1)
-                        {
-                            chestItemPos1 = loopIndex - healVals.Count;
-                            chestFound1 = true;
-                        }
-                    }
+                    handleItemReward(chest1, aVal2_temp, loopIndex, 3, checkBox1, ref chestItemPos1, ref chestFound1);
                 }
-                if (chestCheck(aVal1_temp, chestGilChance2, true))
+
+                if (chest2.checkIfGil(aVal1_temp))
                 {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = 1 + (aVal2_temp % chestGilAmount2);
-                } // Otherwise, what item is it, and where is the first desired item
+                    handleGilReward(chest2, aVal2_temp, 4);
+                } 
+                // Otherwise, what item is it, and where is the first desired item
                 else
                 {
-                    if (chestCheck(aVal2_temp, chestItemChance2, true))
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (object)"Item 1";
-
-                        // Check if the items are in this position
-                        if ((checkBox2.Checked && loopIndex >= healVals.Count) && !chestFound2)
-                        {
-                            chestItemPos2 = loopIndex - healVals.Count;
-                            chestFound2 = true;
-                        }
-                    }
-                    else
-                    {
-                        dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (object)"Item 2";
-
-                        // Check if the items are in this position
-                        if ((!checkBox2.Checked && loopIndex >= healVals.Count) && !chestFound2)
-                        {
-                            chestItemPos2 = loopIndex - healVals.Count;
-                            chestFound2 = true;
-                        }
-                    }
+                    handleItemReward(chest2, aVal2_temp, loopIndex, 4, checkBox2, ref chestItemPos2, ref chestFound2);
                 }
             }
 
@@ -433,6 +364,50 @@ namespace FF12RNGHelper
             tbLastHeal.SelectAll();
 
             group.SetIndex(indexStatic);
+        }
+
+        private void handleChestSpawn(Chest chest, int loopIndex, int column,
+            ref int chestFoundPosition, ref bool chestSpawn)
+        {
+            int chestFirstChance = healVals.Count + chest.getRNGPosition();
+
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
+            if (loopIndex >= chestFirstChance && !chestSpawn)
+            {
+                chestFoundPosition = loopIndex - healVals.Count - chest.getRNGPosition();
+                chestSpawn = true;
+            }
+        }
+
+        private void handleItemReward(Chest chest, uint PRNG, int loopIndex, int column, CheckBox checkBox,
+            ref int itemPosition, ref bool chestFound)
+        {
+            if (chest.checkIfFirstItem(PRNG))
+            {
+                handleItemRewardHelper("Item 1", loopIndex, column, checkBox, true, ref itemPosition, ref chestFound);
+            }
+            else
+            {
+                handleItemRewardHelper("Item 2", loopIndex, column, checkBox, false, ref itemPosition, ref chestFound);
+            }
+        }
+
+        private void handleItemRewardHelper(string text, int loopIndex, int column, CheckBox checkBox, bool expectCheck,
+            ref int itemPosition, ref bool chestFound)
+        {
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = (object)text;
+
+            // Check if the items are in this position
+            if (((checkBox.Checked == expectCheck) && loopIndex >= healVals.Count) && !chestFound)
+            {
+                itemPosition = loopIndex - healVals.Count;
+                chestFound = true;
+            }
+        }
+
+        private void handleGilReward(Chest chest, uint PRNG, int column)
+        {
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = chest.getGilAmount(PRNG);
         }
 
         private void tbLevel_Validating(object sender, CancelEventArgs e)
