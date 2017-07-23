@@ -366,7 +366,6 @@ namespace FF12RNGHelper
             //Start the party!
             Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>)e.Argument;
             BackgroundWorker bw = sender as BackgroundWorker;
-            dispRNG.consumeBG(inputArgs.Item1, bw, e);
             if (bw.CancellationPending)
             {
                 e.Cancel = true;
