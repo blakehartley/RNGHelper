@@ -43,46 +43,6 @@ namespace FF12RNGHelper
             this.Close();
         }
 
-		/*
-        private void parseThings()
-        {
-            //Parse the boxes
-            level = double.Parse(tbLevel1.Text);
-            mag = double.Parse(tbMagic1.Text);
-            switch (ddlSpellPow1.SelectedIndex)
-            {
-                case 0:
-                    spell = (uint)Spells.Cure;
-                    break;
-                case 1:
-                    spell = (uint)Spells.Cura;
-                    break;
-                case 2:
-                    spell = (uint)Spells.Curaga;
-                    break;
-                case 3:
-                    spell = (uint)Spells.Curaja;
-                    break;
-                case 4:
-                    spell = (uint)Spells.CuraIZJS;
-                    break;
-                case 5:
-                    spell = (uint)Spells.CuragaIZJS;
-                    break;
-                case 6:
-                    spell = (uint)Spells.CurajaIZJS;
-                    break;
-                default:
-                    spell = (uint)Spells.Cure;
-                    break;
-            }
-            if (cbSerenity1.Checked)
-            {
-                serenityMult = 1.5;
-            }
-            else serenityMult = 1;
-        }*/
-
 		private void LoadCharacters()
 		{
 			this.group.ClearCharacters();

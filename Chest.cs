@@ -54,7 +54,7 @@ namespace FF12RNGHelper
 
         public int getRNGPosition()
         {
-            return rngPosition;
+            return rngPosition - 1;
         }
 
         public bool checkSpawn(uint PRNG)

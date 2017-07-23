@@ -44,20 +44,24 @@
 			this.cbSerenity1 = new System.Windows.Forms.CheckBox();
 			this.gbStats = new System.Windows.Forms.GroupBox();
 			this.label20 = new System.Windows.Forms.Label();
-			this.cbSerenity3 = new System.Windows.Forms.CheckBox();
 			this.tbLevel3 = new System.Windows.Forms.TextBox();
-			this.ddlSpellPow3 = new System.Windows.Forms.ComboBox();
-			this.label21 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.tbMagic3 = new System.Windows.Forms.TextBox();
 			this.label17 = new System.Windows.Forms.Label();
-			this.cbSerenity2 = new System.Windows.Forms.CheckBox();
 			this.tbLevel2 = new System.Windows.Forms.TextBox();
-			this.ddlSpellPow2 = new System.Windows.Forms.ComboBox();
-			this.label18 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
 			this.tbMagic2 = new System.Windows.Forms.TextBox();
+			this.cbSerenity3 = new System.Windows.Forms.CheckBox();
+			this.ddlSpellPow3 = new System.Windows.Forms.ComboBox();
+			this.label21 = new System.Windows.Forms.Label();
+			this.cbSerenity2 = new System.Windows.Forms.CheckBox();
+			this.ddlSpellPow2 = new System.Windows.Forms.ComboBox();
+			this.label18 = new System.Windows.Forms.Label();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Heal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.steal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.lblLastHeal = new System.Windows.Forms.Label();
 			this.tbLastHeal = new System.Windows.Forms.TextBox();
 			this.btnBegin = new System.Windows.Forms.Button();
@@ -101,10 +105,6 @@
 			this.tbAppear2 = new System.Windows.Forms.TextBox();
 			this.tbItem2 = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Heal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.steal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.menuStrip1.SuspendLayout();
 			this.gbStats.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -142,21 +142,21 @@
 			// stealToolStripMenuItem
 			// 
 			this.stealToolStripMenuItem.Name = "stealToolStripMenuItem";
-			this.stealToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.stealToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
 			this.stealToolStripMenuItem.Text = "Steal";
 			this.stealToolStripMenuItem.Click += new System.EventHandler(this.stealToolStripMenuItem_Click);
 			// 
 			// rareGameToolStripMenuItem
 			// 
 			this.rareGameToolStripMenuItem.Name = "rareGameToolStripMenuItem";
-			this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
 			this.rareGameToolStripMenuItem.Text = "Chests";
 			this.rareGameToolStripMenuItem.Click += new System.EventHandler(this.rareGameToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -278,6 +278,61 @@
 			this.label20.TabIndex = 20;
 			this.label20.Text = "Level:";
 			// 
+			// tbLevel3
+			// 
+			this.tbLevel3.Location = new System.Drawing.Point(48, 78);
+			this.tbLevel3.Name = "tbLevel3";
+			this.tbLevel3.Size = new System.Drawing.Size(34, 20);
+			this.tbLevel3.TabIndex = 17;
+			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.Location = new System.Drawing.Point(88, 81);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(31, 13);
+			this.label22.TabIndex = 21;
+			this.label22.Text = "Mag:";
+			// 
+			// tbMagic3
+			// 
+			this.tbMagic3.Location = new System.Drawing.Point(125, 78);
+			this.tbMagic3.Name = "tbMagic3";
+			this.tbMagic3.Size = new System.Drawing.Size(40, 20);
+			this.tbMagic3.TabIndex = 18;
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(6, 52);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(36, 13);
+			this.label17.TabIndex = 13;
+			this.label17.Text = "Level:";
+			// 
+			// tbLevel2
+			// 
+			this.tbLevel2.Location = new System.Drawing.Point(48, 49);
+			this.tbLevel2.Name = "tbLevel2";
+			this.tbLevel2.Size = new System.Drawing.Size(34, 20);
+			this.tbLevel2.TabIndex = 10;
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(88, 52);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(31, 13);
+			this.label19.TabIndex = 14;
+			this.label19.Text = "Mag:";
+			// 
+			// tbMagic2
+			// 
+			this.tbMagic2.Location = new System.Drawing.Point(125, 49);
+			this.tbMagic2.Name = "tbMagic2";
+			this.tbMagic2.Size = new System.Drawing.Size(40, 20);
+			this.tbMagic2.TabIndex = 11;
+			// 
 			// cbSerenity3
 			// 
 			this.cbSerenity3.AutoSize = true;
@@ -287,13 +342,6 @@
 			this.cbSerenity3.TabIndex = 23;
 			this.cbSerenity3.Text = "Serenity";
 			this.cbSerenity3.UseVisualStyleBackColor = true;
-			// 
-			// tbLevel3
-			// 
-			this.tbLevel3.Location = new System.Drawing.Point(48, 78);
-			this.tbLevel3.Name = "tbLevel3";
-			this.tbLevel3.Size = new System.Drawing.Size(34, 20);
-			this.tbLevel3.TabIndex = 17;
 			// 
 			// ddlSpellPow3
 			// 
@@ -321,31 +369,6 @@
 			this.label21.TabIndex = 22;
 			this.label21.Text = "Spell:";
 			// 
-			// label22
-			// 
-			this.label22.AutoSize = true;
-			this.label22.Location = new System.Drawing.Point(88, 81);
-			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size(31, 13);
-			this.label22.TabIndex = 21;
-			this.label22.Text = "Mag:";
-			// 
-			// tbMagic3
-			// 
-			this.tbMagic3.Location = new System.Drawing.Point(125, 78);
-			this.tbMagic3.Name = "tbMagic3";
-			this.tbMagic3.Size = new System.Drawing.Size(40, 20);
-			this.tbMagic3.TabIndex = 18;
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(6, 52);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(36, 13);
-			this.label17.TabIndex = 13;
-			this.label17.Text = "Level:";
-			// 
 			// cbSerenity2
 			// 
 			this.cbSerenity2.AutoSize = true;
@@ -355,13 +378,6 @@
 			this.cbSerenity2.TabIndex = 16;
 			this.cbSerenity2.Text = "Serenity";
 			this.cbSerenity2.UseVisualStyleBackColor = true;
-			// 
-			// tbLevel2
-			// 
-			this.tbLevel2.Location = new System.Drawing.Point(48, 49);
-			this.tbLevel2.Name = "tbLevel2";
-			this.tbLevel2.Size = new System.Drawing.Size(34, 20);
-			this.tbLevel2.TabIndex = 10;
 			// 
 			// ddlSpellPow2
 			// 
@@ -389,22 +405,6 @@
 			this.label18.TabIndex = 15;
 			this.label18.Text = "Spell:";
 			// 
-			// label19
-			// 
-			this.label19.AutoSize = true;
-			this.label19.Location = new System.Drawing.Point(88, 52);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(31, 13);
-			this.label19.TabIndex = 14;
-			this.label19.Text = "Mag:";
-			// 
-			// tbMagic2
-			// 
-			this.tbMagic2.Location = new System.Drawing.Point(125, 49);
-			this.tbMagic2.Name = "tbMagic2";
-			this.tbMagic2.Size = new System.Drawing.Size(40, 20);
-			this.tbMagic2.TabIndex = 11;
-			// 
 			// dataGridView1
 			// 
 			this.dataGridView1.AllowUserToAddRows = false;
@@ -423,6 +423,39 @@
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.Size = new System.Drawing.Size(513, 713);
 			this.dataGridView1.TabIndex = 14;
+			// 
+			// Position
+			// 
+			this.Position.HeaderText = "Position";
+			this.Position.Name = "Position";
+			this.Position.ReadOnly = true;
+			this.Position.ToolTipText = "Position in the RNG.";
+			this.Position.Width = 70;
+			// 
+			// Heal
+			// 
+			this.Heal.FillWeight = 50F;
+			this.Heal.HeaderText = "Heal";
+			this.Heal.Name = "Heal";
+			this.Heal.ReadOnly = true;
+			this.Heal.ToolTipText = "How much you heal for at this number.";
+			this.Heal.Width = 50;
+			// 
+			// Percent
+			// 
+			this.Percent.FillWeight = 50F;
+			this.Percent.HeaderText = "Percent";
+			this.Percent.MinimumWidth = 11;
+			this.Percent.Name = "Percent";
+			this.Percent.ReadOnly = true;
+			this.Percent.ToolTipText = "Random number divided by 2^32";
+			// 
+			// steal
+			// 
+			this.steal.HeaderText = "Raw RNG";
+			this.steal.MinimumWidth = 11;
+			this.steal.Name = "steal";
+			this.steal.ToolTipText = "Number from the RNG";
 			// 
 			// lblLastHeal
 			// 
@@ -638,7 +671,7 @@
 			this.tbRNG1.Name = "tbRNG1";
 			this.tbRNG1.Size = new System.Drawing.Size(49, 20);
 			this.tbRNG1.TabIndex = 4;
-			this.tbRNG1.Text = "0";
+			this.tbRNG1.Text = "1";
 			// 
 			// tbMax1
 			// 
@@ -704,7 +737,7 @@
 			this.tbRNG2.Name = "tbRNG2";
 			this.tbRNG2.Size = new System.Drawing.Size(49, 20);
 			this.tbRNG2.TabIndex = 4;
-			this.tbRNG2.Text = "7";
+			this.tbRNG2.Text = "1";
 			// 
 			// tbMax2
 			// 
@@ -858,39 +891,6 @@
 			this.groupBox5.Size = new System.Drawing.Size(239, 108);
 			this.groupBox5.TabIndex = 22;
 			this.groupBox5.TabStop = false;
-			// 
-			// Position
-			// 
-			this.Position.HeaderText = "Position";
-			this.Position.Name = "Position";
-			this.Position.ReadOnly = true;
-			this.Position.ToolTipText = "Position in the RNG.";
-			this.Position.Width = 70;
-			// 
-			// Heal
-			// 
-			this.Heal.FillWeight = 50F;
-			this.Heal.HeaderText = "Heal";
-			this.Heal.Name = "Heal";
-			this.Heal.ReadOnly = true;
-			this.Heal.ToolTipText = "How much you heal for at this number.";
-			this.Heal.Width = 50;
-			// 
-			// Percent
-			// 
-			this.Percent.FillWeight = 50F;
-			this.Percent.HeaderText = "Percent";
-			this.Percent.MinimumWidth = 11;
-			this.Percent.Name = "Percent";
-			this.Percent.ReadOnly = true;
-			this.Percent.ToolTipText = "Random number divided by 2^32";
-			// 
-			// steal
-			// 
-			this.steal.HeaderText = "Raw RNG";
-			this.steal.MinimumWidth = 11;
-			this.steal.Name = "steal";
-			this.steal.ToolTipText = "Number from the RNG";
 			// 
 			// FormSpawn
 			// 

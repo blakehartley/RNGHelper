@@ -191,14 +191,6 @@ namespace FF12RNGHelper
             displayRNG(0, end);
         }
 
-        private bool chestCheck(uint PRNG, double chestChance, bool flip)
-        {
-            if (flip)
-                return (randToPercent(PRNG) < chestChance);
-            else
-                return (randToPercent(PRNG) > chestChance);
-        }
-
         private void displayRNG(int start, int end)
         {
             IRNG displayRNG;
