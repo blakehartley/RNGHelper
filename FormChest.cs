@@ -15,12 +15,14 @@ namespace FF12RNGHelper
     public partial class FormChest : Form
     {
         // Number of rows to display before the current rng position
-        private static int historyToDisplay = 5;
+        private const int historyToDisplay = 5;
+        private const int findNextTimeout = 60;
+        private const int searchBufferSize = 1000000;
 
         private IRNG searchRNG;
         private IRNG dispRNG;
         private int index;	// Current index in the PRNG list
-        private List<uint> searchBuff;	// buffer of PRNG numbers
+        private CircularBuffer<uint> searchBuff;	// buffer of PRNG numbers
         private List<int> healVals;  // List of heal values input by user
         private CharacterGroup group = new CharacterGroup();
 
@@ -119,7 +121,7 @@ namespace FF12RNGHelper
             while (!match)
             {
                 // Quit if it's taking too long.
-                if (timer.Elapsed.TotalSeconds > 60)
+                if (timer.Elapsed.TotalSeconds > findNextTimeout)
                 {
                     timer.Stop();
                     return false;
@@ -362,12 +364,12 @@ namespace FF12RNGHelper
         {
             btnContinue.Enabled = true;
             bConsume.Enabled = true;
-            //Parse the boxes
+
             group.ResetIndex();
             LoadCharacters();
 
             healVals.Clear();
-            searchBuff = new List<uint>();
+            searchBuff = new CircularBuffer<uint>(searchBufferSize);
             searchRNG.sgenrand();
             searchBuff.Add(searchRNG.genrand());
             index = 0;
@@ -386,8 +388,9 @@ namespace FF12RNGHelper
             // Store all of the information we need to restore our state if we fail
             int groupIndex_temp = group.GetIndex();
             int index_temp = index;
+            // We have to Deep Copy this data
             List<int> healVals_temp = new List<int>(healVals);
-            List<uint> searchBuff_temp = new List<uint>(searchBuff);
+            CircularBuffer<uint> searchBuff_temp = searchBuff.DeepClone();
             IRNG rng_temp = searchRNG.DeepClone();
 
             group.IncrimentIndex();
@@ -396,9 +399,11 @@ namespace FF12RNGHelper
                 // Restore state
                 group.SetIndex(groupIndex_temp);
                 index = index_temp;
+                // No Deep Copy needed here. We can just re-assign the temps
+                // because we won't be touching them again.
                 healVals = healVals_temp;
                 searchBuff = searchBuff_temp;
-                searchRNG = rng_temp.DeepClone();
+                searchRNG = rng_temp;
 
                 MessageBox.Show("Impossible Heal Value entered.");
                 return;

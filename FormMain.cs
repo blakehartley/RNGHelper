@@ -21,7 +21,7 @@ namespace FF12RNGHelper
         double mag;
         uint spell;
         double serenityMult;
-        enum Spells : uint {Cure=20,Cura=45, Curaga=85, Curaja=145, CuraIZJS=46, CuragaIZJS=86, CurajaIZJS=120 }
+        enum Spells : uint { Cure = 20, Cura = 45, Curaga = 85, Curaja = 145, CuraIZJS = 46, CuragaIZJS = 86, CurajaIZJS = 120 }
         System.Diagnostics.Stopwatch aStopwatch = new System.Diagnostics.Stopwatch();
 
         public FormMain()
@@ -86,7 +86,7 @@ namespace FF12RNGHelper
             btnContinue.Enabled = true;
             //Parse the boxes
             parseThings();
-            
+
             healVals.Clear();
             searchBuff = new CircularBuffer<UInt32>(100);
             searchRNG.sgenrand();
@@ -104,20 +104,20 @@ namespace FF12RNGHelper
         private void btnContinue_Click(object sender, EventArgs e)
         {
             DateTime begint = DateTime.Now;
-            if(!findNext(UInt32.Parse(tbLastHeal.Text)))
+            if (!findNext(UInt32.Parse(tbLastHeal.Text)))
             {
                 MessageBox.Show("Impossible Heal Value entered.");
                 return;
             }
             DateTime endt = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endt - begint).ToString();
-            displayRNG(index-(ulong)healVals.Count+1, index + 500);
+            displayRNG(index - (ulong)healVals.Count + 1, index + 500);
         }
 
         private bool findNext(UInt32 value)
         {
             //Do a range check before trying this out to avoid entering an infinite loop.
-            if(value > healMax() || value < healMin())
+            if (value > healMax() || value < healMin())
             {
                 return false;
             }
@@ -136,7 +136,7 @@ namespace FF12RNGHelper
                         break;
                     }
                 }
-                if(!match)
+                if (!match)
                 {
                     searchBuff.Add(searchRNG.genrand());
                     index++;
@@ -174,7 +174,7 @@ namespace FF12RNGHelper
         private void displayRNG(UInt64 start, UInt64 end)
         {
             IRNG displayRNG;
-            if(cbPlatform.SelectedItem as string == "PS2")
+            if (cbPlatform.SelectedItem as string == "PS2")
             {
                 displayRNG = new RNG1998();
             }
@@ -202,13 +202,13 @@ namespace FF12RNGHelper
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToHeal(aVal);
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = randToPercent(aVal);
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (aVal < 0x1000000) ;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (aVal < 0x1000000);
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = stealCompute(aVal, displayRNG, false);
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[6].Value = stealCompute(aVal, displayRNG, true);
             }
         }
 
-        
+
         private string stealCompute(uint currentVal, IRNG anRNG, bool thiefCuff)
         {
             string returnStr = "";
@@ -218,32 +218,32 @@ namespace FF12RNGHelper
             uint secondPercent = anRNG.genrand() % 100;
             uint thirdPercent = anRNG.genrand() % 100;
             anRNG.loadState(rngState);
-            if(thiefCuff)
+            if (thiefCuff)
             {
-                if(firstPercent < 6)
+                if (firstPercent < 6)
                 {
                     returnStr += "Rare";
                 }
-                if(secondPercent < 30)
+                if (secondPercent < 30)
                 {
                     returnStr += " + Uncommon";
                 }
-                if(thirdPercent < 80)
+                if (thirdPercent < 80)
                 {
                     returnStr += " + Common";
                 }
             }
             else
             {
-                if(firstPercent < 3)
+                if (firstPercent < 3)
                 {
                     returnStr = "Rare";
                 }
-                else if(secondPercent < 10)
+                else if (secondPercent < 10)
                 {
                     returnStr = "Uncommon";
                 }
-                else if(thirdPercent < 55)
+                else if (thirdPercent < 55)
                 {
                     returnStr = "Common";
                 }
@@ -252,12 +252,12 @@ namespace FF12RNGHelper
             {
                 returnStr = "None";
             }
-            return returnStr.TrimStart(new char[]{' ','+'});
+            return returnStr.TrimStart(new char[] { ' ', '+' });
         }
         private void tbLevel_Validating(object sender, CancelEventArgs e)
         {
             double tempVal;
-            if(!double.TryParse(tbLevel.Text,out tempVal))
+            if (!double.TryParse(tbLevel.Text, out tempVal))
             {
                 tbLevel.Text = "0";
             }
@@ -319,10 +319,10 @@ namespace FF12RNGHelper
         private void backgroundWorkerConsume_DoWork(object sender, DoWorkEventArgs e)
         {
             //Start the party!
-            Tuple<ulong,ulong> inputArgs = (Tuple<ulong, ulong>)e.Argument;
+            Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>)e.Argument;
             BackgroundWorker bw = sender as BackgroundWorker;
             dispRNG.consumeBG(inputArgs.Item1, bw, e);
-            if(bw.CancellationPending)
+            if (bw.CancellationPending)
             {
                 e.Cancel = true;
             }
@@ -331,7 +331,7 @@ namespace FF12RNGHelper
                 e.Result = inputArgs;
                 aStopwatch.Stop();
             }
-            
+
         }
 
         private void backgroundWorkerConsume_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -341,7 +341,7 @@ namespace FF12RNGHelper
                 //We made it!
                 dataGridView1.Rows.Clear();
                 Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>)e.Result;
-                
+
                 for (UInt64 i = inputArgs.Item1; i < inputArgs.Item2; i++)
                 {
                     //Start actually displaying
@@ -374,14 +374,14 @@ namespace FF12RNGHelper
 
         private void cbPlatform_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if(cbPlatform.SelectedItem as string == "PS2" && searchRNG is RNG2002)
+            if (cbPlatform.SelectedItem as string == "PS2" && searchRNG is RNG2002)
             {
                 btnContinue.Enabled = false;
                 dataGridView1.Rows.Clear();
                 dispRNG = new RNG1998();
                 searchRNG = new RNG1998();
             }
-            else if(cbPlatform.SelectedItem as string == "PS4" && searchRNG is RNG1998)
+            else if (cbPlatform.SelectedItem as string == "PS4" && searchRNG is RNG1998)
             {
                 btnContinue.Enabled = false;
                 dataGridView1.Rows.Clear();
@@ -396,37 +396,56 @@ namespace FF12RNGHelper
             this.FindForm().Hide();
         }
 
-		private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			new FormSpawn().Show();
-			this.FindForm().Hide();
-		}
-	}
+        private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormSpawn().Show();
+            this.FindForm().Hide();
+        }
+    }
 
-	//Fairly basic circular buffer. The last thing I want to do is run out of memory while churning through random numbers.
-	public class CircularBuffer<T>
+    //Fairly basic circular buffer. The last thing I want to do is run out of memory while churning through random numbers.
+    public class CircularBuffer<T> : IDeepCloneable<CircularBuffer<T>>
     {
         private T[] buffer;
         private int nextFree;
+        private int length;
 
         public CircularBuffer(int length)
         {
-          buffer = new T[length];
-          nextFree = 0;
+            this.length = length;
+            buffer = new T[length];
+            nextFree = 0;
         }
 
         public void Add(T o)
         {
-          buffer[nextFree] = o;
-          nextFree = (nextFree+1) % buffer.Length;
+            buffer[nextFree] = o;
+            nextFree = (nextFree + 1) % buffer.Length;
         }
+
+        public CircularBuffer<T> DeepClone()
+        {
+            CircularBuffer<T> copy = new CircularBuffer<T>(length);
+            copy.buffer = buffer.Clone() as T[];
+            copy.nextFree = nextFree;
+            copy.length = length;
+            return copy;
+        }
+
+        object IDeepCloneable.DeepClone()
+        {
+            return DeepClone();
+        }
+
+        
+
         public T this[long index]
         {
             get
             {
                 int tempIndex = (int)(index % buffer.Length);
                 //Make negative indexes behave properly.
-                if(tempIndex < 0)
+                if (tempIndex < 0)
                 {
                     tempIndex = buffer.Length + tempIndex;
                 }
