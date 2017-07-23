@@ -70,6 +70,8 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="CharacterGroup.cs" />
+    <Compile Include="CircularBuffer.cs" />
+    <Compile Include="Spell.cs" />
     <Compile Include="Steal.cs" />
     <Compile Include="Chest.cs" />
     <Compile Include="FormSteal.cs">
@@ -83,12 +85,6 @@
     </Compile>
     <Compile Include="FormChest.Designer.cs">
       <DependentUpon>FormChest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSpawn.cs">
       <SubType>Form</SubType>
@@ -107,9 +103,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormChest.resx">
       <DependentUpon>FormChest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSpawn.resx">
       <DependentUpon>FormSpawn.cs</DependentUpon>

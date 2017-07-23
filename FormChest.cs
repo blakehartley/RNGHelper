@@ -75,16 +75,13 @@ namespace FF12RNGHelper
         {
             double level = double.Parse(levelBox.Text);
             double magic = double.Parse(magicBox.Text);
-            int startIndex = spellPowerBox.SelectedItem.ToString().IndexOf("(") + 1;
-            int length = spellPowerBox.SelectedItem.ToString().IndexOf(")") - startIndex;
-            double spellpower = double.Parse(spellPowerBox.SelectedItem.ToString().Substring(startIndex, length));
-            group.AddCharacter(new Character(level, magic, spellpower, serenityBox.Checked));
+            Spell spell = new Spell(spellPowerBox);
+            group.AddCharacter(new Character(level, magic, spell.getPower(), serenityBox.Checked));
         }
 
         private int ParseNumRows()
         {
-            int numRows;
-            int.TryParse(tbNumRows.Text, out numRows);
+            int numRows = int.Parse(tbNumRows.Text);
             if (numRows < 30)
                 numRows = 30;
             if (numRows > 10000)
@@ -147,11 +144,6 @@ namespace FF12RNGHelper
 
             group.SetIndex(indexStatic);
             return true;
-        }
-
-        double randToPercent(uint toConvert)
-        {
-            return toConvert % 100;
         }
 
         /// <summary>
@@ -351,6 +343,11 @@ namespace FF12RNGHelper
             dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = chest.getGilAmount(PRNG);
         }
 
+        double randToPercent(uint toConvert)
+        {
+            return toConvert % 100;
+        }
+
         private void tbLevel_Validating(object sender, CancelEventArgs e)
         {
             double tempVal;
@@ -441,7 +438,6 @@ namespace FF12RNGHelper
             //Start the party!
             Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>)e.Argument;
             BackgroundWorker bw = sender as BackgroundWorker;
-            dispRNG.consumeBG(inputArgs.Item1, bw, e);
             if (bw.CancellationPending)
             {
                 e.Cancel = true;
