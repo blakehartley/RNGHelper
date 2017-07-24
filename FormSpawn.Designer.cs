@@ -86,7 +86,7 @@
 			this.tbAppear1 = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
-			this.tbItem1 = new System.Windows.Forms.TextBox();
+			this.tbAppear12 = new System.Windows.Forms.TextBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.label15 = new System.Windows.Forms.Label();
@@ -146,21 +146,21 @@
 			// stealToolStripMenuItem
 			// 
 			this.stealToolStripMenuItem.Name = "stealToolStripMenuItem";
-			this.stealToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.stealToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
 			this.stealToolStripMenuItem.Text = "Steal";
 			this.stealToolStripMenuItem.Click += new System.EventHandler(this.stealToolStripMenuItem_Click);
 			// 
 			// rareGameToolStripMenuItem
 			// 
 			this.rareGameToolStripMenuItem.Name = "rareGameToolStripMenuItem";
-			this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
 			this.rareGameToolStripMenuItem.Text = "Chests";
 			this.rareGameToolStripMenuItem.Click += new System.EventHandler(this.rareGameToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -682,23 +682,23 @@
 			this.label14.TabIndex = 18;
 			this.label14.Text = "Last 1 before 2:";
 			// 
-			// tbItem1
+			// tbAppear12
 			// 
-			this.tbItem1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tbItem1.Enabled = false;
-			this.tbItem1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tbItem1.Location = new System.Drawing.Point(125, 38);
-			this.tbItem1.Name = "tbItem1";
-			this.tbItem1.Size = new System.Drawing.Size(79, 25);
-			this.tbItem1.TabIndex = 19;
-			this.tbItem1.Text = "?";
+			this.tbAppear12.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbAppear12.Enabled = false;
+			this.tbAppear12.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbAppear12.Location = new System.Drawing.Point(125, 38);
+			this.tbAppear12.Name = "tbAppear12";
+			this.tbAppear12.Size = new System.Drawing.Size(79, 25);
+			this.tbAppear12.TabIndex = 19;
+			this.tbAppear12.Text = "?";
 			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.label13);
 			this.groupBox3.Controls.Add(this.label14);
 			this.groupBox3.Controls.Add(this.tbAppear1);
-			this.groupBox3.Controls.Add(this.tbItem1);
+			this.groupBox3.Controls.Add(this.tbAppear12);
 			this.groupBox3.Location = new System.Drawing.Point(13, 300);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(204, 68);
@@ -1025,7 +1025,7 @@
 		private System.Windows.Forms.TextBox tbAppear1;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.TextBox tbItem1;
+		private System.Windows.Forms.TextBox tbAppear12;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Label label15;

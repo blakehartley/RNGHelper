@@ -14,7 +14,7 @@ namespace FF12RNGHelper
     {
         IRNG searchRNG;
         IRNG dispRNG;
-        UInt64 index;	// Current index in the PRNG list
+        int index;	// Current index in the PRNG list
         CircularBuffer<UInt32> searchBuff;	// buffer of PRNG numbers
         List<UInt32> healVals;  // List of heal values input by user
 		CharacterGroup group = new CharacterGroup();
@@ -74,10 +74,10 @@ namespace FF12RNGHelper
 			this.group.AddCharacter(new Character(level1, magic1, spellpower1, cbSerenity3.Checked));
 		}
 
-		private long ParseNumRows()
+		private int ParseNumRows()
 		{
-			long numRows;
-			long.TryParse(tbNumRows.Text, out numRows);
+			int numRows;
+			int.TryParse(tbNumRows.Text, out numRows);
 			if (numRows < 30)
 				numRows = 30;
 			if (numRows > 10000)
@@ -104,8 +104,8 @@ namespace FF12RNGHelper
                 MessageBox.Show("Impossible Heal Value entered.");
                 return;
             }
-			long numRows = ParseNumRows();
-			displayRNG(index, index + (ulong) numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index, index + numRows);
         }
 
         private void btnContinue_Click(object sender, EventArgs e)
@@ -119,8 +119,8 @@ namespace FF12RNGHelper
             }
             DateTime endt = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endt - begint).ToString();
-			long numRows = ParseNumRows();
-			displayRNG(index-(ulong)healVals.Count+1, index + (ulong) numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index-healVals.Count+1, index + numRows);
         }
 
         private bool FindNext(uint value)
@@ -151,7 +151,7 @@ namespace FF12RNGHelper
 				for (int i = 0; i < healVals.Count; i++)
                 {
 					// index of first heal:
-					long index0 = (long) index - healVals.Count + 1;
+					int index0 = index - healVals.Count + 1;
 
 					if (group.GetHealValue(searchBuff[index0 + i]) != healVals[i])
                     {
@@ -175,7 +175,7 @@ namespace FF12RNGHelper
             return toConvert % 100;
         }
 
-        private void displayRNG(UInt64 end)
+        private void displayRNG(int end)
         {
             displayRNG(0, end);
         }
@@ -188,7 +188,7 @@ namespace FF12RNGHelper
 				return false;
         }
 
-        private void displayRNG(UInt64 start, UInt64 end)
+        private void displayRNG(int start, int end)
         {
             IRNG displayRNG;
             if (cbPlatform.SelectedItem as string == "PS2")
@@ -204,7 +204,7 @@ namespace FF12RNGHelper
             //Consume RNG seeds before our desired index
             //This can take obscene amounts of time.
             DateTime startt = DateTime.Now;
-            for (UInt64 i = 0; i < start; i++)
+            for (int index = 0; index < start; index++)
             {
                 displayRNG.genrand();
             }
@@ -213,13 +213,11 @@ namespace FF12RNGHelper
 
 			// Rare 1:
 			double spawnMin1, spawnMax1;
-            uint rareRNGPosition1;
+            int rareRNGPosition1;
 
             double.TryParse(tbMin1.Text, out spawnMin1);
 			double.TryParse(tbMax1.Text, out spawnMax1);
-			uint.TryParse(tbRNG1.Text, out rareRNGPosition1);
-
-			rareRNGPosition1++;
+			int.TryParse(tbRNG1.Text, out rareRNGPosition1);
 
 			// Convert to fraction:
 			spawnMin1 /= 100.0;
@@ -227,13 +225,11 @@ namespace FF12RNGHelper
 
 			// Rare 2:
 			double spawnMin2, spawnMax2;
-			uint rareRNGPosition2;
+			int rareRNGPosition2;
 
 			double.TryParse(tbMin2.Text, out spawnMin2);
 			double.TryParse(tbMax2.Text, out spawnMax2);
-			uint.TryParse(tbRNG2.Text, out rareRNGPosition2);
-
-			rareRNGPosition2++;
+			int.TryParse(tbRNG2.Text, out rareRNGPosition2);
 
 			// Convert to fraction:
 			spawnMin2 /= 100.0;
@@ -241,10 +237,10 @@ namespace FF12RNGHelper
 
 			// Use these variables to check for first instance of chest and contents
 			bool rareSpawn1 = false;
-			uint rareFoundPos1 = 0;
+			int rareFoundPos1 = 0;
 
 			bool rareSpawn2 = false;
-			uint rareFoundPos2 = 0;
+			int rareFoundPos2 = 0;
 
 			// Use these variables to check for first punch combo
 			bool comboFound = false;
@@ -258,10 +254,10 @@ namespace FF12RNGHelper
 			group.ResetIndex();
 
 			//group.ResetIndex();
-            for (UInt64 i = start; i < end; i++)
+            for (int index = start; index < end; index++)
             {
                 // Index starting at 0
-                uint j = (uint)i - (uint)start;
+                int index0 = index - start;
 
 				// Get the heal value once:
 				int healNow = group.GetHealValue(aVal1);
@@ -271,7 +267,7 @@ namespace FF12RNGHelper
 				float spawnChance = (float)aVal1 / 4294967296;
 
 				// Put the next expected heal in the text box
-				if (i == start + (ulong)healVals.Count - 1)
+				if (index == start + healVals.Count - 1)
 				{
 					tbLastHeal.Text = healNext.ToString();
 					//tbAppear1.Text = group.HealMin().ToString();
@@ -285,13 +281,13 @@ namespace FF12RNGHelper
 				aVal2 = displayRNG.genrand();
 
 				// Skip the entry if it's too long ago
-				if (j < healVals.Count - 5)
+				if (index0 < healVals.Count - 5)
 					continue;
 
 				//Start actually displaying
 				dataGridView1.Rows.Add();
 
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = i;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = index;
                 //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal1;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = healNow;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = spawnChance;
@@ -301,38 +297,36 @@ namespace FF12RNGHelper
 
 				if ( rareCheck(spawnChance, spawnMin1, spawnMax1) )
                 {
-					int chestFirstChance = healVals.Count + (int)rareRNGPosition1;
+					int chestFirstChance = healVals.Count + rareRNGPosition1 - 1;
 
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightBlue;
-					if (j >= chestFirstChance && !rareSpawn1)
+					if (index0 >= chestFirstChance && !rareSpawn1)
 					{
-						rareFoundPos1 = j - (uint)healVals.Count - rareRNGPosition1;
+						rareFoundPos1 = index0 - healVals.Count - rareRNGPosition1 + 1;
 						rareSpawn1 = true;
 					}
                 }
 				if ( rareCheck(spawnChance, spawnMin2, spawnMax2) )
 				{
-					int chestFirstChance = healVals.Count + (int)rareRNGPosition2;
+					int chestFirstChance = healVals.Count + rareRNGPosition2 - 1;
 
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Crimson;
-					if (j >= chestFirstChance && !rareSpawn2)
+					if (index0 >= chestFirstChance && !rareSpawn2)
 					{
-						rareFoundPos2 = j - (uint)healVals.Count - rareRNGPosition2;
+						rareFoundPos2 = index0 - healVals.Count - rareRNGPosition2  + 1;
 						rareSpawn2 = true;
 					}
 				}
 				if (rareCheck(spawnChance, spawnMin1, spawnMax1) && rareCheck(spawnChance, spawnMin2, spawnMax2))
 				{
-					int chestFirstChance = healVals.Count + (int)rareRNGPosition2;
-
-					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.MediumPurple;
+					int chestFirstChance = healVals.Count + Math.Max(rareRNGPosition1, rareRNGPosition2)+ 1;
 				}
 
 				// Color consumed RNG green
-				if (i < start + (ulong)healVals.Count)
+				if (index0 < healVals.Count)
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
 
-				int comboCheck = (int)j - healVals.Count - 5 + 1;
+				int comboCheck = index0 - healVals.Count - 5 + 1;
 				if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound && ((aVal1_temp % 100) < 3))
 				{
 					comboFound = true;
@@ -455,8 +449,8 @@ namespace FF12RNGHelper
 
         private void FormChest_Load(object sender, EventArgs e)
         {
-			long numRows = ParseNumRows();
-			displayRNG(index - (ulong)healVals.Count + 1, index + (ulong) numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index - healVals.Count + 1, index + numRows);
         }
 
         private void stealToolStripMenuItem_Click(object sender, EventArgs e)
@@ -496,12 +490,12 @@ namespace FF12RNGHelper
 					MessageBox.Show("Impossible Heal Value entered.");
 					return;
 				}
-				displayRNG(index - (ulong)healVals.Count + 1, index +1);
+				displayRNG(index - healVals.Count + 1, index +1);
 			}
 			DateTime endt = DateTime.Now;
 			toolStripStatusLabelPercent.Text = (endt - begint).ToString();
-			long numRows = ParseNumRows();
-			displayRNG(index - (ulong)healVals.Count + 1, index + (ulong)numRows);
+			int numRows = ParseNumRows();
+			displayRNG(index - healVals.Count + 1, index + numRows);
 		}
 
 		private void btnClear_Click(object sender, EventArgs e)
