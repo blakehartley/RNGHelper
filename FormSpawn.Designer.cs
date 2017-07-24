@@ -62,17 +62,6 @@
 			this.Heal = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.steal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.lblLastHeal = new System.Windows.Forms.Label();
-			this.tbLastHeal = new System.Windows.Forms.TextBox();
-			this.btnBegin = new System.Windows.Forms.Button();
-			this.btnContinue = new System.Windows.Forms.Button();
-			this.groupBoxSearch = new System.Windows.Forms.GroupBox();
-			this.tbNumRows = new System.Windows.Forms.TextBox();
-			this.label24 = new System.Windows.Forms.Label();
-			this.btnClear = new System.Windows.Forms.Button();
-			this.tbConsume = new System.Windows.Forms.TextBox();
-			this.bConsume = new System.Windows.Forms.Button();
-			this.label23 = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBarPercent = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabelPercent = new System.Windows.Forms.ToolStripStatusLabel();
@@ -105,10 +94,23 @@
 			this.tbAppear2 = new System.Windows.Forms.TextBox();
 			this.tbItem2 = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.tbNumRows = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.btnClear = new System.Windows.Forms.Button();
+			this.tbConsume = new System.Windows.Forms.TextBox();
+			this.bConsume = new System.Windows.Forms.Button();
+			this.label5 = new System.Windows.Forms.Label();
+			this.tbLastHeal = new System.Windows.Forms.TextBox();
+			this.btnContinue = new System.Windows.Forms.Button();
+			this.label6 = new System.Windows.Forms.Label();
+			this.btnBegin = new System.Windows.Forms.Button();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.label25 = new System.Windows.Forms.Label();
+			this.tbCombo = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.gbStats.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-			this.groupBoxSearch.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.gbPlatform.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -116,6 +118,8 @@
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -142,21 +146,21 @@
 			// stealToolStripMenuItem
 			// 
 			this.stealToolStripMenuItem.Name = "stealToolStripMenuItem";
-			this.stealToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.stealToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.stealToolStripMenuItem.Text = "Steal";
 			this.stealToolStripMenuItem.Click += new System.EventHandler(this.stealToolStripMenuItem_Click);
 			// 
 			// rareGameToolStripMenuItem
 			// 
 			this.rareGameToolStripMenuItem.Name = "rareGameToolStripMenuItem";
-			this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.rareGameToolStripMenuItem.Text = "Chests";
 			this.rareGameToolStripMenuItem.Click += new System.EventHandler(this.rareGameToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -456,130 +460,6 @@
 			this.steal.MinimumWidth = 11;
 			this.steal.Name = "steal";
 			this.steal.ToolTipText = "Number from the RNG";
-			// 
-			// lblLastHeal
-			// 
-			this.lblLastHeal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.lblLastHeal.AutoSize = true;
-			this.lblLastHeal.Location = new System.Drawing.Point(6, 25);
-			this.lblLastHeal.Name = "lblLastHeal";
-			this.lblLastHeal.Size = new System.Drawing.Size(80, 13);
-			this.lblLastHeal.TabIndex = 0;
-			this.lblLastHeal.Text = "Last healed for:";
-			// 
-			// tbLastHeal
-			// 
-			this.tbLastHeal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.tbLastHeal.Location = new System.Drawing.Point(92, 22);
-			this.tbLastHeal.Name = "tbLastHeal";
-			this.tbLastHeal.Size = new System.Drawing.Size(79, 20);
-			this.tbLastHeal.TabIndex = 11;
-			this.tbLastHeal.Text = "90";
-			this.tbLastHeal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLastHeal_KeyPress);
-			this.tbLastHeal.Validating += new System.ComponentModel.CancelEventHandler(this.tbLastHeal_Validating);
-			// 
-			// btnBegin
-			// 
-			this.btnBegin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnBegin.Location = new System.Drawing.Point(258, 19);
-			this.btnBegin.Name = "btnBegin";
-			this.btnBegin.Size = new System.Drawing.Size(79, 23);
-			this.btnBegin.TabIndex = 13;
-			this.btnBegin.Text = "Begin Search";
-			this.btnBegin.UseVisualStyleBackColor = true;
-			this.btnBegin.Click += new System.EventHandler(this.btnBegin_Click);
-			// 
-			// btnContinue
-			// 
-			this.btnContinue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnContinue.Enabled = false;
-			this.btnContinue.Location = new System.Drawing.Point(177, 20);
-			this.btnContinue.Name = "btnContinue";
-			this.btnContinue.Size = new System.Drawing.Size(75, 23);
-			this.btnContinue.TabIndex = 12;
-			this.btnContinue.Text = "Continue Search";
-			this.btnContinue.UseVisualStyleBackColor = true;
-			this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
-			// 
-			// groupBoxSearch
-			// 
-			this.groupBoxSearch.Controls.Add(this.tbNumRows);
-			this.groupBoxSearch.Controls.Add(this.label24);
-			this.groupBoxSearch.Controls.Add(this.btnClear);
-			this.groupBoxSearch.Controls.Add(this.tbConsume);
-			this.groupBoxSearch.Controls.Add(this.bConsume);
-			this.groupBoxSearch.Controls.Add(this.label23);
-			this.groupBoxSearch.Controls.Add(this.tbLastHeal);
-			this.groupBoxSearch.Controls.Add(this.btnContinue);
-			this.groupBoxSearch.Controls.Add(this.lblLastHeal);
-			this.groupBoxSearch.Controls.Add(this.btnBegin);
-			this.groupBoxSearch.Location = new System.Drawing.Point(13, 369);
-			this.groupBoxSearch.Name = "groupBoxSearch";
-			this.groupBoxSearch.Size = new System.Drawing.Size(410, 122);
-			this.groupBoxSearch.TabIndex = 2;
-			this.groupBoxSearch.TabStop = false;
-			this.groupBoxSearch.Text = "RNG Search";
-			// 
-			// tbNumRows
-			// 
-			this.tbNumRows.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.tbNumRows.Location = new System.Drawing.Point(92, 74);
-			this.tbNumRows.Name = "tbNumRows";
-			this.tbNumRows.Size = new System.Drawing.Size(79, 20);
-			this.tbNumRows.TabIndex = 19;
-			this.tbNumRows.Text = "100";
-			// 
-			// label24
-			// 
-			this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label24.AutoSize = true;
-			this.label24.Location = new System.Drawing.Point(6, 77);
-			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size(84, 13);
-			this.label24.TabIndex = 18;
-			this.label24.Text = "Number of rows:";
-			// 
-			// btnClear
-			// 
-			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnClear.Location = new System.Drawing.Point(258, 46);
-			this.btnClear.Name = "btnClear";
-			this.btnClear.Size = new System.Drawing.Size(79, 23);
-			this.btnClear.TabIndex = 17;
-			this.btnClear.Text = "Clear";
-			this.btnClear.UseVisualStyleBackColor = true;
-			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-			// 
-			// tbConsume
-			// 
-			this.tbConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.tbConsume.Location = new System.Drawing.Point(92, 48);
-			this.tbConsume.Name = "tbConsume";
-			this.tbConsume.Size = new System.Drawing.Size(79, 20);
-			this.tbConsume.TabIndex = 15;
-			this.tbConsume.Text = "10";
-			// 
-			// bConsume
-			// 
-			this.bConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.bConsume.Enabled = false;
-			this.bConsume.Location = new System.Drawing.Point(177, 46);
-			this.bConsume.Name = "bConsume";
-			this.bConsume.Size = new System.Drawing.Size(75, 23);
-			this.bConsume.TabIndex = 16;
-			this.bConsume.Text = "Consume";
-			this.bConsume.UseVisualStyleBackColor = true;
-			this.bConsume.Click += new System.EventHandler(this.bConsume_Click);
-			// 
-			// label23
-			// 
-			this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label23.AutoSize = true;
-			this.label23.Location = new System.Drawing.Point(6, 51);
-			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(77, 13);
-			this.label23.TabIndex = 14;
-			this.label23.Text = "Consume next:";
 			// 
 			// statusStrip1
 			// 
@@ -892,11 +772,175 @@
 			this.groupBox5.TabIndex = 22;
 			this.groupBox5.TabStop = false;
 			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.tbNumRows);
+			this.groupBox6.Controls.Add(this.label4);
+			this.groupBox6.Controls.Add(this.btnClear);
+			this.groupBox6.Controls.Add(this.tbConsume);
+			this.groupBox6.Controls.Add(this.bConsume);
+			this.groupBox6.Controls.Add(this.label5);
+			this.groupBox6.Controls.Add(this.tbLastHeal);
+			this.groupBox6.Controls.Add(this.btnContinue);
+			this.groupBox6.Controls.Add(this.label6);
+			this.groupBox6.Controls.Add(this.btnBegin);
+			this.groupBox6.Location = new System.Drawing.Point(13, 374);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(410, 122);
+			this.groupBox6.TabIndex = 23;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "RNG Search";
+			// 
+			// tbNumRows
+			// 
+			this.tbNumRows.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.tbNumRows.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbNumRows.Location = new System.Drawing.Point(91, 86);
+			this.tbNumRows.Name = "tbNumRows";
+			this.tbNumRows.Size = new System.Drawing.Size(79, 26);
+			this.tbNumRows.TabIndex = 19;
+			this.tbNumRows.Text = "100";
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point(5, 89);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(53, 20);
+			this.label4.TabIndex = 18;
+			this.label4.Text = "Rows:";
+			// 
+			// btnClear
+			// 
+			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnClear.Location = new System.Drawing.Point(274, 54);
+			this.btnClear.Name = "btnClear";
+			this.btnClear.Size = new System.Drawing.Size(91, 26);
+			this.btnClear.TabIndex = 17;
+			this.btnClear.Text = "Clear";
+			this.btnClear.UseVisualStyleBackColor = true;
+			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+			// 
+			// tbConsume
+			// 
+			this.tbConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.tbConsume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbConsume.Location = new System.Drawing.Point(91, 54);
+			this.tbConsume.Name = "tbConsume";
+			this.tbConsume.Size = new System.Drawing.Size(79, 26);
+			this.tbConsume.TabIndex = 15;
+			this.tbConsume.Text = "10";
+			// 
+			// bConsume
+			// 
+			this.bConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.bConsume.Enabled = false;
+			this.bConsume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.bConsume.Location = new System.Drawing.Point(174, 54);
+			this.bConsume.Name = "bConsume";
+			this.bConsume.Size = new System.Drawing.Size(94, 26);
+			this.bConsume.TabIndex = 16;
+			this.bConsume.Text = "Consume";
+			this.bConsume.UseVisualStyleBackColor = true;
+			this.bConsume.Click += new System.EventHandler(this.bConsume_Click);
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(5, 57);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(81, 20);
+			this.label5.TabIndex = 14;
+			this.label5.Text = "Consume:";
+			// 
+			// tbLastHeal
+			// 
+			this.tbLastHeal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.tbLastHeal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbLastHeal.Location = new System.Drawing.Point(92, 22);
+			this.tbLastHeal.Name = "tbLastHeal";
+			this.tbLastHeal.Size = new System.Drawing.Size(79, 26);
+			this.tbLastHeal.TabIndex = 11;
+			this.tbLastHeal.Text = "90";
+			// 
+			// btnContinue
+			// 
+			this.btnContinue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnContinue.Enabled = false;
+			this.btnContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnContinue.Location = new System.Drawing.Point(274, 22);
+			this.btnContinue.Name = "btnContinue";
+			this.btnContinue.Size = new System.Drawing.Size(91, 26);
+			this.btnContinue.TabIndex = 12;
+			this.btnContinue.Text = "Continue";
+			this.btnContinue.UseVisualStyleBackColor = true;
+			this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
+			// 
+			// label6
+			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(5, 25);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(78, 20);
+			this.label6.TabIndex = 0;
+			this.label6.Text = "Last heal:";
+			// 
+			// btnBegin
+			// 
+			this.btnBegin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnBegin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnBegin.Location = new System.Drawing.Point(174, 22);
+			this.btnBegin.Name = "btnBegin";
+			this.btnBegin.Size = new System.Drawing.Size(94, 26);
+			this.btnBegin.TabIndex = 13;
+			this.btnBegin.Text = "Start";
+			this.btnBegin.UseVisualStyleBackColor = true;
+			this.btnBegin.Click += new System.EventHandler(this.btnBegin_Click);
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.label25);
+			this.groupBox7.Controls.Add(this.tbCombo);
+			this.groupBox7.Location = new System.Drawing.Point(13, 502);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(204, 40);
+			this.groupBox7.TabIndex = 24;
+			this.groupBox7.TabStop = false;
+			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.Location = new System.Drawing.Point(6, 16);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(110, 13);
+			this.label25.TabIndex = 12;
+			this.label25.Text = "Combo after punch #:";
+			// 
+			// tbCombo
+			// 
+			this.tbCombo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbCombo.Enabled = false;
+			this.tbCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbCombo.Location = new System.Drawing.Point(125, 7);
+			this.tbCombo.Name = "tbCombo";
+			this.tbCombo.Size = new System.Drawing.Size(73, 25);
+			this.tbCombo.TabIndex = 17;
+			this.tbCombo.Text = "?";
+			// 
 			// FormSpawn
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(953, 765);
+			this.Controls.Add(this.groupBox7);
+			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
@@ -904,7 +948,6 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gbPlatform);
 			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.groupBoxSearch);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.gbStats);
 			this.Controls.Add(this.menuStrip1);
@@ -918,8 +961,6 @@
 			this.gbStats.ResumeLayout(false);
 			this.gbStats.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-			this.groupBoxSearch.ResumeLayout(false);
-			this.groupBoxSearch.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.gbPlatform.ResumeLayout(false);
@@ -933,6 +974,10 @@
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -952,11 +997,6 @@
 		private System.Windows.Forms.CheckBox cbSerenity1;
 		private System.Windows.Forms.GroupBox gbStats;
 		private System.Windows.Forms.DataGridView dataGridView1;
-		private System.Windows.Forms.Label lblLastHeal;
-		private System.Windows.Forms.TextBox tbLastHeal;
-		private System.Windows.Forms.Button btnBegin;
-		private System.Windows.Forms.Button btnContinue;
-		private System.Windows.Forms.GroupBox groupBoxSearch;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.StatusStrip statusStrip1;
@@ -1006,17 +1046,25 @@
 		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.TextBox tbMagic2;
 		private System.Windows.Forms.ToolStripMenuItem rareGameToolStripMenuItem;
-		private System.Windows.Forms.TextBox tbConsume;
-		private System.Windows.Forms.Button bConsume;
-		private System.Windows.Forms.Label label23;
-		private System.Windows.Forms.Button btnClear;
-		private System.Windows.Forms.TextBox tbNumRows;
-		private System.Windows.Forms.Label label24;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Position;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Heal;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Percent;
 		private System.Windows.Forms.DataGridViewTextBoxColumn steal;
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.TextBox tbNumRows;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Button btnClear;
+		private System.Windows.Forms.TextBox tbConsume;
+		private System.Windows.Forms.Button bConsume;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.TextBox tbLastHeal;
+		private System.Windows.Forms.Button btnContinue;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Button btnBegin;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.TextBox tbCombo;
 	}
 }
 

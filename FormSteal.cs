@@ -223,6 +223,10 @@ namespace FF12RNGHelper
 			bool rareSteal = false;
 			bool rareStealCuffs = false;
 
+			// Use these variables to check for first punch combo
+			bool comboFound = false;
+			int comboPos = 0;
+
 			uint aVal1 = displayRNG.genrand();
             uint aVal2 = displayRNG.genrand();
 			uint aVal3 = displayRNG.genrand();
@@ -287,12 +291,22 @@ namespace FF12RNGHelper
 					rareStealCuffs = true;
 					rarePositionCuffs = loopIndex - healVals.Count;
 				}
+
+				// Check for combo during string of punches
+				int comboCheck = loopIndex - healVals.Count - 5 + 1;
+				if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound && ((aVal1_temp % 100) < 3))
+				{
+					comboFound = true;
+					comboPos = comboCheck / 10;
+				}
 			}
 
 			tbRare.Text = rarePosition.ToString();
 			tbRareCuffs.Text = rarePositionCuffs.ToString();
 
-            tbLastHeal.Focus();
+			tbCombo.Text = comboPos.ToString();
+
+			tbLastHeal.Focus();
             tbLastHeal.SelectAll();
 
             group.SetIndex(indexStatic);

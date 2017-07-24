@@ -118,6 +118,9 @@
 			this.tbAppear2 = new System.Windows.Forms.TextBox();
 			this.tbItem2 = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.label25 = new System.Windows.Forms.Label();
+			this.tbCombo = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.gbStats.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -129,6 +132,7 @@
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
+			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -481,18 +485,20 @@
 			// 
 			this.lblLastHeal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblLastHeal.AutoSize = true;
-			this.lblLastHeal.Location = new System.Drawing.Point(6, 25);
+			this.lblLastHeal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblLastHeal.Location = new System.Drawing.Point(5, 25);
 			this.lblLastHeal.Name = "lblLastHeal";
-			this.lblLastHeal.Size = new System.Drawing.Size(80, 13);
+			this.lblLastHeal.Size = new System.Drawing.Size(78, 20);
 			this.lblLastHeal.TabIndex = 0;
-			this.lblLastHeal.Text = "Last healed for:";
+			this.lblLastHeal.Text = "Last heal:";
 			// 
 			// tbLastHeal
 			// 
 			this.tbLastHeal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.tbLastHeal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tbLastHeal.Location = new System.Drawing.Point(92, 22);
 			this.tbLastHeal.Name = "tbLastHeal";
-			this.tbLastHeal.Size = new System.Drawing.Size(79, 20);
+			this.tbLastHeal.Size = new System.Drawing.Size(79, 26);
 			this.tbLastHeal.TabIndex = 11;
 			this.tbLastHeal.Text = "90";
 			this.tbLastHeal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLastHeal_KeyPress);
@@ -501,11 +507,12 @@
 			// btnBegin
 			// 
 			this.btnBegin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnBegin.Location = new System.Drawing.Point(258, 19);
+			this.btnBegin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnBegin.Location = new System.Drawing.Point(174, 22);
 			this.btnBegin.Name = "btnBegin";
-			this.btnBegin.Size = new System.Drawing.Size(79, 23);
+			this.btnBegin.Size = new System.Drawing.Size(94, 26);
 			this.btnBegin.TabIndex = 13;
-			this.btnBegin.Text = "Begin Search";
+			this.btnBegin.Text = "Start";
 			this.btnBegin.UseVisualStyleBackColor = true;
 			this.btnBegin.Click += new System.EventHandler(this.btnBegin_Click);
 			// 
@@ -513,11 +520,12 @@
 			// 
 			this.btnContinue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnContinue.Enabled = false;
-			this.btnContinue.Location = new System.Drawing.Point(177, 20);
+			this.btnContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnContinue.Location = new System.Drawing.Point(274, 22);
 			this.btnContinue.Name = "btnContinue";
-			this.btnContinue.Size = new System.Drawing.Size(75, 23);
+			this.btnContinue.Size = new System.Drawing.Size(91, 26);
 			this.btnContinue.TabIndex = 12;
-			this.btnContinue.Text = "Continue Search";
+			this.btnContinue.Text = "Continue";
 			this.btnContinue.UseVisualStyleBackColor = true;
 			this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
 			// 
@@ -543,9 +551,10 @@
 			// tbNumRows
 			// 
 			this.tbNumRows.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.tbNumRows.Location = new System.Drawing.Point(92, 74);
+			this.tbNumRows.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbNumRows.Location = new System.Drawing.Point(91, 86);
 			this.tbNumRows.Name = "tbNumRows";
-			this.tbNumRows.Size = new System.Drawing.Size(79, 20);
+			this.tbNumRows.Size = new System.Drawing.Size(79, 26);
 			this.tbNumRows.TabIndex = 19;
 			this.tbNumRows.Text = "100";
 			// 
@@ -553,18 +562,20 @@
 			// 
 			this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label24.AutoSize = true;
-			this.label24.Location = new System.Drawing.Point(6, 77);
+			this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label24.Location = new System.Drawing.Point(5, 89);
 			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size(84, 13);
+			this.label24.Size = new System.Drawing.Size(53, 20);
 			this.label24.TabIndex = 18;
-			this.label24.Text = "Number of rows:";
+			this.label24.Text = "Rows:";
 			// 
 			// btnClear
 			// 
 			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnClear.Location = new System.Drawing.Point(258, 46);
+			this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnClear.Location = new System.Drawing.Point(274, 54);
 			this.btnClear.Name = "btnClear";
-			this.btnClear.Size = new System.Drawing.Size(79, 23);
+			this.btnClear.Size = new System.Drawing.Size(91, 26);
 			this.btnClear.TabIndex = 17;
 			this.btnClear.Text = "Clear";
 			this.btnClear.UseVisualStyleBackColor = true;
@@ -573,9 +584,10 @@
 			// tbConsume
 			// 
 			this.tbConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.tbConsume.Location = new System.Drawing.Point(92, 48);
+			this.tbConsume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbConsume.Location = new System.Drawing.Point(91, 54);
 			this.tbConsume.Name = "tbConsume";
-			this.tbConsume.Size = new System.Drawing.Size(79, 20);
+			this.tbConsume.Size = new System.Drawing.Size(79, 26);
 			this.tbConsume.TabIndex = 15;
 			this.tbConsume.Text = "10";
 			// 
@@ -583,9 +595,10 @@
 			// 
 			this.bConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.bConsume.Enabled = false;
-			this.bConsume.Location = new System.Drawing.Point(177, 46);
+			this.bConsume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.bConsume.Location = new System.Drawing.Point(177, 54);
 			this.bConsume.Name = "bConsume";
-			this.bConsume.Size = new System.Drawing.Size(75, 23);
+			this.bConsume.Size = new System.Drawing.Size(91, 26);
 			this.bConsume.TabIndex = 16;
 			this.bConsume.Text = "Consume";
 			this.bConsume.UseVisualStyleBackColor = true;
@@ -595,11 +608,12 @@
 			// 
 			this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label23.AutoSize = true;
-			this.label23.Location = new System.Drawing.Point(6, 51);
+			this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label23.Location = new System.Drawing.Point(5, 57);
 			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(77, 13);
+			this.label23.Size = new System.Drawing.Size(81, 20);
 			this.label23.TabIndex = 14;
-			this.label23.Text = "Consume next:";
+			this.label23.Text = "Consume:";
 			// 
 			// statusStrip1
 			// 
@@ -1030,11 +1044,42 @@
 			this.groupBox5.TabIndex = 22;
 			this.groupBox5.TabStop = false;
 			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.label25);
+			this.groupBox6.Controls.Add(this.tbCombo);
+			this.groupBox6.Location = new System.Drawing.Point(13, 571);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(204, 40);
+			this.groupBox6.TabIndex = 21;
+			this.groupBox6.TabStop = false;
+			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.Location = new System.Drawing.Point(6, 16);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(110, 13);
+			this.label25.TabIndex = 12;
+			this.label25.Text = "Combo after punch #:";
+			// 
+			// tbCombo
+			// 
+			this.tbCombo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbCombo.Enabled = false;
+			this.tbCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbCombo.Location = new System.Drawing.Point(125, 7);
+			this.tbCombo.Name = "tbCombo";
+			this.tbCombo.Size = new System.Drawing.Size(73, 25);
+			this.tbCombo.TabIndex = 17;
+			this.tbCombo.Text = "?";
+			// 
 			// FormChest
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(953, 765);
+			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
@@ -1071,6 +1116,8 @@
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1168,6 +1215,9 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn Percent;
 		private System.Windows.Forms.DataGridViewTextBoxColumn steal;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Contents2;
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.TextBox tbCombo;
 	}
 }
 

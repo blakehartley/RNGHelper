@@ -246,7 +246,11 @@ namespace FF12RNGHelper
 			bool rareSpawn2 = false;
 			uint rareFoundPos2 = 0;
 
-            UInt32 aVal1 = displayRNG.genrand();
+			// Use these variables to check for first punch combo
+			bool comboFound = false;
+			int comboPos = 0;
+
+			UInt32 aVal1 = displayRNG.genrand();
             UInt32 aVal2 = displayRNG.genrand();
 
 			// We want to preserve the character index, since this loop is just for display:
@@ -327,13 +331,22 @@ namespace FF12RNGHelper
 				// Color consumed RNG green
 				if (i < start + (ulong)healVals.Count)
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
+
+				int comboCheck = (int)j - healVals.Count - 5 + 1;
+				if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound && ((aVal1_temp % 100) < 3))
+				{
+					comboFound = true;
+					comboPos = comboCheck / 10;
+				}
 			}
 
 			tbAppear1.Text = rareFoundPos1.ToString();
 
 			tbAppear2.Text = rareFoundPos2.ToString();
 
-            tbLastHeal.Focus();
+			tbCombo.Text = comboPos.ToString();
+
+			tbLastHeal.Focus();
             tbLastHeal.SelectAll();
 
 			group.SetIndex(indexStatic);
