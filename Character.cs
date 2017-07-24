@@ -38,7 +38,7 @@ namespace FF12RNGHelper
         /// <param name="rngValue">RNG value from PRNG</param>
         public int GetHealValue(uint rngValue)
         {
-            double bonusSpellPower = (double)rngValue % (SpellPower * 12.5) / 100.0;
+            double bonusSpellPower = (double)rngValue % Math.Floor(SpellPower * 12.5) / 100.0;
             return calculateHeal(bonusSpellPower);
         }
 
