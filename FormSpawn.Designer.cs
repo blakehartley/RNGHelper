@@ -129,7 +129,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(953, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(808, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -425,7 +425,7 @@
             this.steal});
 			this.dataGridView1.Location = new System.Drawing.Point(428, 27);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(513, 713);
+			this.dataGridView1.Size = new System.Drawing.Size(368, 713);
 			this.dataGridView1.TabIndex = 14;
 			// 
 			// Position
@@ -469,7 +469,7 @@
             this.toolStripStatusLabelProgress});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 743);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(953, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(808, 22);
 			this.statusStrip1.TabIndex = 5;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -867,6 +867,7 @@
 			this.tbLastHeal.Size = new System.Drawing.Size(79, 26);
 			this.tbLastHeal.TabIndex = 11;
 			this.tbLastHeal.Text = "90";
+			this.tbLastHeal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLastHeal_KeyPress);
 			// 
 			// btnContinue
 			// 
@@ -938,7 +939,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(953, 765);
+			this.ClientSize = new System.Drawing.Size(808, 765);
 			this.Controls.Add(this.groupBox7);
 			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.groupBox5);

@@ -142,7 +142,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(953, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(838, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -439,7 +439,7 @@
             this.Contents2});
 			this.dataGridView1.Location = new System.Drawing.Point(428, 27);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(513, 713);
+			this.dataGridView1.Size = new System.Drawing.Size(398, 713);
 			this.dataGridView1.TabIndex = 14;
 			// 
 			// Position
@@ -623,7 +623,7 @@
             this.toolStripStatusLabelProgress});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 743);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(953, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(838, 22);
 			this.statusStrip1.TabIndex = 5;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -1078,7 +1078,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(953, 765);
+			this.ClientSize = new System.Drawing.Size(838, 765);
 			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox4);

@@ -694,6 +694,7 @@
 			this.tbLastHeal.Size = new System.Drawing.Size(79, 26);
 			this.tbLastHeal.TabIndex = 11;
 			this.tbLastHeal.Text = "90";
+			this.tbLastHeal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLastHeal_KeyPress);
 			// 
 			// btnContinue
 			// 
