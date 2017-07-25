@@ -164,7 +164,11 @@ namespace FF12RNGHelper
                     searchBuff.Add(searchRNG.genrand());
                     index++;
                 }
-            } while (!match);
+				if (index > 1e7)
+				{
+					break;
+				}
+			} while (!match);
 
 			group.SetIndex(indexStatic);
 			return true;
@@ -242,6 +246,9 @@ namespace FF12RNGHelper
 			bool rareSpawn2 = false;
 			int rareFoundPos2 = 0;
 
+			// Last rare 1 before rare 2 variable, for Ishteen
+			int rareFoundPos3 = 0;
+
 			// Use these variables to check for first punch combo
 			bool comboFound = false;
 			int comboPos = 0;
@@ -293,7 +300,7 @@ namespace FF12RNGHelper
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = spawnChance;
 				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = aVal1_temp.ToString("N0");
 
-				// Check if the chests are in a position offset by a fixed amount
+				// Check if the rares are in a position offset by a fixed amount
 
 				if ( rareCheck(spawnChance, spawnMin1, spawnMax1) )
                 {
@@ -319,7 +326,17 @@ namespace FF12RNGHelper
 				}
 				if (rareCheck(spawnChance, spawnMin1, spawnMax1) && rareCheck(spawnChance, spawnMin2, spawnMax2))
 				{
-					int chestFirstChance = healVals.Count + Math.Max(rareRNGPosition1, rareRNGPosition2)+ 1;
+					//int chestFirstChance = healVals.Count + Math.Max(rareRNGPosition1, rareRNGPosition2)+ 1;
+
+					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Orchid;
+				}
+				if( rareCheck(spawnChance, spawnMin1, spawnMax1) )
+				{
+					// Check if rare 2 has been found yet
+					if (!rareSpawn2)
+					{
+						rareFoundPos3 = index0 - healVals.Count - rareRNGPosition1 + 1;
+					}
 				}
 
 				// Color consumed RNG green
@@ -337,6 +354,8 @@ namespace FF12RNGHelper
 			tbAppear1.Text = rareFoundPos1.ToString();
 
 			tbAppear2.Text = rareFoundPos2.ToString();
+
+			tbAppear12.Text = rareFoundPos3.ToString();
 
 			tbCombo.Text = comboPos.ToString();
 

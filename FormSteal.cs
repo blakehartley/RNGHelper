@@ -175,7 +175,11 @@ namespace FF12RNGHelper
                     searchBuff.Add(searchRNG.genrand());
                     index++;
                 }
-            } while (!match);
+				if (index > 1e7)
+				{
+					break;
+				}
+			} while (!match);
 
             group.SetIndex(indexStatic);
             return true;

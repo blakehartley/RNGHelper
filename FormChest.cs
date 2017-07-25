@@ -140,6 +140,10 @@ namespace FF12RNGHelper
                     searchBuff.Add(searchRNG.genrand());
                     index++;
                 }
+				if (index > 1e7)
+				{
+					break;
+				}
             }
 
             group.SetIndex(indexStatic);
