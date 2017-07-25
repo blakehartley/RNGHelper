@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FF12RNGHelper
@@ -18,6 +13,7 @@ namespace FF12RNGHelper
         private const int historyToDisplay = 5;
         private const int findNextTimeout = 60;
         private const int searchBufferSize = 1000000;
+        private const int maxSearchIndexSupported = (int)1e7; // 10 million
 
         private IRNG searchRNG;
         private IRNG dispRNG;
@@ -118,7 +114,8 @@ namespace FF12RNGHelper
             while (!match)
             {
                 // Quit if it's taking too long.
-                if (timer.Elapsed.TotalSeconds > findNextTimeout)
+                if (timer.Elapsed.TotalSeconds > findNextTimeout ||
+                    index > maxSearchIndexSupported)
                 {
                     timer.Stop();
                     return false;
@@ -140,11 +137,8 @@ namespace FF12RNGHelper
                     searchBuff.Add(searchRNG.genrand());
                     index++;
                 }
-				if (index > 1e7)
-				{
-					break;
-				}
             }
+            timer.Stop();
 
             group.SetIndex(indexStatic);
             return true;
@@ -200,7 +194,7 @@ namespace FF12RNGHelper
 
 			// Use these variables to check for first punch combo
 			bool comboFound = false;
-			int comboPos = 0;
+			int comboPos =  0;
 
             uint firstRNGVal = displayRNG.genrand();
             uint secondRNGVal = displayRNG.genrand();
@@ -284,7 +278,8 @@ namespace FF12RNGHelper
 
 				// Check for combo during string of punches
 				int comboCheck = loopIndex - healVals.Count - 5 + 1 ;
-				if (comboCheck%10 == 0 && comboCheck >= 0 && !comboFound && ((firstRNGVal_temp%100) < 3) )
+				if (comboCheck%10 == 0 && comboCheck >= 0 && !comboFound &&
+                    Combo.IsSucessful(firstRNGVal_temp))
 				{
 					comboFound = true;
 					comboPos = comboCheck/10;
@@ -297,7 +292,7 @@ namespace FF12RNGHelper
             tbAppear2.Text = chestFoundPos2.ToString();
             tbItem2.Text = chestItemPos2.ToString();
 
-			tbCombo.Text = comboPos.ToString();
+			tbCombo.Text = comboFound ? comboPos.ToString() : "SAFE";
 
             tbLastHeal.Focus();
             tbLastHeal.SelectAll();

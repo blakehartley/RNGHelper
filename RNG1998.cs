@@ -103,7 +103,8 @@ namespace FF12RNGHelper
         }
 
         /// <summary>
-        /// Generates the next random number in the sequence.
+        /// Generates the next random number in the sequence
+        /// on [0,0xffffffff]-interval.
         /// </summary>
         /// <returns>The next random number in the sequence.</returns>
         public UInt32 genrand()

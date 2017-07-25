@@ -71,6 +71,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterGroup.cs" />
     <Compile Include="CircularBuffer.cs" />
+    <Compile Include="Combo.cs" />
     <Compile Include="Spell.cs" />
     <Compile Include="Steal.cs" />
     <Compile Include="Chest.cs" />
@@ -134,9 +135,6 @@
     <None Include="Resources\Icon1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\4.png" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +146,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Image1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
