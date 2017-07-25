@@ -192,9 +192,9 @@ namespace FF12RNGHelper
             int chestFoundPos2 = 0;
             int chestItemPos2 = 0;
 
-			// Use these variables to check for first punch combo
-			bool comboFound = false;
-			int comboPos =  0;
+            // Use these variables to check for first punch combo
+            bool comboFound = false;
+            int comboPos = 0;
 
             uint firstRNGVal = displayRNG.genrand();
             uint secondRNGVal = displayRNG.genrand();
@@ -276,14 +276,14 @@ namespace FF12RNGHelper
                     handleItemReward(chest2, secondRNGVal_temp, loopIndex, 4, checkBox2, ref chestItemPos2, ref chestFound2);
                 }
 
-				// Check for combo during string of punches
-				int comboCheck = loopIndex - healVals.Count - 5 + 1 ;
-				if (comboCheck%10 == 0 && comboCheck >= 0 && !comboFound &&
+                // Check for combo during string of punches
+                int comboCheck = loopIndex - healVals.Count - 5 + 1;
+                if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound &&
                     Combo.IsSucessful(firstRNGVal_temp))
-				{
-					comboFound = true;
-					comboPos = comboCheck/10;
-				}
+                {
+                    comboFound = true;
+                    comboPos = comboCheck / 10;
+                }
             }
 
             tbAppear1.Text = chestFoundPos1.ToString();
@@ -292,7 +292,7 @@ namespace FF12RNGHelper
             tbAppear2.Text = chestFoundPos2.ToString();
             tbItem2.Text = chestItemPos2.ToString();
 
-			tbCombo.Text = comboFound ? comboPos.ToString() : "SAFE";
+            tbCombo.Text = comboFound ? comboPos.ToString() : "SAFE";
 
             tbLastHeal.Focus();
             tbLastHeal.SelectAll();
