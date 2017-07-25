@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace FF12RNGHelper
 {
     public partial class FormSpawn : Form
     {
+        private const int findNextTimeout = 60;
+        private const int maxSearchIndexSupported = (int)1e7; // 10 million
+
         IRNG searchRNG;
         IRNG dispRNG;
         int index;	// Current index in the PRNG list
@@ -143,10 +147,21 @@ namespace FF12RNGHelper
 
 			// Otherwise, continue moving through the RNG to find the next matching position
             bool match;
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             do
             {
-				// Reset the index to start the scan again
-				group.ResetIndex();
+                // Quit if it's taking too long.
+                if (timer.Elapsed.TotalSeconds > findNextTimeout ||
+                    index > maxSearchIndexSupported)
+                {
+                    timer.Stop();
+                    group.SetIndex(indexStatic);
+                    return false;
+                }
+
+                // Reset the index to start the scan again
+                group.ResetIndex();
 				match = true;
 				for (int i = 0; i < healVals.Count; i++)
                 {
@@ -169,6 +184,7 @@ namespace FF12RNGHelper
 					break;
 				}
 			} while (!match);
+            timer.Stop();
 
 			group.SetIndex(indexStatic);
 			return true;
@@ -344,7 +360,8 @@ namespace FF12RNGHelper
 					dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
 
 				int comboCheck = index0 - healVals.Count - 5 + 1;
-				if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound && ((aVal1_temp % 100) < 3))
+				if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound &&
+                    Combo.IsSucessful(aVal1_temp))
 				{
 					comboFound = true;
 					comboPos = comboCheck / 10;

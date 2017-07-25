@@ -14,6 +14,9 @@ namespace FF12RNGHelper
 {
     public partial class FormSteal : Form
     {
+        private const int findNextTimeout = 60;
+        private const int maxSearchIndexSupported = (int)1e7; // 10 million
+
         private IRNG searchRNG;
         private IRNG dispRNG;
         private int index;	// Current index in the PRNG list
@@ -149,7 +152,8 @@ namespace FF12RNGHelper
             do
             {
                 // Quit if it's taking too long.
-                if (timer.Elapsed.TotalSeconds > 60)
+                if (timer.Elapsed.TotalSeconds > findNextTimeout ||
+                    index > maxSearchIndexSupported)
                 {
                     timer.Stop();
                     group.SetIndex(indexStatic);
@@ -180,6 +184,7 @@ namespace FF12RNGHelper
 					break;
 				}
 			} while (!match);
+            timer.Stop();
 
             group.SetIndex(indexStatic);
             return true;
@@ -298,7 +303,8 @@ namespace FF12RNGHelper
 
 				// Check for combo during string of punches
 				int comboCheck = loopIndex - healVals.Count - 5 + 1;
-				if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound && ((aVal1_temp % 100) < 3))
+                if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound &&
+                    Combo.IsSucessful(aVal1_temp))
 				{
 					comboFound = true;
 					comboPos = comboCheck / 10;

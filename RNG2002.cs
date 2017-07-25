@@ -47,9 +47,6 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FF12RNGHelper
 {
@@ -101,9 +98,13 @@ namespace FF12RNGHelper
         }
 
         private UInt32[] mag01 = { 0x0U, MATRIX_A }; //Moved out of below method.
-        /* mag01[x] = x * MATRIX_A  for x=0,1 */
+                                                     /* mag01[x] = x * MATRIX_A  for x=0,1 */
 
-        /* generates a random number on [0,0xffffffff]-interval */
+        /// <summary>
+        /// Generates the next random number in the sequence
+        /// on [0,0xffffffff]-interval.
+        /// </summary>
+        /// <returns>The next random number in the sequence.</returns>
         public UInt32 genrand() //genrand_int32
         {
             UInt32 y;

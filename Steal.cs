@@ -1,65 +1,90 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FF12RNGHelper
 {
+    /// <summary>
+    /// This class encapsulates a single steal oportunity
+    /// </summary>
     class Steal
     {
-		private int commonChance = 55;
-		private int uncommonChance = 10;
-		private int rareChance = 3;
-		private int commonChanceCuffs = 80;
-		private int uncommonChanceCuffs = 30;
-		private int rareChanceCuffs = 6;
+        // Strings for display in the UI
+        private const string Rare = "Rare";
+        private const string Uncommon = "Uncommon";
+        private const string Common = "Common";
+        private const string None = "None";
+        private const string Linker = " + ";
 
-		public Steal()
-        {
-			
-		}
+        // Steal chances
+        private const int CommonChance = 55;
+        private const int UncommonChance = 10;
+        private const int RareChance = 3;
+        private const int CommonChanceCuffs = 80;
+        private const int UncommonChanceCuffs = 30;
+        private const int RareChanceCuffs = 6;
 
-        public string checkSteal(uint PRNG0, uint PRNG1, uint PRNG2)
+        /// <summary>
+        /// Check if you steal anything while not wearing the Thief's Cuffs
+        /// When not wearing Thief's Cuffs you may only steal one item.
+        /// Once you are successful, you get that item and that's it.
+        /// </summary>
+        public string checkSteal(uint PRNG1, uint PRNG2, uint PRNG3)
         {
-			if ( randToPercent(PRNG0) < rareChance )
-			{
-				return "Rare";
-			}
-			else if ( randToPercent(PRNG1) < uncommonChance )
-			{
-				return "Uncommon";
-			}
-			else if ( randToPercent(PRNG2) < commonChance )
-			{
-				return "Common";
-			}
-			return "None";
+            if (stealSuccessful(PRNG1, RareChance))
+            {
+                return Rare;
+            }
+            if (stealSuccessful(PRNG2, UncommonChance))
+            {
+                return Uncommon;
+            }
+            if (stealSuccessful(PRNG3, CommonChance))
+            {
+                return Common;
+            }
+            return None;
         }
 
-		public string checkStealCuffs(uint PRNG0, uint PRNG1, uint PRNG2)
-		{
-			string returnStr = "";
+        /// <summary>
+        /// Check if you steal anything while wearing the Thief's Cuffs
+        /// When not wearing Thief's Cuffs you may steal more than one
+        /// item, and you have better odds. Roll against all 3 and get
+        /// everything you successfully steal.
+        /// </summary>
+        public string checkStealCuffs(uint PRNG1, uint PRNG2, uint PRNG3)
+        {
+            string returnStr = String.Empty;
 
-			if (randToPercent(PRNG0) < rareChanceCuffs )
-			{
-				returnStr += "Rare";
-			}
-			if ( randToPercent(PRNG1) < uncommonChanceCuffs )
-			{
-				returnStr += " + Uncommon";
-			}
-			if ( randToPercent(PRNG2) < commonChanceCuffs )
-			{
-				returnStr += " + Common";
-			}
-			if (returnStr == "")
-			{
-				returnStr = "None";
-			}
-			return returnStr.TrimStart(new char[] { ' ', '+' });
-		}
+            if (stealSuccessful(PRNG1, RareChanceCuffs))
+            {
+                returnStr += Rare;
+            }
+            if (stealSuccessful(PRNG2, UncommonChanceCuffs))
+            {
+                returnStr += Linker + Uncommon;
+            }
+            if (stealSuccessful(PRNG3, CommonChanceCuffs))
+            {
+                returnStr += Linker + Common;
+            }
+            if (returnStr == String.Empty)
+            {
+                returnStr = None;
+            }
+            return returnStr.TrimStart(Linker.ToCharArray());
+        }
 
-        private double randToPercent(uint toConvert)
+        /// <summary>
+        /// Calculate if a steal attempt was successful
+        /// </summary>
+        private bool stealSuccessful(uint PRNG, int chance)
+        {
+            return randToPercent(PRNG) < chance;
+        }
+
+        /// <summary>
+        /// Convert an RNG value into a percentage
+        /// </summary>
+        private int randToPercent(uint toConvert)
         {
             return (int) (toConvert % 100);
         }
