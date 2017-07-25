@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FF12RNGHelper
@@ -179,11 +174,7 @@ namespace FF12RNGHelper
                     searchBuff.Add(searchRNG.genrand());
                     index++;
                 }
-				if (index > 1e7)
-				{
-					break;
-				}
-			} while (!match);
+            } while (!match);
             timer.Stop();
 
             group.SetIndex(indexStatic);
@@ -223,22 +214,22 @@ namespace FF12RNGHelper
             DateTime endTime = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endTime - startTime).Milliseconds.ToString();
 
-			Steal steal = new Steal();
-			Steal stealCuffs = new Steal();
+            Steal steal = new Steal();
+            Steal stealCuffs = new Steal();
 
-			int rarePosition = 0;
-			int rarePositionCuffs = 0;
+            int rarePosition = 0;
+            int rarePositionCuffs = 0;
 
-			bool rareSteal = false;
-			bool rareStealCuffs = false;
+            bool rareSteal = false;
+            bool rareStealCuffs = false;
 
-			// Use these variables to check for first punch combo
-			bool comboFound = false;
-			int comboPos = 0;
+            // Use these variables to check for first punch combo
+            bool comboFound = false;
+            int comboPos = 0;
 
-			uint aVal1 = displayRNG.genrand();
+            uint aVal1 = displayRNG.genrand();
             uint aVal2 = displayRNG.genrand();
-			uint aVal3 = displayRNG.genrand();
+            uint aVal3 = displayRNG.genrand();
 
             // We want to preserve the character index, since this loop is just for display:
             int indexStatic = group.GetIndex();
@@ -263,10 +254,10 @@ namespace FF12RNGHelper
                 // Advance the RNG before starting the loop in case we want to skip an entry
                 uint aVal1_temp = aVal1;
                 uint aVal2_temp = aVal2;
-				uint aVal3_temp = aVal3;
-				aVal1 = aVal2;
-				aVal2 = aVal3;
-				aVal3 = displayRNG.genrand();
+                uint aVal3_temp = aVal3;
+                aVal1 = aVal2;
+                aVal2 = aVal3;
+                aVal3 = displayRNG.genrand();
 
                 // Skip the entry if it's too long ago
                 if (loopIndex < healVals.Count - 5)
@@ -283,69 +274,69 @@ namespace FF12RNGHelper
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = currentHeal;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(aVal1_temp);
 
-				handleSteal(steal, aVal1_temp, aVal2_temp, aVal3_temp, 3);
-				handleStealCuffs(stealCuffs, aVal1_temp, aVal2_temp, aVal3_temp, 4);
+                handleSteal(steal, aVal1_temp, aVal2_temp, aVal3_temp, 3);
+                handleStealCuffs(stealCuffs, aVal1_temp, aVal2_temp, aVal3_temp, 4);
 
-				dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = (aVal1_temp < 0x1000000);
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = (aVal1_temp < 0x1000000);
 
-				// Check if the chests are in a position offset by a fixed amount
-				if ((aVal1_temp % 100) < 3 && !rareSteal && loopIndex >= healVals.Count)
+                // Check if the chests are in a position offset by a fixed amount
+                if ((aVal1_temp % 100) < 3 && !rareSteal && loopIndex >= healVals.Count)
                 {
-					rareSteal = true;
-					rarePosition = loopIndex - healVals.Count;
+                    rareSteal = true;
+                    rarePosition = loopIndex - healVals.Count;
                 }
 
-				if ((aVal1_temp % 100) < 6 && !rareStealCuffs && loopIndex >= healVals.Count)
-				{
-					rareStealCuffs = true;
-					rarePositionCuffs = loopIndex - healVals.Count;
-				}
+                if ((aVal1_temp % 100) < 6 && !rareStealCuffs && loopIndex >= healVals.Count)
+                {
+                    rareStealCuffs = true;
+                    rarePositionCuffs = loopIndex - healVals.Count;
+                }
 
-				// Check for combo during string of punches
-				int comboCheck = loopIndex - healVals.Count - 5 + 1;
+                // Check for combo during string of punches
+                int comboCheck = loopIndex - healVals.Count - 5 + 1;
                 if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound &&
                     Combo.IsSucessful(aVal1_temp))
-				{
-					comboFound = true;
-					comboPos = comboCheck / 10;
-				}
-			}
+                {
+                    comboFound = true;
+                    comboPos = comboCheck / 10;
+                }
+            }
 
-			tbRare.Text = rarePosition.ToString();
-			tbRareCuffs.Text = rarePositionCuffs.ToString();
+            tbRare.Text = rarePosition.ToString();
+            tbRareCuffs.Text = rarePositionCuffs.ToString();
 
-			tbCombo.Text = comboPos.ToString();
+            tbCombo.Text = comboPos.ToString();
 
-			tbLastHeal.Focus();
+            tbLastHeal.Focus();
             tbLastHeal.SelectAll();
 
             group.SetIndex(indexStatic);
         }
 
-		private void handleSteal(Steal steal, uint PRNG0, uint PRNG1, uint PRNG2, int column)
-		{
-			dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = steal.checkSteal(PRNG0, PRNG1, PRNG2);
-		}
+        private void handleSteal(Steal steal, uint PRNG0, uint PRNG1, uint PRNG2, int column)
+        {
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = steal.checkSteal(PRNG0, PRNG1, PRNG2);
+        }
 
-		private void handleStealCuffs(Steal steal, uint PRNG0, uint PRNG1, uint PRNG2, int column)
-		{
-			dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = steal.checkStealCuffs(PRNG0, PRNG1, PRNG2);
-		}
+        private void handleStealCuffs(Steal steal, uint PRNG0, uint PRNG1, uint PRNG2, int column)
+        {
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = steal.checkStealCuffs(PRNG0, PRNG1, PRNG2);
+        }
 
-		private void handleStealHelper(string text, int loopIndex, int column, CheckBox checkBox, bool expectCheck,
-			ref int itemPosition, ref bool chestFound)
-		{
-			dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = (object)text;
+        private void handleStealHelper(string text, int loopIndex, int column, CheckBox checkBox, bool expectCheck,
+            ref int itemPosition, ref bool chestFound)
+        {
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = (object)text;
 
-			// Check if the items are in this position
-			if (((checkBox.Checked == expectCheck) && loopIndex >= healVals.Count) && !chestFound)
-			{
-				itemPosition = loopIndex - healVals.Count;
-				chestFound = true;
-			}
-		}
+            // Check if the items are in this position
+            if (((checkBox.Checked == expectCheck) && loopIndex >= healVals.Count) && !chestFound)
+            {
+                itemPosition = loopIndex - healVals.Count;
+                chestFound = true;
+            }
+        }
 
-		private void tbLevel_Validating(object sender, CancelEventArgs e)
+        private void tbLevel_Validating(object sender, CancelEventArgs e)
         {
             double tempVal;
             if (!double.TryParse(tbLevel1.Text, out tempVal))
@@ -470,13 +461,13 @@ namespace FF12RNGHelper
             this.FindForm().Hide();
         }
 
-		private void chestsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			new FormChest().Show();
-			this.FindForm().Hide();
-		}
+        private void chestsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormChest().Show();
+            this.FindForm().Hide();
+        }
 
-		private void bConsume_Click(object sender, EventArgs e)
+        private void bConsume_Click(object sender, EventArgs e)
         {
             DateTime begint = DateTime.Now;
             int consume;
@@ -504,5 +495,5 @@ namespace FF12RNGHelper
             tbLastHeal.Focus();
             tbLastHeal.SelectAll();
         }
-	}
+    }
 }

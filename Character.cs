@@ -23,7 +23,7 @@ namespace FF12RNGHelper
         private double Magic;
         private double SpellPower;
         private double SerenityMult;
-        
+
         public Character(double level, double magic, double spellpower, bool serenity)
         {
             Level = level;
@@ -67,7 +67,7 @@ namespace FF12RNGHelper
         /// <returns></returns>
         private int calculateHeal(double bonusSpellPower)
         {
-            return (int) ((SpellPower + bonusSpellPower) * (2.0 + Magic * (Level + Magic) / 256.0) * SerenityMult);
+            return (int)((SpellPower + bonusSpellPower) * (2.0 + Magic * (Level + Magic) / 256.0) * SerenityMult);
         }
     }
 }
