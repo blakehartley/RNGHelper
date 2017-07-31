@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static FF12RNGHelper.ChestFutureRng;
+
+using ChestFutureRngInstance = FF12RNGHelper.ChestFutureRng.ChestFutureRngInstance;
+using ChestReward = FF12RNGHelper.ChestFutureRng.ChestReward;
+using AdvanceDirections = FF12RNGHelper.ChestFutureRng.AdvanceDirections;
+using RewardType = FF12RNGHelper.ChestFutureRng.RewardType;
 
 namespace FF12RNGHelper
 {
