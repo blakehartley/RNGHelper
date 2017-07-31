@@ -75,73 +75,73 @@ namespace FF12RNGHelper
         }
 
         #endregion public methods
-
-        #region public types
-
-        /// <summary>
-        /// A ChestFutureRngInstance represents a single
-        /// step into the future
-        /// </summary>
-        public class ChestFutureRngInstance
-        {
-            public bool IsPastRng;
-            public int Index;
-            public int CurrentHeal;
-            public int RandToPercent;
-            public List<ChestReward> ChestRewards;
-
-            public ChestFutureRngInstance(int chestCount)
-            {
-                IsPastRng = false;
-                Index = -1;
-                CurrentHeal = -1;
-                RandToPercent = -1;
-                ChestRewards = new List<ChestReward>();
-                for (int i = 0; i < chestCount; i++)
-                {
-                    ChestRewards.Add(new ChestReward());
-                }
-            }
-        }
-
-        /// <summary>
-        /// A ChestReward represents the results of a single chest
-        /// for a single ChestFutureRngInstance
-        /// </summary>
-        public class ChestReward
-        {
-            public bool ChestWillSpawn;
-            public int GilAmount;
-            public RewardType Reward;
-
-            public ChestReward()
-            {
-                ChestWillSpawn = false;
-                GilAmount = -1;
-                Reward = RewardType.Gil;
-            }
-        }
-
-        /// <summary>
-        /// This class is used to store the recommended
-        /// actions based on info provided
-        /// </summary>
-        public class AdvanceDirections
-        {
-            public int AdvanceToAppear;
-            public int AdvanceForItem;
-        }
-
-        /// <summary>
-        /// Enumeration of the possible chest rewards
-        /// </summary>
-        public enum RewardType
-        {
-            Gil,
-            Item1,
-            Item2
-        }
-
-        #endregion public types
     }
+
+    #region public types
+
+    /// <summary>
+    /// A ChestFutureRngInstance represents a single
+    /// step into the future
+    /// </summary>
+    public class ChestFutureRngInstance
+    {
+        public bool IsPastRng;
+        public int Index;
+        public int CurrentHeal;
+        public int RandToPercent;
+        public List<ChestReward> ChestRewards;
+
+        public ChestFutureRngInstance(int chestCount)
+        {
+            IsPastRng = false;
+            Index = -1;
+            CurrentHeal = -1;
+            RandToPercent = -1;
+            ChestRewards = new List<ChestReward>();
+            for (int i = 0; i < chestCount; i++)
+            {
+                ChestRewards.Add(new ChestReward());
+            }
+        }
+    }
+
+    /// <summary>
+    /// A ChestReward represents the results of a single chest
+    /// for a single ChestFutureRngInstance
+    /// </summary>
+    public class ChestReward
+    {
+        public bool ChestWillSpawn;
+        public int GilAmount;
+        public RewardType Reward;
+
+        public ChestReward()
+        {
+            ChestWillSpawn = false;
+            GilAmount = -1;
+            Reward = RewardType.Gil;
+        }
+    }
+
+    /// <summary>
+    /// This class is used to store the recommended
+    /// actions based on info provided
+    /// </summary>
+    public class AdvanceDirections
+    {
+        public int AdvanceToAppear;
+        public int AdvanceForItem;
+    }
+
+    /// <summary>
+    /// Enumeration of the possible chest rewards
+    /// </summary>
+    public enum RewardType
+    {
+        Gil,
+        Item1,
+        Item2
+    }
+
+    #endregion public types
 }
