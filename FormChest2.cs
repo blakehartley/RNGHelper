@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static FF12RNGHelper.ChestFutureRng;
 
 namespace FF12RNGHelper
 {
@@ -164,9 +163,9 @@ namespace FF12RNGHelper
         {
             const string item1 = "Item 1";
             const string item2 = "Item 2";
+            const int cellOffset = 3; // start filling data in the 4th spot
 
             int chestCount = rngInstance.ChestRewards.Count;
-            int cellOffset = 3; // start filling data in the 4th spot
             for (int chestIndex = 0; chestIndex < chestCount; chestIndex++)
             {
                 ChestReward reward = rngInstance.ChestRewards.ElementAt(chestIndex);
