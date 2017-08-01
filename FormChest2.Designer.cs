@@ -123,7 +123,6 @@ namespace FF12RNGHelper
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.tbCombo = new System.Windows.Forms.TextBox();
-            this.chestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gbStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -152,7 +151,6 @@ namespace FF12RNGHelper
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chestToolStripMenuItem,
             this.stealToolStripMenuItem,
             this.rareGameToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -1078,13 +1076,6 @@ namespace FF12RNGHelper
             this.tbCombo.TabIndex = 17;
             this.tbCombo.Text = "?";
             // 
-            // chestToolStripMenuItem
-            // 
-            this.chestToolStripMenuItem.Name = "chestToolStripMenuItem";
-            this.chestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.chestToolStripMenuItem.Text = "Chest";
-            this.chestToolStripMenuItem.Click += new System.EventHandler(this.chestToolStripMenuItem_Click);
-            // 
             // FormChest2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1229,7 +1220,6 @@ namespace FF12RNGHelper
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox tbCombo;
-        private ToolStripMenuItem chestToolStripMenuItem;
     }
 }
 

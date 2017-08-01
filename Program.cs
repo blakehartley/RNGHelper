@@ -13,7 +13,7 @@ namespace FF12RNGHelper
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormChest());
+            Application.Run(new FormChest2());
         }
     }
 }

@@ -198,8 +198,8 @@ namespace FF12RNGHelper
             chestReward.Reward = reward;
 
             // Check if the items are in this position
-            if (((chest.WantItemOne() == expectItemOne) &&
-                 LoopIndex >= HealVals.Count) && !chest.IsChestFound())
+            if (chest.WantItemOne() == expectItemOne &&
+                LoopIndex >= HealVals.Count && !chest.IsChestFound())
             {
                 chest.SetChestItemPosition(LoopIndex - HealVals.Count);
                 chest.SetChestFound();
