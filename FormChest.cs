@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace FF12RNGHelper
 {
+    [Obsolete("FormChest is deprecated. Please use FormChest2.")]
     public partial class FormChest : Form
     {
         // Number of rows to display before the current rng position

@@ -397,12 +397,6 @@ namespace FF12RNGHelper
             Hide();
         }
 
-        private void chestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new FormChest().Show();
-            Hide();
-        }
-
         #endregion change form methods
 
         #region backgroundworker stuff

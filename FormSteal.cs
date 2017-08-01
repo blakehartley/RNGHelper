@@ -463,8 +463,8 @@ namespace FF12RNGHelper
 
         private void chestsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormChest().Show();
-            this.FindForm().Hide();
+            new FormChest2().Show();
+            Hide();
         }
 
         private void bConsume_Click(object sender, EventArgs e)
