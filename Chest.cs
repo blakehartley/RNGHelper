@@ -78,8 +78,8 @@
         {
             _chestSpawn = false;
             _chestFound = false;
-            _chestFoundPos = 0;
-            _chestItemPos = 0;
+            _chestFoundPos = -1;
+            _chestItemPos = -1;
         }
 
         public int getRNGPosition()
