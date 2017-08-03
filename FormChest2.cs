@@ -88,10 +88,20 @@ namespace FF12RNGHelper
         {
             _chests.Clear();
 
-            Chest chest1 = new Chest(textBox1.Text, textBox2.Text, textBox3.Text,
-                textBox4.Text, textBox5.Text);
-            Chest chest2 = new Chest(textBox10.Text, textBox9.Text, textBox8.Text,
-                textBox7.Text, textBox6.Text);
+            Chest chest1 = new Chest(
+                int.Parse(textBox1.Text),
+                int.Parse(textBox2.Text),
+                int.Parse(textBox3.Text),
+                int.Parse(textBox4.Text),
+                int.Parse(textBox5.Text),
+                cbWantItem1First.Checked);
+            Chest chest2 = new Chest(
+                int.Parse(textBox10.Text),
+                int.Parse(textBox9.Text),
+                int.Parse(textBox8.Text),
+                int.Parse(textBox7.Text),
+                int.Parse(textBox6.Text),
+                cbWantItem1Second.Checked);
 
             _chests.Add(chest1);
             _chests.Add(chest2);
