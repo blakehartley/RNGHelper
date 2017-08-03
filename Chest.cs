@@ -1,4 +1,6 @@
-﻿namespace FF12RNGHelper
+﻿using System;
+
+namespace FF12RNGHelper
 {
     public class Chest
     {
@@ -16,6 +18,7 @@
         private int _chestFoundPos;
         private int _chestItemPos;
 
+        [Obsolete]
         public Chest(int spawnchance,
             int rngposition,
             int gilchance,
@@ -44,6 +47,7 @@
                 wantitem1);
         }
 
+        [Obsolete]
         public Chest(string spawnchance,
             string rngposition,
             string gilchance,

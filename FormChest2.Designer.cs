@@ -85,7 +85,7 @@ namespace FF12RNGHelper
             this.cbPlatform = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbWantItem1First = new System.Windows.Forms.CheckBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -98,7 +98,7 @@ namespace FF12RNGHelper
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.cbWantItem1Second = new System.Windows.Forms.CheckBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -680,7 +680,7 @@ namespace FF12RNGHelper
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.cbWantItem1First);
             this.groupBox1.Controls.Add(this.textBox5);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.textBox4);
@@ -707,14 +707,14 @@ namespace FF12RNGHelper
             this.label6.TabIndex = 11;
             this.label6.Text = "Want Item 1:";
             // 
-            // checkBox1
+            // cbWantItem1First
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(101, 149);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbWantItem1First.AutoSize = true;
+            this.cbWantItem1First.Location = new System.Drawing.Point(101, 149);
+            this.cbWantItem1First.Name = "cbWantItem1First";
+            this.cbWantItem1First.Size = new System.Drawing.Size(15, 14);
+            this.cbWantItem1First.TabIndex = 10;
+            this.cbWantItem1First.UseVisualStyleBackColor = true;
             // 
             // textBox5
             // 
@@ -804,7 +804,7 @@ namespace FF12RNGHelper
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.checkBox2);
+            this.groupBox2.Controls.Add(this.cbWantItem1Second);
             this.groupBox2.Controls.Add(this.textBox6);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox7);
@@ -831,14 +831,14 @@ namespace FF12RNGHelper
             this.label7.TabIndex = 11;
             this.label7.Text = "Want Item 1:";
             // 
-            // checkBox2
+            // cbWantItem1Second
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(101, 149);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 10;
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbWantItem1Second.AutoSize = true;
+            this.cbWantItem1Second.Location = new System.Drawing.Point(101, 149);
+            this.cbWantItem1Second.Name = "cbWantItem1Second";
+            this.cbWantItem1Second.Size = new System.Drawing.Size(15, 14);
+            this.cbWantItem1Second.TabIndex = 10;
+            this.cbWantItem1Second.UseVisualStyleBackColor = true;
             // 
             // textBox6
             // 
@@ -1170,10 +1170,10 @@ namespace FF12RNGHelper
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbWantItem1First;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox cbWantItem1Second;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox7;
