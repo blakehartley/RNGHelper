@@ -184,9 +184,9 @@ namespace FF12RNGHelper
 
                 if (reward.ChestWillSpawn)
                 {
-                    Font currentStyle = dataGridView1.CurrentCell.InheritedStyle.Font;
-                    row.Cells[chestIndex + cellOffset].Style.Font =
-                        new Font(currentStyle, FontStyle.Bold);
+                    DataGridViewCell currentCell = row.Cells[chestIndex + cellOffset];
+                    Font currentStyle = currentCell.InheritedStyle.Font;
+                    currentCell.Style.Font = new Font(currentStyle, FontStyle.Bold);
                 }
             }
         }
@@ -194,12 +194,21 @@ namespace FF12RNGHelper
         private void UpdateAdvanceData()
         {
             AdvanceDirections directions1 = _futureRng.GetAdvanceDirectionsAtIndex(0);
-            tbAppear1.Text = directions1.AdvanceToAppear.ToString();
-            tbItem1.Text = directions1.AdvanceForItem.ToString();
+            tbAppear1.Text = ConvertAdvanceDirectionsToText(directions1.AdvanceToAppear);
+            tbItem1.Text = ConvertAdvanceDirectionsToText(directions1.AdvanceForItem);
 
             AdvanceDirections directions2 = _futureRng.GetAdvanceDirectionsAtIndex(1);
-            tbAppear2.Text = directions2.AdvanceToAppear.ToString();
-            tbItem2.Text = directions2.AdvanceForItem.ToString();
+            tbAppear2.Text = ConvertAdvanceDirectionsToText(directions2.AdvanceToAppear);
+            tbItem2.Text = ConvertAdvanceDirectionsToText(directions2.AdvanceForItem);
+        }
+
+        private static string ConvertAdvanceDirectionsToText(int index)
+        {
+            const string advanceDirectionsNotFound = @"¯\_(ツ)_/¯";
+
+            return index == -1
+                ? advanceDirectionsNotFound
+                : index.ToString();
         }
 
         private void UpdateNextHealData()

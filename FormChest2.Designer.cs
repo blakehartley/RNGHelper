@@ -161,21 +161,21 @@ namespace FF12RNGHelper
             // stealToolStripMenuItem
             // 
             this.stealToolStripMenuItem.Name = "stealToolStripMenuItem";
-            this.stealToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stealToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.stealToolStripMenuItem.Text = "Steal";
             this.stealToolStripMenuItem.Click += new System.EventHandler(this.stealToolStripMenuItem_Click);
             // 
             // rareGameToolStripMenuItem
             // 
             this.rareGameToolStripMenuItem.Name = "rareGameToolStripMenuItem";
-            this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.rareGameToolStripMenuItem.Text = "Rare Game";
             this.rareGameToolStripMenuItem.Click += new System.EventHandler(this.rareGameToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -930,11 +930,12 @@ namespace FF12RNGHelper
             this.tbAppear1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbAppear1.Enabled = false;
             this.tbAppear1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbAppear1.Location = new System.Drawing.Point(125, 7);
+            this.tbAppear1.Location = new System.Drawing.Point(103, 7);
             this.tbAppear1.Name = "tbAppear1";
-            this.tbAppear1.Size = new System.Drawing.Size(79, 25);
+            this.tbAppear1.Size = new System.Drawing.Size(101, 25);
             this.tbAppear1.TabIndex = 17;
             this.tbAppear1.Text = "?";
+            this.tbAppear1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 
@@ -959,11 +960,12 @@ namespace FF12RNGHelper
             this.tbItem1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbItem1.Enabled = false;
             this.tbItem1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbItem1.Location = new System.Drawing.Point(125, 38);
+            this.tbItem1.Location = new System.Drawing.Point(103, 38);
             this.tbItem1.Name = "tbItem1";
-            this.tbItem1.Size = new System.Drawing.Size(79, 25);
+            this.tbItem1.Size = new System.Drawing.Size(101, 25);
             this.tbItem1.TabIndex = 19;
             this.tbItem1.Text = "?";
+            this.tbItem1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox3
             // 
@@ -1012,22 +1014,24 @@ namespace FF12RNGHelper
             this.tbAppear2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbAppear2.Enabled = false;
             this.tbAppear2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbAppear2.Location = new System.Drawing.Point(125, 7);
+            this.tbAppear2.Location = new System.Drawing.Point(103, 7);
             this.tbAppear2.Name = "tbAppear2";
-            this.tbAppear2.Size = new System.Drawing.Size(79, 25);
+            this.tbAppear2.Size = new System.Drawing.Size(101, 25);
             this.tbAppear2.TabIndex = 17;
             this.tbAppear2.Text = "?";
+            this.tbAppear2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbItem2
             // 
             this.tbItem2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbItem2.Enabled = false;
             this.tbItem2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbItem2.Location = new System.Drawing.Point(125, 38);
+            this.tbItem2.Location = new System.Drawing.Point(103, 38);
             this.tbItem2.Name = "tbItem2";
-            this.tbItem2.Size = new System.Drawing.Size(79, 25);
+            this.tbItem2.Size = new System.Drawing.Size(101, 25);
             this.tbItem2.TabIndex = 19;
             this.tbItem2.Text = "?";
+            this.tbItem2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox5
             // 
