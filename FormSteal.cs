@@ -214,9 +214,6 @@ namespace FF12RNGHelper
             DateTime endTime = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endTime - startTime).Milliseconds.ToString();
 
-            Steal steal = new Steal();
-            Steal stealCuffs = new Steal();
-
             int rarePosition = 0;
             int rarePositionCuffs = 0;
 
@@ -274,8 +271,8 @@ namespace FF12RNGHelper
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = currentHeal;
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(aVal1_temp);
 
-                handleSteal(steal, aVal1_temp, aVal2_temp, aVal3_temp, 3);
-                handleStealCuffs(stealCuffs, aVal1_temp, aVal2_temp, aVal3_temp, 4);
+                handleSteal(aVal1_temp, aVal2_temp, aVal3_temp, 3);
+                handleStealCuffs(aVal1_temp, aVal2_temp, aVal3_temp, 4);
 
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = (aVal1_temp < 0x1000000);
 
@@ -313,14 +310,14 @@ namespace FF12RNGHelper
             group.SetIndex(indexStatic);
         }
 
-        private void handleSteal(Steal steal, uint PRNG0, uint PRNG1, uint PRNG2, int column)
+        private void handleSteal(uint PRNG0, uint PRNG1, uint PRNG2, int column)
         {
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = steal.checkSteal(PRNG0, PRNG1, PRNG2);
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = Steal.CheckSteal(PRNG0, PRNG1, PRNG2);
         }
 
-        private void handleStealCuffs(Steal steal, uint PRNG0, uint PRNG1, uint PRNG2, int column)
+        private void handleStealCuffs(uint PRNG0, uint PRNG1, uint PRNG2, int column)
         {
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = steal.checkStealCuffs(PRNG0, PRNG1, PRNG2);
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = Steal.CheckStealCuffs(PRNG0, PRNG1, PRNG2);
         }
 
         private void handleStealHelper(string text, int loopIndex, int column, CheckBox checkBox, bool expectCheck,
