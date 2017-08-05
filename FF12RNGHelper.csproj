@@ -85,6 +85,8 @@
     <Compile Include="PlatformType.cs" />
     <Compile Include="IRngHelper.cs" />
     <Compile Include="Spell.cs" />
+    <Compile Include="Spell2.cs" />
+    <Compile Include="Spells2.cs" />
     <Compile Include="Steal.cs" />
     <Compile Include="Chest.cs" />
     <Compile Include="FormSteal.cs">

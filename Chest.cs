@@ -13,7 +13,6 @@ namespace FF12RNGHelper
 
         // chest finding state
         private bool _chestSpawn;
-
         private bool _chestFound;
         private int _chestFoundPos;
         private int _chestItemPos;

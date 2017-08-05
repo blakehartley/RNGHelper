@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace FF12RNGHelper
@@ -9,6 +6,7 @@ namespace FF12RNGHelper
     /// <summary>
     /// Encapsulates a single cure spell
     /// </summary>
+    [Obsolete("Use Spell2 class")]
     class Spell
     {
         private string Name;
