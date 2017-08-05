@@ -1,11 +1,12 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace FF12RNGHelper
 {
     /// <summary>
     /// This class encapsulates a single steal oportunity
     /// </summary>
-    class Steal
+    internal static class Steal
     {
         // Strings for display in the UI
         private const string Rare = "Rare";
@@ -27,17 +28,17 @@ namespace FF12RNGHelper
         /// When not wearing Thief's Cuffs you may only steal one item.
         /// Once you are successful, you get that item and that's it.
         /// </summary>
-        public string checkSteal(uint PRNG1, uint PRNG2, uint PRNG3)
+        public static string CheckSteal(uint prng1, uint prng2, uint prng3)
         {
-            if (stealSuccessful(PRNG1, RareChance))
+            if (StealSuccessful(prng1, RareChance))
             {
                 return Rare;
             }
-            if (stealSuccessful(PRNG2, UncommonChance))
+            if (StealSuccessful(prng2, UncommonChance))
             {
                 return Uncommon;
             }
-            if (stealSuccessful(PRNG3, CommonChance))
+            if (StealSuccessful(prng3, CommonChance))
             {
                 return Common;
             }
@@ -50,23 +51,23 @@ namespace FF12RNGHelper
         /// item, and you have better odds. Roll against all 3 and get
         /// everything you successfully steal.
         /// </summary>
-        public string checkStealCuffs(uint PRNG1, uint PRNG2, uint PRNG3)
+        public static string CheckStealCuffs(uint prng1, uint prng2, uint prng3)
         {
-            string returnStr = String.Empty;
+            string returnStr = string.Empty;
 
-            if (stealSuccessful(PRNG1, RareChanceCuffs))
+            if (StealSuccessful(prng1, RareChanceCuffs))
             {
                 returnStr += Rare;
             }
-            if (stealSuccessful(PRNG2, UncommonChanceCuffs))
+            if (StealSuccessful(prng2, UncommonChanceCuffs))
             {
                 returnStr += Linker + Uncommon;
             }
-            if (stealSuccessful(PRNG3, CommonChanceCuffs))
+            if (StealSuccessful(prng3, CommonChanceCuffs))
             {
                 returnStr += Linker + Common;
             }
-            if (returnStr == String.Empty)
+            if (returnStr == string.Empty)
             {
                 returnStr = None;
             }
@@ -76,15 +77,15 @@ namespace FF12RNGHelper
         /// <summary>
         /// Calculate if a steal attempt was successful
         /// </summary>
-        private bool stealSuccessful(uint PRNG, int chance)
+        private static bool StealSuccessful(uint prng, int chance)
         {
-            return randToPercent(PRNG) < chance;
+            return RandToPercent(prng) < chance;
         }
 
         /// <summary>
         /// Convert an RNG value into a percentage
         /// </summary>
-        private int randToPercent(uint toConvert)
+        private static int RandToPercent(uint toConvert)
         {
             return (int) (toConvert % 100);
         }

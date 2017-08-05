@@ -1,4 +1,7 @@
-﻿namespace FF12RNGHelper
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("UnitTests")]
+namespace FF12RNGHelper
 {
     /// <summary>
     /// This class calculates the number of combos
