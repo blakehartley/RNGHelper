@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UnitTests")]
+
 namespace FF12RNGHelper
 {
     /// <summary>

@@ -14,22 +14,32 @@ namespace FF12RNGHelper
         //Constants
         private const double MaxBonusMultiplier = 0.125; // Goku-mode.
         private const double MinBonusMultiplier = 0; // Not much of a bonus. :(
-
         private const double NoSerenityBoost = 1.0;
         private const double SerenityBoost = 1.5;
 
         // Character Info
-        private double Level;
-        private double Magic;
-        private double SpellPower;
-        private double SerenityMult;
+        private readonly double _level;
+        private readonly double _magic;
+        private readonly double _spellPower;
+        private readonly double _serenityMult;
+        private readonly Spell2 _spell;
 
+        [Obsolete]
         public Character(double level, double magic, double spellpower, bool serenity)
         {
-            Level = level;
-            Magic = magic;
-            SpellPower = spellpower;
-            SerenityMult = serenity ? SerenityBoost : NoSerenityBoost;
+            _level = level;
+            _magic = magic;
+            _spellPower = spellpower;
+            _serenityMult = serenity ? SerenityBoost : NoSerenityBoost;
+        }
+
+        public Character(double level, double magic, Spells2 spell, bool serenity)
+        {
+            _level = level;
+            _magic = magic;
+            _spell = new Spell2(spell);
+            _spellPower = _spell.GetSpellPower();
+            _serenityMult = serenity ? SerenityBoost : NoSerenityBoost;
         }
 
         /// <summary>
@@ -38,8 +48,8 @@ namespace FF12RNGHelper
         /// <param name="rngValue">RNG value from PRNG</param>
         public int GetHealValue(uint rngValue)
         {
-            double bonusSpellPower = (double)rngValue % Math.Floor(SpellPower * 12.5) / 100.0;
-            return calculateHeal(bonusSpellPower);
+            double bonusSpellPower = rngValue % Math.Floor(_spellPower * 12.5) / 100.0;
+            return CalculateHeal(bonusSpellPower);
         }
 
         /// <summary>
@@ -47,8 +57,8 @@ namespace FF12RNGHelper
         /// </summary>
         public int HealMax()
         {
-            double bonusSpellPower = MaxBonusMultiplier * SpellPower;
-            return calculateHeal(bonusSpellPower);
+            double bonusSpellPower = MaxBonusMultiplier * _spellPower;
+            return CalculateHeal(bonusSpellPower);
         }
 
         /// <summary>
@@ -57,17 +67,23 @@ namespace FF12RNGHelper
         /// <returns></returns>
         public int HealMin()
         {
-            return calculateHeal(MinBonusMultiplier);
+            return CalculateHeal(MinBonusMultiplier);
         }
 
         /// <summary>
-        /// Calculates the value of the spell based on stats and bonus spell power based on PRNG.
+        /// Calculates the value of the spell based on stats and bonus spell 
+        /// power based on PRNG.
         /// </summary>
-        /// <param name="bonusSpellPower">Bonus spell power to be added to base spell power.</param>
+        /// <param name="bonusSpellPower">Bonus spell power to be added to 
+        /// base spell power.</param>
         /// <returns></returns>
-        private int calculateHeal(double bonusSpellPower)
+        private int CalculateHeal(double bonusSpellPower)
         {
-            return (int)((SpellPower + bonusSpellPower) * (2.0 + Magic * (Level + Magic) / 256.0) * SerenityMult);
+            double totalSpellPower = _spellPower + bonusSpellPower;
+            double regularDamage = totalSpellPower * 
+                (2.0 + _magic * (_level + _magic) / 256.0);
+            double finalDamage = regularDamage * _serenityMult;
+            return (int) finalDamage;
         }
     }
 }

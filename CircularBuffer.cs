@@ -2,29 +2,37 @@
 {
     public class CircularBuffer<T> : IDeepCloneable<CircularBuffer<T>>
     {
-        private T[] buffer;
-        private int nextFree;
-        private int length;
+        private T[] _buffer;
+        private int _nextFree;
+        private int _length;
 
         public CircularBuffer(int length)
         {
-            this.length = length;
-            buffer = new T[length];
-            nextFree = 0;
+            _length = length;
+            _buffer = new T[length];
+            _nextFree = 0;
         }
 
         public void Add(T o)
         {
-            buffer[nextFree] = o;
-            nextFree = (nextFree + 1) % buffer.Length;
+            _buffer[_nextFree] = o;
+            _nextFree = ++_nextFree % _buffer.Length;
+        }
+
+        public T this[int index]
+        {
+            get => _buffer[AdjustIndex(index)];
+            set => _buffer[AdjustIndex(index)] = value;
         }
 
         public CircularBuffer<T> DeepClone()
         {
-            CircularBuffer<T> copy = new CircularBuffer<T>(length);
-            copy.buffer = buffer.Clone() as T[];
-            copy.nextFree = nextFree;
-            copy.length = length;
+            CircularBuffer<T> copy = new CircularBuffer<T>(_length)
+            {
+                _buffer = _buffer.Clone() as T[],
+                _nextFree = _nextFree,
+                _length = _length
+            };
             return copy;
         }
 
@@ -33,36 +41,15 @@
             return DeepClone();
         }
 
-
-
-        public T this[long index]
+        private int AdjustIndex(int index)
         {
-            get
+            int tempIndex = index % _buffer.Length;
+            //Make negative indexes behave properly.
+            if (tempIndex < 0)
             {
-                int tempIndex = (int)(index % buffer.Length);
-                //Make negative indexes behave properly.
-                if (tempIndex < 0)
-                {
-                    tempIndex = buffer.Length + tempIndex;
-                }
-                return buffer[tempIndex];
+                tempIndex = _buffer.Length + tempIndex;
             }
-            set
-            {
-                buffer[index % buffer.Length] = value;
-            }
-        }
-        public T this[ulong index]
-        {
-            get
-            {
-
-                return buffer[index % (ulong)buffer.LongLength];
-            }
-            set
-            {
-                buffer[index % (ulong)buffer.Length] = value;
-            }
+            return tempIndex;
         }
     }
 }
