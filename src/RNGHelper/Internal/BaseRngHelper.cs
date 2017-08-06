@@ -36,7 +36,6 @@ namespace FF12RNGHelper
         // These members MUST be set by the CalculateRngHelper method
         // implemented by an extending class.
         protected int NextHealValue;
-
         protected int AttacksBeforeNextCombo;
         protected int ComboPosition;
         protected bool ComboFound;
@@ -45,12 +44,11 @@ namespace FF12RNGHelper
 
         // Members provided for data access. Can be updated.
         protected int Index; // Current index in the PRNG list
-
         protected int FutureRngPositionsToCalculate = 100;
-        protected CircularBuffer<uint> SearchBuff; // buffer of PRNG numbers
         protected List<int> HealVals; // List of heal values input by user
         protected CharacterGroup Group = new CharacterGroup();
 
+        private CircularBuffer<uint> SearchBuff; // buffer of PRNG numbers
         private IRNG _searchRng;
         private PlatformType _platformType = PlatformType.Ps2;
         private bool _foundFirstRngPosition;

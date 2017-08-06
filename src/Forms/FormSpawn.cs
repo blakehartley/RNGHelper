@@ -7,31 +7,30 @@ using System.Windows.Forms;
 
 namespace FF12RNGHelper
 {
-    public partial class FormSteal : Form
+    public partial class FormSpawn : Form
     {
         private const int findNextTimeout = 60;
         private const int maxSearchIndexSupported = (int)1e7; // 10 million
+        private const int SearchBufferSize = 1000000;
 
-        private IRNG searchRNG;
-        private IRNG dispRNG;
-        private int index;	// Current index in the PRNG list
-        private List<uint> searchBuff;	// buffer of PRNG numbers
-        private List<int> healVals;  // List of heal values input by user
-        private CharacterGroup group = new CharacterGroup();
+        IRNG searchRNG;
+        IRNG dispRNG;
+        int index;	// Current index in the PRNG list
+        CircularBuffer<UInt32> searchBuff;	// buffer of PRNG numbers
+        List<UInt32> healVals;  // List of heal values input by user
+        CharacterGroup group = new CharacterGroup();
 
-        Stopwatch aStopwatch = new Stopwatch();
+        System.Diagnostics.Stopwatch aStopwatch = new System.Diagnostics.Stopwatch();
 
-        public FormSteal()
+        public FormSpawn()
         {
             InitializeComponent();
-
-            index = 0;
 
             ddlSpellPow1.SelectedIndex = 0;
             ddlSpellPow2.SelectedIndex = 0;
             ddlSpellPow3.SelectedIndex = 0;
             cbPlatform.SelectedIndex = 0;
-            healVals = new List<int>();
+            healVals = new List<UInt32>();
             searchRNG = new RNG1998();
             dispRNG = new RNG1998();
             toolStripStatusLabelPercent.Text = "";
@@ -47,30 +46,33 @@ namespace FF12RNGHelper
 
         private void LoadCharacters()
         {
-            group.ClearCharacters();
-
-            if (tbLevel1.Text != string.Empty && tbMagic1.Text != string.Empty)
+            this.group.ClearCharacters();
+            if (this.tbLevel1.Text != string.Empty && this.tbMagic1.Text != string.Empty)
             {
-                LoadCharacter(tbLevel1, tbMagic1, ddlSpellPow1, cbSerenity1);
+                double level = double.Parse(this.tbLevel1.Text);
+                double magic = double.Parse(this.tbMagic1.Text);
+                int startIndex = this.ddlSpellPow1.SelectedItem.ToString().IndexOf("(") + 1;
+                int length = this.ddlSpellPow1.SelectedItem.ToString().IndexOf(")") - startIndex;
+                double spellpower = double.Parse(this.ddlSpellPow1.SelectedItem.ToString().Substring(startIndex, length));
+                this.group.AddCharacter(new Character(level, magic, spellpower, cbSerenity1.Checked));
             }
-            if (tbLevel2.Text != string.Empty && tbMagic2.Text != string.Empty)
+            if (this.tbLevel2.Text != string.Empty && this.tbMagic2.Text != string.Empty)
             {
-                LoadCharacter(tbLevel2, tbMagic2, ddlSpellPow2, cbSerenity2);
+                double level = double.Parse(this.tbLevel2.Text);
+                double magic = double.Parse(this.tbMagic2.Text);
+                int startIndex = this.ddlSpellPow2.SelectedItem.ToString().IndexOf("(") + 1;
+                int length = this.ddlSpellPow2.SelectedItem.ToString().IndexOf(")") - startIndex;
+                double spellpower = double.Parse(this.ddlSpellPow2.SelectedItem.ToString().Substring(startIndex, length));
+                this.group.AddCharacter(new Character(level, magic, spellpower, cbSerenity2.Checked));
             }
-            if (tbLevel3.Text != string.Empty && tbMagic3.Text != string.Empty)
-            {
-                LoadCharacter(tbLevel3, tbMagic3, ddlSpellPow3, cbSerenity3);
-            }
-        }
-
-        private void LoadCharacter(TextBox levelBox, TextBox magicBox, ComboBox spellPowerBox, CheckBox serenityBox)
-        {
-            double level = double.Parse(levelBox.Text);
-            double magic = double.Parse(magicBox.Text);
-            int startIndex = spellPowerBox.SelectedItem.ToString().IndexOf("(") + 1;
-            int length = spellPowerBox.SelectedItem.ToString().IndexOf(")") - startIndex;
-            double spellpower = double.Parse(spellPowerBox.SelectedItem.ToString().Substring(startIndex, length));
-            group.AddCharacter(new Character(level, magic, spellpower, serenityBox.Checked));
+            if (this.tbLevel3.Text == string.Empty || this.tbMagic3.Text == string.Empty)
+                return;
+            double level1 = double.Parse(this.tbLevel3.Text);
+            double magic1 = double.Parse(this.tbMagic3.Text);
+            int startIndex1 = this.ddlSpellPow3.SelectedItem.ToString().IndexOf("(") + 1;
+            int length1 = this.ddlSpellPow3.SelectedItem.ToString().IndexOf(")") - startIndex1;
+            double spellpower1 = double.Parse(this.ddlSpellPow3.SelectedItem.ToString().Substring(startIndex1, length1));
+            this.group.AddCharacter(new Character(level1, magic1, spellpower1, cbSerenity3.Checked));
         }
 
         private int ParseNumRows()
@@ -93,11 +95,11 @@ namespace FF12RNGHelper
             LoadCharacters();
 
             healVals.Clear();
-            searchBuff = new List<uint>();
+            searchBuff = new CircularBuffer<UInt32>(SearchBufferSize);
             searchRNG.sgenrand();
             searchBuff.Add(searchRNG.genrand());
             index = 0;
-            if (!FindNext(int.Parse(tbLastHeal.Text)))
+            if (!FindNext(UInt32.Parse(tbLastHeal.Text)))
             {
                 btnContinue.Enabled = false;
                 MessageBox.Show("Impossible Heal Value entered.");
@@ -111,7 +113,7 @@ namespace FF12RNGHelper
         {
             DateTime begint = DateTime.Now;
             group.IncrimentIndex();
-            if (!FindNext(int.Parse(tbLastHeal.Text)))
+            if (!FindNext(UInt32.Parse(tbLastHeal.Text)))
             {
                 MessageBox.Show("Impossible Heal Value entered.");
                 return;
@@ -122,10 +124,10 @@ namespace FF12RNGHelper
             displayRNG(index - healVals.Count + 1, index + numRows);
         }
 
-        private bool FindNext(int value)
+        private bool FindNext(uint value)
         {
             // Do a range check before trying this out to avoid entering an infinite loop.
-            if (!group.ValidateHealValue(value))
+            if (value > group.HealMax() || value < group.HealMin())
             {
                 return false;
             }
@@ -181,7 +183,7 @@ namespace FF12RNGHelper
             return true;
         }
 
-        double randToPercent(uint toConvert)
+        UInt32 randToPercent(UInt32 toConvert)
         {
             return toConvert % 100;
         }
@@ -189,6 +191,14 @@ namespace FF12RNGHelper
         private void displayRNG(int end)
         {
             displayRNG(0, end);
+        }
+
+        private bool rareCheck(double chance, double min, double max)
+        {
+            if (chance > min && chance < max)
+                return true;
+            else
+                return false;
         }
 
         private void displayRNG(int start, int end)
@@ -206,27 +216,54 @@ namespace FF12RNGHelper
             dataGridView1.Rows.Clear();
             //Consume RNG seeds before our desired index
             //This can take obscene amounts of time.
-            DateTime startTime = DateTime.Now;
-            for (int i = 0; i < start; i++)
+            DateTime startt = DateTime.Now;
+            for (int index = 0; index < start; index++)
             {
                 displayRNG.genrand();
             }
-            DateTime endTime = DateTime.Now;
-            toolStripStatusLabelPercent.Text = (endTime - startTime).Milliseconds.ToString();
+            DateTime endtt = DateTime.Now;
+            toolStripStatusLabelPercent.Text = (endtt - startt).Milliseconds.ToString();
 
-            int rarePosition = 0;
-            int rarePositionCuffs = 0;
+            // Rare 1:
+            double spawnMin1, spawnMax1;
+            int rareRNGPosition1;
 
-            bool rareSteal = false;
-            bool rareStealCuffs = false;
+            double.TryParse(tbMin1.Text, out spawnMin1);
+            double.TryParse(tbMax1.Text, out spawnMax1);
+            int.TryParse(tbRNG1.Text, out rareRNGPosition1);
+
+            // Convert to fraction:
+            spawnMin1 /= 100.0;
+            spawnMax1 /= 100.0;
+
+            // Rare 2:
+            double spawnMin2, spawnMax2;
+            int rareRNGPosition2;
+
+            double.TryParse(tbMin2.Text, out spawnMin2);
+            double.TryParse(tbMax2.Text, out spawnMax2);
+            int.TryParse(tbRNG2.Text, out rareRNGPosition2);
+
+            // Convert to fraction:
+            spawnMin2 /= 100.0;
+            spawnMax2 /= 100.0;
+
+            // Use these variables to check for first instance of chest and contents
+            bool rareSpawn1 = false;
+            int rareFoundPos1 = 0;
+
+            bool rareSpawn2 = false;
+            int rareFoundPos2 = 0;
+
+            // Last rare 1 before rare 2 variable, for Ishteen
+            int rareFoundPos3 = 0;
 
             // Use these variables to check for first punch combo
             bool comboFound = false;
             int comboPos = 0;
 
-            uint aVal1 = displayRNG.genrand();
-            uint aVal2 = displayRNG.genrand();
-            uint aVal3 = displayRNG.genrand();
+            UInt32 aVal1 = displayRNG.genrand();
+            UInt32 aVal2 = displayRNG.genrand();
 
             // We want to preserve the character index, since this loop is just for display:
             int indexStatic = group.GetIndex();
@@ -236,61 +273,86 @@ namespace FF12RNGHelper
             for (int index = start; index < end; index++)
             {
                 // Index starting at 0
-                int loopIndex = index - start;
+                int index0 = index - start;
 
                 // Get the heal value once:
-                int currentHeal = group.GetHealValue(aVal1);
-                int nextHeal = group.PeekHealValue(aVal2);
+                int healNow = group.GetHealValue(aVal1);
+                int healNext = group.PeekHealValue(aVal2);
+
+                // Get chance to spawn rare game
+                float spawnChance = (float)aVal1 / 4294967296;
 
                 // Put the next expected heal in the text box
                 if (index == start + healVals.Count - 1)
                 {
-                    tbLastHeal.Text = nextHeal.ToString();
+                    tbLastHeal.Text = healNext.ToString();
+                    //tbAppear1.Text = group.HealMin().ToString();
+                    //tbItem1.Text = group.HealMax().ToString();
                 }
 
                 // Advance the RNG before starting the loop in case we want to skip an entry
-                uint aVal1_temp = aVal1;
-                uint aVal2_temp = aVal2;
-                uint aVal3_temp = aVal3;
+                UInt32 aVal1_temp = aVal1;
+                UInt32 aVal2_temp = aVal2;
                 aVal1 = aVal2;
-                aVal2 = aVal3;
-                aVal3 = displayRNG.genrand();
+                aVal2 = displayRNG.genrand();
 
                 // Skip the entry if it's too long ago
-                if (loopIndex < healVals.Count - 5)
+                if (index0 < healVals.Count - 5)
                     continue;
 
                 //Start actually displaying
                 dataGridView1.Rows.Add();
 
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = index;
+                //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal1;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = healNow;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = spawnChance;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = aVal1_temp.ToString("N0");
+
+                // Check if the rares are in a position offset by a fixed amount
+
+                if (rareCheck(spawnChance, spawnMin1, spawnMax1))
+                {
+                    int chestFirstChance = healVals.Count + rareRNGPosition1 - 1;
+
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightBlue;
+                    if (index0 >= chestFirstChance && !rareSpawn1)
+                    {
+                        rareFoundPos1 = index0 - healVals.Count - rareRNGPosition1 + 1;
+                        rareSpawn1 = true;
+                    }
+                }
+                if (rareCheck(spawnChance, spawnMin2, spawnMax2))
+                {
+                    int chestFirstChance = healVals.Count + rareRNGPosition2 - 1;
+
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Crimson;
+                    if (index0 >= chestFirstChance && !rareSpawn2)
+                    {
+                        rareFoundPos2 = index0 - healVals.Count - rareRNGPosition2 + 1;
+                        rareSpawn2 = true;
+                    }
+                }
+                if (rareCheck(spawnChance, spawnMin1, spawnMax1) && rareCheck(spawnChance, spawnMin2, spawnMax2))
+                {
+                    //int chestFirstChance = healVals.Count + Math.Max(rareRNGPosition1, rareRNGPosition2)+ 1;
+
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Orchid;
+                }
+                if (rareCheck(spawnChance, spawnMin1, spawnMax1))
+                {
+                    // Check if rare 2 has been found yet
+                    if (!rareSpawn2)
+                    {
+                        rareFoundPos3 = index0 - healVals.Count - rareRNGPosition1 + 1;
+                    }
+                }
+
                 // Color consumed RNG green
-                if (index < start + healVals.Count)
+                if (index0 < healVals.Count)
                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightGreen;
 
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = index;
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = currentHeal;
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(aVal1_temp);
-
-                handleSteal(aVal1_temp, aVal2_temp, aVal3_temp, 3);
-                handleStealCuffs(aVal1_temp, aVal2_temp, aVal3_temp, 4);
-
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[5].Value = (aVal1_temp < 0x1000000);
-
-                // Check if the chests are in a position offset by a fixed amount
-                if ((aVal1_temp % 100) < 3 && !rareSteal && loopIndex >= healVals.Count)
-                {
-                    rareSteal = true;
-                    rarePosition = loopIndex - healVals.Count;
-                }
-
-                if ((aVal1_temp % 100) < 6 && !rareStealCuffs && loopIndex >= healVals.Count)
-                {
-                    rareStealCuffs = true;
-                    rarePositionCuffs = loopIndex - healVals.Count;
-                }
-
-                // Check for combo during string of punches
-                int comboCheck = loopIndex - healVals.Count - 5 + 1;
+                int comboCheck = index0 - healVals.Count - 5 + 1;
                 if (comboCheck % 10 == 0 && comboCheck >= 0 && !comboFound &&
                     Combo.IsSucessful(aVal1_temp))
                 {
@@ -299,8 +361,11 @@ namespace FF12RNGHelper
                 }
             }
 
-            tbRare.Text = rarePosition.ToString();
-            tbRareCuffs.Text = rarePositionCuffs.ToString();
+            tbAppear1.Text = rareFoundPos1.ToString();
+
+            tbAppear2.Text = rareFoundPos2.ToString();
+
+            tbAppear12.Text = rareFoundPos3.ToString();
 
             tbCombo.Text = comboPos.ToString();
 
@@ -308,29 +373,6 @@ namespace FF12RNGHelper
             tbLastHeal.SelectAll();
 
             group.SetIndex(indexStatic);
-        }
-
-        private void handleSteal(uint PRNG0, uint PRNG1, uint PRNG2, int column)
-        {
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = Steal.CheckSteal(PRNG0, PRNG1, PRNG2);
-        }
-
-        private void handleStealCuffs(uint PRNG0, uint PRNG1, uint PRNG2, int column)
-        {
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = Steal.CheckStealCuffs(PRNG0, PRNG1, PRNG2);
-        }
-
-        private void handleStealHelper(string text, int loopIndex, int column, CheckBox checkBox, bool expectCheck,
-            ref int itemPosition, ref bool chestFound)
-        {
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = (object)text;
-
-            // Check if the items are in this position
-            if (((checkBox.Checked == expectCheck) && loopIndex >= healVals.Count) && !chestFound)
-            {
-                itemPosition = loopIndex - healVals.Count;
-                chestFound = true;
-            }
         }
 
         private void tbLevel_Validating(object sender, CancelEventArgs e)
@@ -353,8 +395,8 @@ namespace FF12RNGHelper
 
         private void tbLastHeal_Validating(object sender, CancelEventArgs e)
         {
-            int tempVal;
-            if (!int.TryParse(tbLastHeal.Text, out tempVal))
+            UInt32 tempVal;
+            if (!UInt32.TryParse(tbLastHeal.Text, out tempVal))
             {
                 tbLastHeal.Text = "0";
             }
@@ -363,57 +405,6 @@ namespace FF12RNGHelper
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("FF12 RNG Helper v1.02\nSo many features, so little time...");
-        }
-
-        private void backgroundWorkerConsume_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //Start the party!
-            Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>)e.Argument;
-            BackgroundWorker bw = sender as BackgroundWorker;
-            if (bw.CancellationPending)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                e.Result = inputArgs;
-                aStopwatch.Stop();
-            }
-
-        }
-
-        private void backgroundWorkerConsume_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!e.Cancelled)
-            {
-                //We made it!
-                dataGridView1.Rows.Clear();
-                Tuple<int, int> inputArgs = (Tuple<int, int>)e.Result;
-
-                for (int i = inputArgs.Item1; i < inputArgs.Item2; i++)
-                {
-                    //Start actually displaying
-                    uint aVal = dispRNG.genrand();
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = i;
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = aVal;
-                    //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToHeal(aVal);
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = randToPercent(aVal);
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[4].Value = (aVal % 65000);
-                }
-            }
-        }
-
-        private void backgroundWorkerConsume_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            toolStripProgressBarPercent.Value = e.ProgressPercentage;
-            toolStripStatusLabelPercent.Text = e.ProgressPercentage.ToString() + "%";
-            toolStripStatusLabelProgress.Text = aStopwatch.Elapsed.ToString();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            backgroundWorkerConsume.CancelAsync();
         }
 
         private void cbPlatform_SelectionChangeCommitted(object sender, EventArgs e)
@@ -440,6 +431,12 @@ namespace FF12RNGHelper
             displayRNG(index - healVals.Count + 1, index + numRows);
         }
 
+        private void stealToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormSteal().Show();
+            this.FindForm().Hide();
+        }
+
         private void tbLastHeal_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -454,12 +451,6 @@ namespace FF12RNGHelper
 
         private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormSpawn().Show();
-            this.FindForm().Hide();
-        }
-
-        private void chestsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
             new FormChest2().Show();
             Hide();
         }
@@ -472,7 +463,7 @@ namespace FF12RNGHelper
             for (int i = 0; i < consume; i++)
             {
                 group.IncrimentIndex();
-                if (!FindNext(int.Parse(tbLastHeal.Text)))
+                if (!FindNext(UInt32.Parse(tbLastHeal.Text)))
                 {
                     MessageBox.Show("Impossible Heal Value entered.");
                     return;

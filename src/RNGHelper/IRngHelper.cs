@@ -12,7 +12,7 @@
     /// 4) GetChestFutureRng()
     /// 5) GetNextExpecteHealValue() and GetAttacksUntilNextCombo()
     /// </summary>
-    internal interface IRngHelper
+    public interface IRngHelper
     {
         #region fatty interface methods
 

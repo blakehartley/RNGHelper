@@ -19,6 +19,18 @@ namespace FF12RNGHelper
 
         private const string IntDefaultValue = "0";
 
+        private static readonly Dictionary<string, Spells> NameToSpellMap =
+            new Dictionary<string, Spells>
+            {
+                {"Cure", Spells.Cure},
+                {"Cura", Spells.Cura},
+                {"Curaga", Spells.Curaga},
+                {"Curaja", Spells.Curaja},
+                {"Cura IZJS/TZA", Spells.CuraIzjsTza},
+                {"Curaga IZJS/TZA", Spells.CuragaIzjsTza},
+                {"Curaja IZJS/TZA", Spells.CurajaIzjsTza},
+            };
+
         #endregion constants
 
         #region internal state
@@ -79,8 +91,8 @@ namespace FF12RNGHelper
         {
             double level = double.Parse(levelBox.Text);
             double magic = double.Parse(magicBox.Text);
-            Spell spell = new Spell(spellPowerBox);
-            _group.AddCharacter(new Character(level, magic, spell.getPower(),
+            Spells spell = NameToSpellMap[spellPowerBox.SelectedItem.ToString()];
+            _group.AddCharacter(new Character(level, magic, spell,
                 serenityBox.Checked));
         }
 
@@ -256,16 +268,6 @@ namespace FF12RNGHelper
 
         #endregion update UI methods
 
-        private int ParseNumRows()
-        {
-            int numRows = int.Parse(tbNumRows.Text);
-            if (numRows < 30)
-                numRows = 30;
-            if (numRows > 10000)
-                numRows = 10000;
-            return numRows;
-        }
-
         #region click methods
 
         private void btnBegin_Click(object sender, EventArgs e)
@@ -335,6 +337,16 @@ namespace FF12RNGHelper
 
         #endregion click methods
 
+        private int ParseNumRows()
+        {
+            int numRows = int.Parse(tbNumRows.Text);
+            if (numRows < 30)
+                numRows = 30;
+            if (numRows > 10000)
+                numRows = 10000;
+            return numRows;
+        }
+
         private void cbPlatform_SelectionChangeCommitted(object sender, EventArgs e)
         {
             if (cbPlatform.SelectedItem as string == "PS2" && _platform is PlatformType.Ps4)
@@ -362,6 +374,31 @@ namespace FF12RNGHelper
                     btnContinue_Click(sender, e);
             }
         }
+
+        private void FormChest_Load(object sender, EventArgs e)
+        {
+            LoadData();
+            int numRows = ParseNumRows();
+
+            _rngHelper.CalculateRng(numRows);
+            DisplayFutureRng();
+        }
+
+        #region change form methods
+
+        private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormSpawn().Show();
+            Hide();
+        }
+
+        private void stealToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormSteal().Show();
+            Hide();
+        }
+
+        #endregion change form methods
 
         #region text box validation
 
@@ -393,64 +430,5 @@ namespace FF12RNGHelper
         }
 
         #endregion text box validation
-
-        private void FormChest_Load(object sender, EventArgs e)
-        {
-            LoadData();
-            int numRows = ParseNumRows();
-            _rngHelper.CalculateRng(numRows);
-            DisplayFutureRng();
-        }
-
-        #region change form methods
-
-        private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new FormSpawn().Show();
-            Hide();
-        }
-
-        private void stealToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new FormSteal().Show();
-            Hide();
-        }
-
-        #endregion change form methods
-
-        #region backgroundworker stuff
-
-        private void backgroundWorkerConsume_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //Start the party!
-            Tuple<ulong, ulong> inputArgs = (Tuple<ulong, ulong>) e.Argument;
-            BackgroundWorker bw = sender as BackgroundWorker;
-            if (bw.CancellationPending)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                e.Result = inputArgs;
-            }
-        }
-
-        private void backgroundWorkerConsume_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!e.Cancelled)
-            {
-                //We made it!
-                dataGridView1.Rows.Clear();
-                Tuple<int, int> inputArgs = (Tuple<int, int>) e.Result;
-            }
-        }
-
-        private void backgroundWorkerConsume_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            toolStripProgressBarPercent.Value = e.ProgressPercentage;
-            toolStripStatusLabelPercent.Text = e.ProgressPercentage.ToString() + "%";
-        }
-
-        #endregion backgroundworker stuff
     }
 }
