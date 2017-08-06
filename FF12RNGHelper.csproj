@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Forms\FormUtils.cs" />
     <Compile Include="src\RNGHelper\Internal\BaseRngHelper.cs" />
     <Compile Include="src\RNGHelper\Character.cs" />
     <Compile Include="src\RNGHelper\CharacterGroup.cs" />
