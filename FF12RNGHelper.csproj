@@ -68,62 +68,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRngHelper.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="CharacterGroup.cs" />
-    <Compile Include="ChestFutureRng.cs" />
-    <Compile Include="ChestRngHelper.cs" />
-    <Compile Include="CircularBuffer.cs" />
-    <Compile Include="Combo.cs" />
-    <Compile Include="FormChest2.cs">
+    <Compile Include="src\RNGHelper\Internal\BaseRngHelper.cs" />
+    <Compile Include="src\RNGHelper\Character.cs" />
+    <Compile Include="src\RNGHelper\CharacterGroup.cs" />
+    <Compile Include="src\RNGHelper\ChestFutureRng.cs" />
+    <Compile Include="src\RNGHelper\ChestRngHelper.cs" />
+    <Compile Include="src\RNGHelper\Internal\CircularBuffer.cs" />
+    <Compile Include="src\RNGHelper\Internal\Combo.cs" />
+    <Compile Include="src\Forms\FormChest2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChest2.Designer.cs">
+    <Compile Include="src\Forms\FormChest2.Designer.cs">
       <DependentUpon>FormChest2.cs</DependentUpon>
     </Compile>
-    <Compile Include="IFutureRng.cs" />
-    <Compile Include="PlatformType.cs" />
-    <Compile Include="IRngHelper.cs" />
-    <Compile Include="Spell.cs" />
-    <Compile Include="Spell2.cs" />
-    <Compile Include="Spells2.cs" />
-    <Compile Include="Steal.cs" />
-    <Compile Include="Chest.cs" />
-    <Compile Include="FormSteal.cs">
+    <Compile Include="src\RNGHelper\Internal\IFutureRng.cs" />
+    <Compile Include="src\RNGHelper\PlatformType.cs" />
+    <Compile Include="src\RNGHelper\IRngHelper.cs" />
+    <Compile Include="src\RNGHelper\Internal\Spell.cs" />
+    <Compile Include="src\RNGHelper\Spells.cs" />
+    <Compile Include="src\RNGHelper\Internal\Steal.cs" />
+    <Compile Include="src\RNGHelper\Chest.cs" />
+    <Compile Include="src\Forms\FormSteal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSteal.Designer.cs">
+    <Compile Include="src\Forms\FormSteal.Designer.cs">
       <DependentUpon>FormSteal.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChest.cs">
+    <Compile Include="src\Forms\FormChest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChest.Designer.cs">
+    <Compile Include="src\Forms\FormChest.Designer.cs">
       <DependentUpon>FormChest.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSpawn.cs">
+    <Compile Include="src\Forms\FormSpawn.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSpawn.Designer.cs">
+    <Compile Include="src\Forms\FormSpawn.Designer.cs">
       <DependentUpon>FormSpawn.cs</DependentUpon>
     </Compile>
-    <Compile Include="IDeepClonable.cs" />
-    <Compile Include="IRNG.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="src\RNGHelper\Internal\IDeepClonable.cs" />
+    <Compile Include="src\RNGHelper\Internal\IRNG.cs" />
+    <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RNG1998.cs" />
-    <Compile Include="RNG2002.cs" />
-    <Compile Include="Utils.cs" />
-    <EmbeddedResource Include="FormChest2.resx">
+    <Compile Include="src\RNGHelper\Internal\RNG1998.cs" />
+    <Compile Include="src\RNGHelper\Internal\RNG2002.cs" />
+    <Compile Include="src\RNGHelper\Internal\Utils.cs" />
+    <EmbeddedResource Include="src\Forms\FormChest2.resx">
       <DependentUpon>FormChest2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSteal.resx">
+    <EmbeddedResource Include="src\Forms\FormSteal.resx">
       <DependentUpon>FormSteal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChest.resx">
+    <EmbeddedResource Include="src\Forms\FormChest.resx">
       <DependentUpon>FormChest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSpawn.resx">
+    <EmbeddedResource Include="src\Forms\FormSpawn.resx">
       <DependentUpon>FormSpawn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

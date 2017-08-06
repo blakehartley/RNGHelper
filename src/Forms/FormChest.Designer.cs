@@ -1,8 +1,6 @@
-﻿using System.Windows.Forms;
-
-namespace FF12RNGHelper
+﻿namespace FF12RNGHelper
 {
-    partial class FormChest2
+    partial class FormChest
     {
         /// <summary>
         /// Required designer variable.
@@ -74,18 +72,17 @@ namespace FF12RNGHelper
             this.label24 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.tbConsume = new System.Windows.Forms.TextBox();
-            this.btnConsume = new System.Windows.Forms.Button();
+            this.bConsume = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBarPercent = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabelPercent = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelProgress = new System.Windows.Forms.ToolStripStatusLabel();
-            this.backgroundWorkerConsume = new System.ComponentModel.BackgroundWorker();
             this.gbPlatform = new System.Windows.Forms.GroupBox();
             this.cbPlatform = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.cbWantItem1First = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -98,7 +95,7 @@ namespace FF12RNGHelper
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbWantItem1Second = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -123,6 +120,7 @@ namespace FF12RNGHelper
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.tbCombo = new System.Windows.Forms.TextBox();
+            this.backgroundWorkerConsume = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.gbStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -537,7 +535,7 @@ namespace FF12RNGHelper
             this.groupBoxSearch.Controls.Add(this.label24);
             this.groupBoxSearch.Controls.Add(this.btnClear);
             this.groupBoxSearch.Controls.Add(this.tbConsume);
-            this.groupBoxSearch.Controls.Add(this.btnConsume);
+            this.groupBoxSearch.Controls.Add(this.bConsume);
             this.groupBoxSearch.Controls.Add(this.label23);
             this.groupBoxSearch.Controls.Add(this.tbLastHeal);
             this.groupBoxSearch.Controls.Add(this.btnContinue);
@@ -593,18 +591,18 @@ namespace FF12RNGHelper
             this.tbConsume.TabIndex = 15;
             this.tbConsume.Text = "10";
             // 
-            // btnConsume
+            // bConsume
             // 
-            this.btnConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnConsume.Enabled = false;
-            this.btnConsume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConsume.Location = new System.Drawing.Point(177, 54);
-            this.btnConsume.Name = "btnConsume";
-            this.btnConsume.Size = new System.Drawing.Size(91, 26);
-            this.btnConsume.TabIndex = 16;
-            this.btnConsume.Text = "Consume";
-            this.btnConsume.UseVisualStyleBackColor = true;
-            this.btnConsume.Click += new System.EventHandler(this.bConsume_Click);
+            this.bConsume.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bConsume.Enabled = false;
+            this.bConsume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bConsume.Location = new System.Drawing.Point(177, 54);
+            this.bConsume.Name = "bConsume";
+            this.bConsume.Size = new System.Drawing.Size(91, 26);
+            this.bConsume.TabIndex = 16;
+            this.bConsume.Text = "Consume";
+            this.bConsume.UseVisualStyleBackColor = true;
+            this.bConsume.Click += new System.EventHandler(this.bConsume_Click);
             // 
             // label23
             // 
@@ -646,14 +644,6 @@ namespace FF12RNGHelper
             this.toolStripStatusLabelProgress.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabelProgress.Text = "toolStripStatusLabel1";
             // 
-            // backgroundWorkerConsume
-            // 
-            this.backgroundWorkerConsume.WorkerReportsProgress = true;
-            this.backgroundWorkerConsume.WorkerSupportsCancellation = true;
-            this.backgroundWorkerConsume.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerConsume_DoWork);
-            this.backgroundWorkerConsume.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerConsume_ProgressChanged);
-            this.backgroundWorkerConsume.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerConsume_RunWorkerCompleted);
-            // 
             // gbPlatform
             // 
             this.gbPlatform.Controls.Add(this.cbPlatform);
@@ -680,7 +670,7 @@ namespace FF12RNGHelper
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.cbWantItem1First);
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.textBox5);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.textBox4);
@@ -707,14 +697,14 @@ namespace FF12RNGHelper
             this.label6.TabIndex = 11;
             this.label6.Text = "Want Item 1:";
             // 
-            // cbWantItem1First
+            // checkBox1
             // 
-            this.cbWantItem1First.AutoSize = true;
-            this.cbWantItem1First.Location = new System.Drawing.Point(101, 149);
-            this.cbWantItem1First.Name = "cbWantItem1First";
-            this.cbWantItem1First.Size = new System.Drawing.Size(15, 14);
-            this.cbWantItem1First.TabIndex = 10;
-            this.cbWantItem1First.UseVisualStyleBackColor = true;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(101, 149);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // textBox5
             // 
@@ -804,7 +794,7 @@ namespace FF12RNGHelper
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.cbWantItem1Second);
+            this.groupBox2.Controls.Add(this.checkBox2);
             this.groupBox2.Controls.Add(this.textBox6);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox7);
@@ -831,14 +821,14 @@ namespace FF12RNGHelper
             this.label7.TabIndex = 11;
             this.label7.Text = "Want Item 1:";
             // 
-            // cbWantItem1Second
+            // checkBox2
             // 
-            this.cbWantItem1Second.AutoSize = true;
-            this.cbWantItem1Second.Location = new System.Drawing.Point(101, 149);
-            this.cbWantItem1Second.Name = "cbWantItem1Second";
-            this.cbWantItem1Second.Size = new System.Drawing.Size(15, 14);
-            this.cbWantItem1Second.TabIndex = 10;
-            this.cbWantItem1Second.UseVisualStyleBackColor = true;
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(101, 149);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(15, 14);
+            this.checkBox2.TabIndex = 10;
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // textBox6
             // 
@@ -930,12 +920,11 @@ namespace FF12RNGHelper
             this.tbAppear1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbAppear1.Enabled = false;
             this.tbAppear1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbAppear1.Location = new System.Drawing.Point(103, 7);
+            this.tbAppear1.Location = new System.Drawing.Point(125, 7);
             this.tbAppear1.Name = "tbAppear1";
-            this.tbAppear1.Size = new System.Drawing.Size(101, 25);
+            this.tbAppear1.Size = new System.Drawing.Size(79, 25);
             this.tbAppear1.TabIndex = 17;
             this.tbAppear1.Text = "?";
-            this.tbAppear1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 
@@ -960,12 +949,11 @@ namespace FF12RNGHelper
             this.tbItem1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbItem1.Enabled = false;
             this.tbItem1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbItem1.Location = new System.Drawing.Point(103, 38);
+            this.tbItem1.Location = new System.Drawing.Point(125, 38);
             this.tbItem1.Name = "tbItem1";
-            this.tbItem1.Size = new System.Drawing.Size(101, 25);
+            this.tbItem1.Size = new System.Drawing.Size(79, 25);
             this.tbItem1.TabIndex = 19;
             this.tbItem1.Text = "?";
-            this.tbItem1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox3
             // 
@@ -1014,24 +1002,22 @@ namespace FF12RNGHelper
             this.tbAppear2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbAppear2.Enabled = false;
             this.tbAppear2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbAppear2.Location = new System.Drawing.Point(103, 7);
+            this.tbAppear2.Location = new System.Drawing.Point(125, 7);
             this.tbAppear2.Name = "tbAppear2";
-            this.tbAppear2.Size = new System.Drawing.Size(101, 25);
+            this.tbAppear2.Size = new System.Drawing.Size(79, 25);
             this.tbAppear2.TabIndex = 17;
             this.tbAppear2.Text = "?";
-            this.tbAppear2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbItem2
             // 
             this.tbItem2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbItem2.Enabled = false;
             this.tbItem2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbItem2.Location = new System.Drawing.Point(103, 38);
+            this.tbItem2.Location = new System.Drawing.Point(125, 38);
             this.tbItem2.Name = "tbItem2";
-            this.tbItem2.Size = new System.Drawing.Size(101, 25);
+            this.tbItem2.Size = new System.Drawing.Size(79, 25);
             this.tbItem2.TabIndex = 19;
             this.tbItem2.Text = "?";
-            this.tbItem2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox5
             // 
@@ -1080,7 +1066,15 @@ namespace FF12RNGHelper
             this.tbCombo.TabIndex = 17;
             this.tbCombo.Text = "?";
             // 
-            // FormChest2
+            // backgroundWorkerConsume
+            // 
+            this.backgroundWorkerConsume.WorkerReportsProgress = true;
+            this.backgroundWorkerConsume.WorkerSupportsCancellation = true;
+            this.backgroundWorkerConsume.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerConsume_DoWork);
+            this.backgroundWorkerConsume.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerConsume_ProgressChanged);
+            this.backgroundWorkerConsume.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerConsume_RunWorkerCompleted);
+            // 
+            // FormChest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1099,7 +1093,7 @@ namespace FF12RNGHelper
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(557, 601);
-            this.Name = "FormChest2";
+            this.Name = "FormChest";
             this.Text = "FF12 RNG Helper";
             this.Load += new System.EventHandler(this.FormChest_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -1153,7 +1147,6 @@ namespace FF12RNGHelper
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarPercent;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelPercent;
-        private System.ComponentModel.BackgroundWorker backgroundWorkerConsume;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelProgress;
         private System.Windows.Forms.GroupBox gbPlatform;
         private System.Windows.Forms.ComboBox cbPlatform;
@@ -1170,10 +1163,10 @@ namespace FF12RNGHelper
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox cbWantItem1First;
+        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox cbWantItem1Second;
+        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox7;
@@ -1194,36 +1187,37 @@ namespace FF12RNGHelper
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox tbAppear2;
         private System.Windows.Forms.TextBox tbItem2;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.CheckBox cbSerenity3;
-        private System.Windows.Forms.TextBox tbLevel3;
-        private System.Windows.Forms.ComboBox ddlSpellPow3;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox tbMagic3;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.CheckBox cbSerenity2;
-        private System.Windows.Forms.TextBox tbLevel2;
-        private System.Windows.Forms.ComboBox ddlSpellPow2;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox tbMagic2;
-        private System.Windows.Forms.ToolStripMenuItem rareGameToolStripMenuItem;
-        private System.Windows.Forms.TextBox tbConsume;
-        private System.Windows.Forms.Button btnConsume;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.TextBox tbNumRows;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Position;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Heal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Percent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn steal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Contents2;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox tbCombo;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.CheckBox cbSerenity3;
+		private System.Windows.Forms.TextBox tbLevel3;
+		private System.Windows.Forms.ComboBox ddlSpellPow3;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.TextBox tbMagic3;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.CheckBox cbSerenity2;
+		private System.Windows.Forms.TextBox tbLevel2;
+		private System.Windows.Forms.ComboBox ddlSpellPow2;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.TextBox tbMagic2;
+		private System.Windows.Forms.ToolStripMenuItem rareGameToolStripMenuItem;
+		private System.Windows.Forms.TextBox tbConsume;
+		private System.Windows.Forms.Button bConsume;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.Button btnClear;
+		private System.Windows.Forms.TextBox tbNumRows;
+		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Position;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Heal;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Percent;
+		private System.Windows.Forms.DataGridViewTextBoxColumn steal;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Contents2;
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.TextBox tbCombo;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerConsume;
     }
 }
 

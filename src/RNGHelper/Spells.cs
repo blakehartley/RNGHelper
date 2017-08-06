@@ -3,7 +3,7 @@
     /// <summary>
     /// Enumeration of all supported spells
     /// </summary>
-    public enum Spells2
+    public enum Spells
     {
         Cure,
         Cura,
