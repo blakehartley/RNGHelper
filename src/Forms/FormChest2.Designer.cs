@@ -1093,6 +1093,7 @@ namespace FF12RNGHelper
             this.Name = "FormChest2";
             this.Text = "FF12 RNG Helper";
             this.Load += new System.EventHandler(this.FormChest_Load);
+            this.FormClosed += FormUtils.CloseApplication;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gbStats.ResumeLayout(false);
