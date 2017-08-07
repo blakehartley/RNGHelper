@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FF12RNGHelper;
+using FF12RNGHelper.Core;
 
 namespace UnitTests
 {

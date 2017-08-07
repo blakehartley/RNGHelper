@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// This class encapsulates the cure spells

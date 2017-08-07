@@ -4,8 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using FF12RNGHelper.Core;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Forms
 {
     public partial class FormSpawn : Form
     {

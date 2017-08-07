@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Forms
 {
     public static class FormUtils
     {

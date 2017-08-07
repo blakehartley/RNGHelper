@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FF12RNGHelper
+﻿namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// This interface is for objects that can be deep copied.

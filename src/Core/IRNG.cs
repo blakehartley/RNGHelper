@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     public interface IRNG : IDeepCloneable<IRNG>
     {

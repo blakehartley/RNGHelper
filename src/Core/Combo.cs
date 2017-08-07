@@ -2,7 +2,7 @@
 
 [assembly: InternalsVisibleTo("UnitTests")]
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// This class calculates the number of combos

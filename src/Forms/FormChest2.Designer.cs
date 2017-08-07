@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace FF12RNGHelper
+﻿namespace FF12RNGHelper.Forms
 {
     partial class FormChest2
     {

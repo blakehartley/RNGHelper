@@ -48,7 +48,7 @@
 
 using System;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     public class RNG2002 : IRNG
     {
