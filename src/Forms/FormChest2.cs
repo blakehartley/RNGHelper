@@ -4,8 +4,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FF12RNGHelper.Core;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Forms
 {
     public partial class FormChest2 : Form
     {

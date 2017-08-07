@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// This class encapsulates a group of characters casting spells
@@ -66,6 +66,7 @@ namespace FF12RNGHelper
         /// <param name="i"></param>
         public void SetIndex(int i)
         {
+            var check = characters[i];
             charIndex = i;
         }
 

@@ -1,4 +1,4 @@
-﻿namespace FF12RNGHelper
+﻿namespace FF12RNGHelper.Core
 {
     internal class CircularBuffer<T> : IDeepCloneable<CircularBuffer<T>>
     {

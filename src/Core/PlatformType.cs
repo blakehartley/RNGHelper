@@ -1,4 +1,4 @@
-﻿namespace FF12RNGHelper
+﻿namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// Platform types supported by the RNGHelper

@@ -58,6 +58,11 @@
     <Compile Include="src\CharacterTests.cs" />
     <Compile Include="src\ChestTests.cs" />
     <Compile Include="src\CircularBufferTests.cs" />
+    <Compile Include="src\CharacterGroupTests.cs" />
+    <Compile Include="src\BaseRngHelperTests.cs" />
+    <Compile Include="src\TestUtils.cs" />
+    <Compile Include="src\ChestFutureRngTests.cs" />
+    <Compile Include="src\UtilsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

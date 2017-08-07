@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// The BaseRngHelper class contains all of the generic

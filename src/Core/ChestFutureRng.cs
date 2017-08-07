@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace FF12RNGHelper
+namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// The ChestFutureRng object represents the entire

@@ -1,4 +1,4 @@
-﻿namespace FF12RNGHelper
+﻿namespace FF12RNGHelper.Core
 {
     /// <summary>
     /// Enumeration of all supported spells
