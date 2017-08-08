@@ -1,4 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 
@@ -29,6 +32,7 @@ namespace FF12RNGHelper.Core
         /// When not wearing Thief's Cuffs you may only steal one item.
         /// Once you are successful, you get that item and that's it.
         /// </summary>
+        [Obsolete]
         public static string CheckSteal(uint prng1, uint prng2, uint prng3)
         {
             if (StealSuccessful(prng1, RareChance))
@@ -47,11 +51,34 @@ namespace FF12RNGHelper.Core
         }
 
         /// <summary>
+        /// Check if you steal anything while not wearing the Thief's Cuffs
+        /// When not wearing Thief's Cuffs you may only steal one item.
+        /// Once you are successful, you get that item and that's it.
+        /// </summary>
+        public static StealType CheckSteal2(uint prng1, uint prng2, uint prng3)
+        {
+            if (StealSuccessful(prng1, RareChance))
+            {
+                return StealType.Rare;
+            }
+            if (StealSuccessful(prng2, UncommonChance))
+            {
+                return StealType.Uncommon;
+            }
+            if (StealSuccessful(prng3, CommonChance))
+            {
+                return StealType.Common;
+            }
+            return StealType.None;
+        }
+
+        /// <summary>
         /// Check if you steal anything while wearing the Thief's Cuffs
         /// When not wearing Thief's Cuffs you may steal more than one
         /// item, and you have better odds. Roll against all 3 and get
         /// everything you successfully steal.
         /// </summary>
+        [Obsolete]
         public static string CheckStealCuffs(uint prng1, uint prng2, uint prng3)
         {
             string returnStr = string.Empty;
@@ -73,6 +100,42 @@ namespace FF12RNGHelper.Core
                 returnStr = None;
             }
             return returnStr.TrimStart(Linker.ToCharArray());
+        }
+
+        /// <summary>
+        /// Check if you steal anything while wearing the Thief's Cuffs
+        /// When not wearing Thief's Cuffs you may steal more than one
+        /// item, and you have better odds. Roll against all 3 and get
+        /// everything you successfully steal.
+        /// </summary>
+        public static List<StealType> CheckStealCuffs2(uint prng1, uint prng2, uint prng3)
+        {
+            List<StealType> rewards = new List<StealType>();
+
+            if (StealSuccessful(prng1, RareChanceCuffs))
+            {
+                rewards.Add(StealType.Rare);
+            }
+            if (StealSuccessful(prng2, UncommonChanceCuffs))
+            {
+                rewards.Add(StealType.Uncommon);
+            }
+            if (StealSuccessful(prng3, CommonChanceCuffs))
+            {
+                rewards.Add(StealType.Common);
+            }
+            if (!rewards.Any())
+            {
+                rewards.Add(StealType.None);
+            }
+            return rewards;
+        }
+
+        public static bool WouldRareStealSucceed(uint prng, bool cuffs)
+        {
+            int chance = cuffs ? RareChanceCuffs : RareChance;
+
+            return StealSuccessful(prng, chance);
         }
 
         /// <summary>

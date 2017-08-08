@@ -434,7 +434,7 @@ namespace FF12RNGHelper.Forms
 
         private void stealToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormSteal().Show();
+            new FormSteal2().Show();
             this.FindForm().Hide();
         }
 
