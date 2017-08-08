@@ -17,6 +17,7 @@
         public StealRngHelper(PlatformType platform, CharacterGroup group)
             : base(platform, group)
         {
+            _futureRng = new StealFutureRng();
         }
 
         #endregion construction/intialization

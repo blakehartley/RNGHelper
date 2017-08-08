@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\StealFutureRngTests.cs" />
     <Compile Include="src\ComboTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\StealTests.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="src\BaseRngHelperTests.cs" />
     <Compile Include="src\TestUtils.cs" />
     <Compile Include="src\ChestFutureRngTests.cs" />
+    <Compile Include="src\ChestRngHelperTests.cs" />
+    <Compile Include="src\StealRngHelperTests.cs" />
     <Compile Include="src\UtilsTests.cs" />
   </ItemGroup>
   <ItemGroup>
