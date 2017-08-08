@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace FF12RNGHelper.Core
@@ -15,6 +16,7 @@ namespace FF12RNGHelper.Core
     /// Extending classes MUST implement ONE of the following
     /// methods:
     /// public new ChestFutureRng GetChestFutureRng();
+    /// public new StealFutureRng GetStealFutureRng();
     /// </summary>
     public abstract class BaseRngHelper : IRngHelper
     {
@@ -106,7 +108,12 @@ namespace FF12RNGHelper.Core
         // also be implemented by the extending class
         public ChestFutureRng GetChestFutureRng()
         {
-            throw new System.NotImplementedException(ExtendingClassMustImplementMsg);
+            throw new NotImplementedException(ExtendingClassMustImplementMsg);
+        }
+
+        public StealFutureRng GetStealFutureRng()
+        {
+            throw new NotImplementedException(ExtendingClassMustImplementMsg);
         }
 
         #endregion Fatty interface methods

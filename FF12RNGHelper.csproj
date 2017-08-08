@@ -68,6 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Forms\FormSteal2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\FormSteal2.Designer.cs">
+      <DependentUpon>FormSteal2.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\FormUtils.cs" />
     <Compile Include="src\Core\BaseRngHelper.cs" />
     <Compile Include="src\Core\Character.cs" />
@@ -114,8 +120,13 @@
     <Compile Include="src\Core\RNG1998.cs" />
     <Compile Include="src\Core\RNG2002.cs" />
     <Compile Include="src\Core\Utils.cs" />
+    <Compile Include="src\Core\StealFutureRng.cs" />
+    <Compile Include="src\Core\StealRngHelper.cs" />
     <EmbeddedResource Include="src\Forms\FormChest2.resx">
       <DependentUpon>FormChest2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\FormSteal2.resx">
+      <DependentUpon>FormSteal2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\FormSteal.resx">
       <DependentUpon>FormSteal.cs</DependentUpon>

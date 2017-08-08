@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using FF12RNGHelper.Core;
 
 namespace FF12RNGHelper.Forms
 {
-    public partial class FormChest2 : Form
+    public partial class FormSteal2 : Form
     {
         #region constants
 
@@ -36,17 +35,16 @@ namespace FF12RNGHelper.Forms
 
         #region internal state
 
-        private ChestRngHelper _rngHelper;
-        private ChestFutureRng _futureRng;
+        private StealRngHelper _rngHelper;
+        private StealFutureRng _futureRng;
         private CharacterGroup _group = new CharacterGroup();
-        private List<Chest> _chests = new List<Chest>();
         private PlatformType _platform = PlatformType.Ps2;
 
         #endregion internal state
 
         #region construction/initialization
 
-        public FormChest2()
+        public FormSteal2()
         {
             InitializeComponent();
 
@@ -63,7 +61,6 @@ namespace FF12RNGHelper.Forms
         private void LoadData()
         {
             LoadCharacters();
-            LoadChests();
             InitializeFutureRng();
         }
 
@@ -97,29 +94,6 @@ namespace FF12RNGHelper.Forms
                 serenityBox.Checked));
         }
 
-        private void LoadChests()
-        {
-            _chests.Clear();
-
-            Chest chest1 = new Chest(
-                int.Parse(textBox1.Text),
-                int.Parse(textBox2.Text),
-                int.Parse(textBox3.Text),
-                int.Parse(textBox4.Text),
-                int.Parse(textBox5.Text),
-                cbWantItem1First.Checked);
-            Chest chest2 = new Chest(
-                int.Parse(textBox10.Text),
-                int.Parse(textBox9.Text),
-                int.Parse(textBox8.Text),
-                int.Parse(textBox7.Text),
-                int.Parse(textBox6.Text),
-                cbWantItem1Second.Checked);
-
-            _chests.Add(chest1);
-            _chests.Add(chest2);
-        }
-
         private void InitializeFutureRng()
         {
             const string ps2 = "PS2";
@@ -128,7 +102,7 @@ namespace FF12RNGHelper.Forms
                 ? PlatformType.Ps2
                 : PlatformType.Ps4;
 
-            _rngHelper = new ChestRngHelper(_platform, _group, _chests);
+            _rngHelper = new StealRngHelper(_platform, _group);
         }
 
         #endregion construction/initialization
@@ -137,13 +111,13 @@ namespace FF12RNGHelper.Forms
 
         private void DisplayFutureRng()
         {
-            _futureRng = _rngHelper.GetChestFutureRng();
+            _futureRng = _rngHelper.GetStealFutureRng();
 
             dataGridView1.Rows.Clear();
 
             UpdateDataGridView();
 
-            UpdateAdvanceData();
+            UpdateStealDirectionsData();
 
             UpdateNextHealData();
 
@@ -158,12 +132,11 @@ namespace FF12RNGHelper.Forms
 
             for (int i = 0; i < positionsCalculated; i++)
             {
-                ChestFutureRngInstance rngInstance = _futureRng.GetRngInstanceAt(i);
+                StealFutureRngInstance rngInstance = _futureRng.GetRngInstanceAt(i);
                 int rowNumber = dataGridView1.Rows.Add();
                 DataGridViewRow row = dataGridView1.Rows[rowNumber];
 
-                UpdateRowStandardInfo(rngInstance, row);
-                UpdateRowChestInfo(rngInstance, row);
+                UpdateRowInfo(rngInstance, row);
 
                 if (rngInstance.IsPastRng)
                 {
@@ -173,59 +146,47 @@ namespace FF12RNGHelper.Forms
             }
         }
 
-        private void UpdateRowStandardInfo(ChestFutureRngInstance rngInstance,
-            DataGridViewRow row)
+        private void UpdateRowInfo(
+            StealFutureRngInstance rngInstance, DataGridViewRow row)
         {
             row.Cells[0].Value = rngInstance.Index;
             row.Cells[1].Value = rngInstance.CurrentHeal;
             row.Cells[2].Value = rngInstance.RandToPercent;
+            row.Cells[5].Value = rngInstance.Lv99RedChocobo;
+
+            row.Cells[3].Value = ConvertStealRewardToString(rngInstance.NormalReward);
+            row.Cells[4].Value = ConvertStealRewardsToString(rngInstance.CuffsReward);
         }
 
-        private void UpdateRowChestInfo(ChestFutureRngInstance rngInstance,
-            DataGridViewRow row)
+        private string ConvertStealRewardToString(StealType reward)
         {
-            const string item1 = "Item 1";
-            const string item2 = "Item 2";
-            const int cellOffset = 3; // start filling data in the 4th spot
+            return reward.ToString();
+        }
 
-            int chestCount = rngInstance.ChestRewards.Count;
-            for (int chestIndex = 0; chestIndex < chestCount; chestIndex++)
+        private string ConvertStealRewardsToString(List<StealType> rewards)
+        {
+            const string linker = " + ";
+
+            string rewardsString = string.Empty;
+
+            foreach (StealType reward in rewards)
             {
-                ChestReward reward = rngInstance.ChestRewards.ElementAt(chestIndex);
-                if (reward.Reward is RewardType.Gil)
-                {
-                    row.Cells[chestIndex + cellOffset].Value = reward.GilAmount;
-                }
-                else if (reward.Reward is RewardType.Item1)
-                {
-                    row.Cells[chestIndex + cellOffset].Value = item1;
-                }
-                else
-                {
-                    row.Cells[chestIndex + cellOffset].Value = item2;
-                }
-
-                if (reward.ChestWillSpawn)
-                {
-                    DataGridViewCell currentCell = row.Cells[chestIndex + cellOffset];
-                    Font currentStyle = currentCell.InheritedStyle.Font;
-                    currentCell.Style.Font = new Font(currentStyle, FontStyle.Bold);
-                }
+                rewardsString += reward + linker;
             }
+
+            return rewardsString.TrimEnd(linker.ToCharArray());
         }
 
-        private void UpdateAdvanceData()
+        private void UpdateStealDirectionsData()
         {
-            AdvanceDirections directions1 = _futureRng.GetAdvanceDirectionsAtIndex(0);
-            tbAppear1.Text = ConvertAdvanceDirectionsToText(directions1.AdvanceToAppear);
-            tbItem1.Text = ConvertAdvanceDirectionsToText(directions1.AdvanceForItem);
-
-            AdvanceDirections directions2 = _futureRng.GetAdvanceDirectionsAtIndex(1);
-            tbAppear2.Text = ConvertAdvanceDirectionsToText(directions2.AdvanceToAppear);
-            tbItem2.Text = ConvertAdvanceDirectionsToText(directions2.AdvanceForItem);
+            StealDirections directions = _futureRng.GetStealDirections();
+            tbRare.Text = ConvertStealDirectionsToText(
+                directions.AdvanceForRare);
+            tbRareCuffs.Text = ConvertStealDirectionsToText(
+                directions.AdvanceForRareCuffs);
         }
 
-        private static string ConvertAdvanceDirectionsToText(int index)
+        private static string ConvertStealDirectionsToText(int index)
         {
             const string advanceDirectionsNotFound = @"¯\_(ツ)_/¯";
 
@@ -284,7 +245,7 @@ namespace FF12RNGHelper.Forms
                 return;
             }
 
-            int numRows = ParseNumRows();
+            int numRows = FormUtils.ParseNumRows(tbNumRows.Text);
             _rngHelper.CalculateRng(numRows);
             DisplayFutureRng();
         }
@@ -297,12 +258,12 @@ namespace FF12RNGHelper.Forms
                 return;
             }
 
-            int numRows = ParseNumRows();
+            int numRows = FormUtils.ParseNumRows(tbNumRows.Text);
             _rngHelper.CalculateRng(numRows);
             DisplayFutureRng();
         }
 
-        private void bConsume_Click(object sender, EventArgs e)
+        private void btnConsume_Click(object sender, EventArgs e)
         {
             int consume;
             int.TryParse(tbConsume.Text, out consume);
@@ -312,7 +273,7 @@ namespace FF12RNGHelper.Forms
             DateTime endt = DateTime.Now;
             toolStripStatusLabelPercent.Text = (endt - begint).ToString();
 
-            int numRows = ParseNumRows();
+            int numRows = FormUtils.ParseNumRows(tbNumRows.Text);
             _rngHelper.CalculateRng(numRows);
             DisplayFutureRng();
         }
@@ -337,16 +298,6 @@ namespace FF12RNGHelper.Forms
         }
 
         #endregion click methods
-
-        private int ParseNumRows()
-        {
-            int numRows = int.Parse(tbNumRows.Text);
-            if (numRows < 30)
-                numRows = 30;
-            if (numRows > 10000)
-                numRows = 10000;
-            return numRows;
-        }
 
         private void cbPlatform_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -376,10 +327,10 @@ namespace FF12RNGHelper.Forms
             }
         }
 
-        private void FormChest_Load(object sender, EventArgs e)
+        private void FormSteal_Load(object sender, EventArgs e)
         {
             LoadData();
-            int numRows = ParseNumRows();
+            int numRows = FormUtils.ParseNumRows(tbNumRows.Text);
 
             _rngHelper.CalculateRng(numRows);
             DisplayFutureRng();
@@ -393,9 +344,9 @@ namespace FF12RNGHelper.Forms
             Hide();
         }
 
-        private void stealToolStripMenuItem_Click(object sender, EventArgs e)
+        private void chestsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormSteal2().Show();
+            new FormChest2().Show();
             Hide();
         }
 
@@ -405,28 +356,24 @@ namespace FF12RNGHelper.Forms
 
         private void tbLevel_Validating(object sender, CancelEventArgs e)
         {
-            double tempVal;
-            if (!double.TryParse(tbLevel1.Text, out tempVal))
-            {
-                tbLevel1.Text = IntDefaultValue;
-            }
+            ValidateIntegerTextBox(tbLevel1);
         }
 
         private void tbMagic_Validating(object sender, CancelEventArgs e)
         {
-            double tempVal;
-            if (!double.TryParse(tbMagic1.Text, out tempVal))
-            {
-                tbMagic1.Text = IntDefaultValue;
-            }
+            ValidateIntegerTextBox(tbMagic1);
         }
 
         private void tbLastHeal_Validating(object sender, CancelEventArgs e)
         {
-            int tempVal;
-            if (!int.TryParse(tbLastHeal.Text, out tempVal))
+            ValidateIntegerTextBox(tbLastHeal);
+        }
+
+        private static void ValidateIntegerTextBox(TextBox tb)
+        {
+            if (!int.TryParse(tb.Text, out int tempVal))
             {
-                tbLastHeal.Text = IntDefaultValue;
+                tb.Text = IntDefaultValue;
             }
         }
 
