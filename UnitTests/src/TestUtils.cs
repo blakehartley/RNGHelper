@@ -33,5 +33,10 @@ namespace UnitTests
             group.AddCharacter(GetDefaultCharacter());
             return group;
         }
+
+        public static Chest GetDefaultChest()
+        {
+            return new Chest(50, 5, 50, 50, 100, false);
+        }
     }
 }

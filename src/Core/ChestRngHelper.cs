@@ -24,6 +24,7 @@ namespace FF12RNGHelper.Core
             : base(platform, group)
         {
             _chests = chests;
+            _futureRng = new ChestFutureRng();
         }
 
         #endregion construction/initialization
