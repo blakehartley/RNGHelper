@@ -76,10 +76,5 @@ namespace UnitTests
         {
             return new StealFutureRngInstance();
         }
-
-        private StealDirections GetStealDirections()
-        {
-            return new StealDirections();
-        }
     }
 }

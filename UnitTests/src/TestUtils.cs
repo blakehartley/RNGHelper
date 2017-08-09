@@ -38,5 +38,10 @@ namespace UnitTests
         {
             return new Chest(50, 5, 50, 50, 100, false);
         }
+
+        public static Monster GetDefaultMonster()
+        {
+                return new Monster(1, 20, 1);
+        }
     }
 }

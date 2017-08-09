@@ -17,6 +17,7 @@ namespace FF12RNGHelper.Core
     /// methods:
     /// public new ChestFutureRng GetChestFutureRng();
     /// public new StealFutureRng GetStealFutureRng();
+    /// public new SpawnFutureRng GetSpawnFutureRng();
     /// </summary>
     public abstract class BaseRngHelper : IRngHelper
     {
@@ -112,6 +113,11 @@ namespace FF12RNGHelper.Core
         }
 
         public StealFutureRng GetStealFutureRng()
+        {
+            throw new NotImplementedException(ExtendingClassMustImplementMsg);
+        }
+
+        public SpawnFutureRng GetSpawnFutureRng()
         {
             throw new NotImplementedException(ExtendingClassMustImplementMsg);
         }

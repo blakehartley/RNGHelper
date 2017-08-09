@@ -7,7 +7,7 @@ using FF12RNGHelper.Core;
 
 namespace FF12RNGHelper.Forms
 {
-    public partial class FormSteal2 : Form
+    public partial class FormSpawn2 : Form
     {
         #region constants
 
@@ -18,6 +18,8 @@ namespace FF12RNGHelper.Forms
             "FF12 RNG Helper v1.02\nSo many features, so little time...";
 
         private const string IntDefaultValue = "0";
+
+        const string ValueNotYetFound = @"¯\_(ツ)_/¯";
 
         private static readonly Dictionary<string, Spells> NameToSpellMap =
             new Dictionary<string, Spells>
@@ -35,16 +37,17 @@ namespace FF12RNGHelper.Forms
 
         #region internal state
 
-        private StealRngHelper _rngHelper;
-        private StealFutureRng _futureRng;
-        private CharacterGroup _group = new CharacterGroup();
+        private SpawnRngHelper _rngHelper;
+        private SpawnFutureRng _futureRng;
+        private readonly CharacterGroup _group = new CharacterGroup();
+        private readonly List<Monster> _monsters = new List<Monster>();
         private PlatformType _platform = PlatformType.Ps2;
 
         #endregion internal state
 
         #region construction/initialization
 
-        public FormSteal2()
+        public FormSpawn2()
         {
             InitializeComponent();
 
@@ -61,6 +64,7 @@ namespace FF12RNGHelper.Forms
         private void LoadData()
         {
             LoadCharacters();
+            LoadMonsters();
             InitializeFutureRng();
         }
 
@@ -94,6 +98,23 @@ namespace FF12RNGHelper.Forms
                 serenityBox.Checked));
         }
 
+        private void LoadMonsters()
+        {
+            _monsters.Clear();
+
+            Monster monster1 = new Monster(
+                int.Parse(tbMin1.Text),
+                int.Parse(tbMax1.Text),
+                int.Parse(tbRNG1.Text));
+            Monster monster2 = new Monster(
+                int.Parse(tbMin2.Text),
+                int.Parse(tbMax2.Text),
+                int.Parse(tbRNG2.Text));
+
+            _monsters.Add(monster1);
+            _monsters.Add(monster2);
+        }
+
         private void InitializeFutureRng()
         {
             const string ps2 = "PS2";
@@ -102,7 +123,7 @@ namespace FF12RNGHelper.Forms
                 ? PlatformType.Ps2
                 : PlatformType.Ps4;
 
-            _rngHelper = new StealRngHelper(_platform, _group);
+            _rngHelper = new SpawnRngHelper(_platform, _group, _monsters);
         }
 
         #endregion construction/initialization
@@ -111,13 +132,13 @@ namespace FF12RNGHelper.Forms
 
         private void DisplayFutureRng()
         {
-            _futureRng = _rngHelper.GetStealFutureRng();
+            _futureRng = _rngHelper.GetSpawnFutureRng();
 
             dataGridView1.Rows.Clear();
 
             UpdateDataGridView();
 
-            UpdateStealDirectionsData();
+            UpdateDirectionsData();
 
             UpdateNextHealData();
 
@@ -132,11 +153,12 @@ namespace FF12RNGHelper.Forms
 
             for (int i = 0; i < positionsCalculated; i++)
             {
-                StealFutureRngInstance rngInstance = _futureRng.GetRngInstanceAt(i);
+                SpawnFutureRngInstance rngInstance = _futureRng.GetRngInstanceAt(i);
                 int rowNumber = dataGridView1.Rows.Add();
                 DataGridViewRow row = dataGridView1.Rows[rowNumber];
 
                 UpdateRowInfo(rngInstance, row);
+                UpdateRowColor(rngInstance, row);
 
                 if (rngInstance.IsPastRng)
                 {
@@ -146,53 +168,55 @@ namespace FF12RNGHelper.Forms
             }
         }
 
-        private void UpdateRowInfo(
-            StealFutureRngInstance rngInstance, DataGridViewRow row)
+        private void UpdateRowInfo(SpawnFutureRngInstance rngInstance, DataGridViewRow row)
         {
             row.Cells[0].Value = rngInstance.Index;
             row.Cells[1].Value = rngInstance.CurrentHeal;
-            row.Cells[2].Value = rngInstance.RandToPercent;
-            row.Cells[5].Value = rngInstance.Lv99RedChocobo;
-
-            row.Cells[3].Value = ConvertStealRewardToString(rngInstance.NormalReward);
-            row.Cells[4].Value = ConvertStealRewardsToString(rngInstance.CuffsReward);
+            row.Cells[2].Value = rngInstance.SpawnChance;
+            row.Cells[3].Value = rngInstance.RawRngValue.ToString("N0");
         }
 
-        private string ConvertStealRewardToString(StealType reward)
+        private void UpdateRowColor(SpawnFutureRngInstance rngInstance, DataGridViewRow row)
         {
-            return reward.ToString();
-        }
+            bool monsterSpawn1 = rngInstance.MonsterSpawns[0];
+            bool monsterSpawn2 = rngInstance.MonsterSpawns[1];
 
-        private string ConvertStealRewardsToString(List<StealType> rewards)
-        {
-            const string linker = " + ";
-
-            string rewardsString = string.Empty;
-
-            foreach (StealType reward in rewards)
+            if (monsterSpawn1)
             {
-                rewardsString += reward + linker;
+                row.DefaultCellStyle.BackColor = Color.LightBlue;
             }
-
-            return rewardsString.TrimEnd(linker.ToCharArray());
+            if (monsterSpawn2)
+            {
+                row.DefaultCellStyle.BackColor = Color.Crimson;
+            }
+            if (monsterSpawn1 && monsterSpawn2)
+            {
+                row.DefaultCellStyle.BackColor = Color.Orchid;
+            }
         }
 
-        private void UpdateStealDirectionsData()
+        private void UpdateDirectionsData()
         {
-            StealDirections directions = _futureRng.GetStealDirections();
-            tbRare.Text = ConvertStealDirectionsToText(
-                directions.AdvanceForRare);
-            tbRareCuffs.Text = ConvertStealDirectionsToText(
-                directions.AdvanceForRareCuffs);
+            tbAppear1.Text = ConvertAdvanceDirectionsToText(
+                _futureRng.GetSpawnDirectionsAtIndex(0).Directions);
+            tbAppear2.Text = ConvertAdvanceDirectionsToText(
+                _futureRng.GetSpawnDirectionsAtIndex(1).Directions);
+            tbAppear12.Text = ConvertNBeforeMDirectionToText(
+                _futureRng.GetStepsToLastNSpawnBeforeMSpawn(0, 1));
         }
 
-        private static string ConvertStealDirectionsToText(int index)
+        private static string ConvertAdvanceDirectionsToText(int index)
         {
-            const string advanceDirectionsNotFound = @"¯\_(ツ)_/¯";
-
             return index == -1
-                ? advanceDirectionsNotFound
+                ? ValueNotYetFound
                 : index.ToString();
+        }
+
+        private static string ConvertNBeforeMDirectionToText(int value)
+        {
+            return value < 0
+                ? ValueNotYetFound
+                : value.ToString();
         }
 
         private void UpdateNextHealData()
@@ -263,7 +287,7 @@ namespace FF12RNGHelper.Forms
             DisplayFutureRng();
         }
 
-        private void btnConsume_Click(object sender, EventArgs e)
+        private void bConsume_Click(object sender, EventArgs e)
         {
             int consume;
             int.TryParse(tbConsume.Text, out consume);
@@ -317,7 +341,7 @@ namespace FF12RNGHelper.Forms
 
         private void tbLastHeal_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char) Keys.Enter)
+            if (e.KeyChar == (char)Keys.Enter)
             {
                 e.Handled = true;
                 if (btnContinue.Enabled == false)
@@ -327,7 +351,7 @@ namespace FF12RNGHelper.Forms
             }
         }
 
-        private void FormSteal_Load(object sender, EventArgs e)
+        private void FormSpawn_Load(object sender, EventArgs e)
         {
             LoadData();
             int numRows = FormUtils.ParseNumRows(tbNumRows.Text);
@@ -338,13 +362,13 @@ namespace FF12RNGHelper.Forms
 
         #region change form methods
 
-        private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void stealToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormSpawn2().Show();
+            new FormSteal2().Show();
             Hide();
         }
 
-        private void chestsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new FormChest2().Show();
             Hide();
@@ -356,24 +380,28 @@ namespace FF12RNGHelper.Forms
 
         private void tbLevel_Validating(object sender, CancelEventArgs e)
         {
-            ValidateIntegerTextBox(tbLevel1);
+            double tempVal;
+            if (!double.TryParse(tbLevel1.Text, out tempVal))
+            {
+                tbLevel1.Text = IntDefaultValue;
+            }
         }
 
         private void tbMagic_Validating(object sender, CancelEventArgs e)
         {
-            ValidateIntegerTextBox(tbMagic1);
+            double tempVal;
+            if (!double.TryParse(tbMagic1.Text, out tempVal))
+            {
+                tbMagic1.Text = IntDefaultValue;
+            }
         }
 
         private void tbLastHeal_Validating(object sender, CancelEventArgs e)
         {
-            ValidateIntegerTextBox(tbLastHeal);
-        }
-
-        private static void ValidateIntegerTextBox(TextBox tb)
-        {
-            if (!int.TryParse(tb.Text, out int tempVal))
+            int tempVal;
+            if (!int.TryParse(tbLastHeal.Text, out tempVal))
             {
-                tb.Text = IntDefaultValue;
+                tbLastHeal.Text = IntDefaultValue;
             }
         }
 
