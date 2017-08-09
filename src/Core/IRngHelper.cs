@@ -9,7 +9,8 @@
     /// 1) FindFirstRngPosition(...)
     /// 2) FindNextRngPosition(...) or ConsumeNextNRngPositions(...)
     /// 3) CalculateRng(...)
-    /// 4) GetChestFutureRng() or GetStealFutureRng()
+    /// 4) GetChestFutureRng() or GetStealFutureRng() or
+    ///    GetSpawnFutureRng()
     /// 5) GetNextExpecteHealValue() and GetAttacksUntilNextCombo()
     /// </summary>
     public interface IRngHelper
@@ -27,9 +28,15 @@
 
         /// <summary>
         /// After calculating RNG, call this method to get the
-        /// StealFutureRng object, ir appropriate
+        /// StealFutureRng object, if appropriate
         /// </summary>
         StealFutureRng GetStealFutureRng();
+
+        /// <summary>
+        /// After calculating RNG, call this method to get the
+        /// SpawnFutureRng object, if appropriate
+        /// </summary>
+        SpawnFutureRng GetSpawnFutureRng();
 
         #endregion fatty interface methods
 

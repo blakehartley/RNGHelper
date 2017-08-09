@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTests
 {
     [TestClass]
-    public class ChestRngHelperTests
+    public class SpawnRngHelperTests
     {
         [TestMethod]
         public void TestGetStealFutureRngThrowsException()
@@ -20,36 +20,36 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestGetSpawnFutureRngThrowsException()
+        public void TestGetChestFutureRngThrowsException()
         {
             Assert.ThrowsException<NotImplementedException>(
                 delegate
                 {
-                    GetDefaultHelper().GetSpawnFutureRng();
+                    GetDefaultHelper().GetChestFutureRng();
                 }
             );
         }
 
         [TestMethod]
-        public void TestGetChestFutureRngNotNull()
+        public void TestGetSpawnFutureRngNotNull()
         {
-            ChestRngHelper helper = GetDefaultHelper();
-            Assert.IsNotNull(helper.GetChestFutureRng());
+            SpawnRngHelper helper = GetDefaultHelper();
+            Assert.IsNotNull(helper.GetSpawnFutureRng());
         }
 
         [TestMethod]
-        public void TestGetChestFutureRng()
+        public void TestGetSpawnFutureRng()
         {
-            ChestRngHelper helper = GetDefaultHelper();
+            SpawnRngHelper helper = GetDefaultHelper();
             helper.FindFirstRngPosition(88);
             helper.CalculateRng(100);
-            Assert.IsNotNull(helper.GetChestFutureRng());
+            Assert.IsNotNull(helper.GetSpawnFutureRng());
         }
 
         [TestMethod]
         public void TestGetAttacksUntilNextCombo()
         {
-            ChestRngHelper helper = GetDefaultHelper();
+            SpawnRngHelper helper = GetDefaultHelper();
             helper.FindFirstRngPosition(89);
             helper.FindNextRngPosition(87);
             helper.FindNextRngPosition(97);
@@ -60,7 +60,7 @@ namespace UnitTests
         [TestMethod]
         public void TestGetNextExpecteHealValue()
         {
-            ChestRngHelper helper = GetDefaultHelper();
+            SpawnRngHelper helper = GetDefaultHelper();
             helper.FindFirstRngPosition(94);
             helper.FindNextRngPosition(89);
             helper.FindNextRngPosition(97);
@@ -71,7 +71,7 @@ namespace UnitTests
         [TestMethod]
         public void TestConsumeNextNRngPositions()
         {
-            ChestRngHelper helper = GetDefaultHelper();
+            SpawnRngHelper helper = GetDefaultHelper();
             helper.FindFirstRngPosition(94);
             helper.FindNextRngPosition(89);
             Assert.IsTrue(helper.ConsumeNextNRngPositions(10));
@@ -80,14 +80,42 @@ namespace UnitTests
             Assert.AreEqual(94, helper.GetNextExpectedHealValue());
         }
 
-        private static ChestRngHelper GetDefaultHelper()
+        [TestMethod]
+        public void TestLastNBeforeMCalculation()
         {
-            return new ChestRngHelper(
+            SpawnRngHelper helper = GetComplexHelper();
+            helper.FindFirstRngPosition(89);
+            helper.FindNextRngPosition(87);
+            helper.FindNextRngPosition(97);
+            helper.CalculateRng(100);
+            Assert.AreEqual(1, helper.GetSpawnFutureRng()
+                .GetStepsToLastNSpawnBeforeMSpawn(0, 1));
+            helper.ConsumeNextNRngPositions(10);
+            helper.CalculateRng(100);
+            Assert.AreEqual(4, helper.GetSpawnFutureRng()
+                .GetStepsToLastNSpawnBeforeMSpawn(0, 1));
+        }
+
+        private static SpawnRngHelper GetDefaultHelper()
+        {
+            return new SpawnRngHelper(
                 PlatformType.Ps2,
                 TestUtils.GetSimpleCharacterGroup(),
-                new List<Chest>
+                new List<Monster>
                 {
-                    TestUtils.GetDefaultChest() 
+                    TestUtils.GetDefaultMonster() 
+                });
+        }
+
+        private static SpawnRngHelper GetComplexHelper()
+        {
+            return new SpawnRngHelper(
+                PlatformType.Ps2,
+                TestUtils.GetSimpleCharacterGroup(),
+                new List<Monster>
+                {
+                    new Monster(0, 20, 1),
+                    new Monster(0, 10, 1)
                 });
         }
     }

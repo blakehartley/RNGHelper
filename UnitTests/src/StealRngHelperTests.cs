@@ -20,6 +20,17 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestGetSpawnFutureRngThrowsException()
+        {
+            Assert.ThrowsException<NotImplementedException>(
+                delegate
+                {
+                    GetDefaultHelper().GetSpawnFutureRng();
+                }
+            );
+        }
+
+        [TestMethod]
         public void TestGetStealFutureRngNotNull()
         {
             StealRngHelper helper = GetDefaultHelper();

@@ -389,7 +389,7 @@ namespace FF12RNGHelper.Forms
 
         private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormSpawn().Show();
+            new FormSpawn2().Show();
             Hide();
         }
 
