@@ -9,35 +9,11 @@ namespace FF12RNGHelper.Forms
 {
     public partial class FormSteal2 : Form
     {
-        #region constants
-
-        private const string ImpossibleHealMsg =
-            "Impossible Heal Value Entered";
-
-        private const string AboutMsg =
-            "FF12 RNG Helper v1.02\nSo many features, so little time...";
-
-        private const string IntDefaultValue = "0";
-
-        private static readonly Dictionary<string, Spells> NameToSpellMap =
-            new Dictionary<string, Spells>
-            {
-                {"Cure", Spells.Cure},
-                {"Cura", Spells.Cura},
-                {"Curaga", Spells.Curaga},
-                {"Curaja", Spells.Curaja},
-                {"Cura IZJS/TZA", Spells.CuraIzjsTza},
-                {"Curaga IZJS/TZA", Spells.CuragaIzjsTza},
-                {"Curaja IZJS/TZA", Spells.CurajaIzjsTza},
-            };
-
-        #endregion constants
-
         #region internal state
 
         private StealRngHelper _rngHelper;
         private StealFutureRng _futureRng;
-        private CharacterGroup _group = new CharacterGroup();
+        private readonly CharacterGroup _group = new CharacterGroup();
         private PlatformType _platform = PlatformType.Ps2;
 
         #endregion internal state
@@ -73,25 +49,16 @@ namespace FF12RNGHelper.Forms
 
             if (tbLevel1.Text != string.Empty && tbMagic1.Text != string.Empty)
             {
-                LoadCharacter(tbLevel1, tbMagic1, ddlSpellPow1, cbSerenity1);
+                FormUtils.LoadCharacter(_group, tbLevel1, tbMagic1, ddlSpellPow1, cbSerenity1);
             }
             if (tbLevel2.Text != string.Empty && tbMagic2.Text != string.Empty)
             {
-                LoadCharacter(tbLevel2, tbMagic2, ddlSpellPow2, cbSerenity2);
+                FormUtils.LoadCharacter(_group, tbLevel2, tbMagic2, ddlSpellPow2, cbSerenity2);
             }
             if (tbLevel3.Text != string.Empty && tbMagic3.Text != string.Empty)
             {
-                LoadCharacter(tbLevel3, tbMagic3, ddlSpellPow3, cbSerenity3);
+                FormUtils.LoadCharacter(_group, tbLevel3, tbMagic3, ddlSpellPow3, cbSerenity3);
             }
-        }
-
-        private void LoadCharacter(TextBox levelBox, TextBox magicBox, ComboBox spellPowerBox, CheckBox serenityBox)
-        {
-            double level = double.Parse(levelBox.Text);
-            double magic = double.Parse(magicBox.Text);
-            Spells spell = NameToSpellMap[spellPowerBox.SelectedItem.ToString()];
-            _group.AddCharacter(new Character(level, magic, spell,
-                serenityBox.Checked));
         }
 
         private void InitializeFutureRng()
@@ -113,15 +80,15 @@ namespace FF12RNGHelper.Forms
         {
             _futureRng = _rngHelper.GetStealFutureRng();
 
-            dataGridView1.Rows.Clear();
+            dataGridView.Rows.Clear();
 
             UpdateDataGridView();
 
             UpdateStealDirectionsData();
 
-            UpdateNextHealData();
+            FormUtils.UpdateNextHealData(_rngHelper, tbLastHeal);
 
-            UpdateComboData();
+            FormUtils.UpdateComboData(_rngHelper, tbCombo);
 
             SetLastHealFocus();
         }
@@ -133,15 +100,14 @@ namespace FF12RNGHelper.Forms
             for (int i = 0; i < positionsCalculated; i++)
             {
                 StealFutureRngInstance rngInstance = _futureRng.GetRngInstanceAt(i);
-                int rowNumber = dataGridView1.Rows.Add();
-                DataGridViewRow row = dataGridView1.Rows[rowNumber];
+                int rowNumber = dataGridView.Rows.Add();
+                DataGridViewRow row = dataGridView.Rows[rowNumber];
 
                 UpdateRowInfo(rngInstance, row);
 
                 if (rngInstance.IsPastRng)
                 {
-                    dataGridView1.Rows[dataGridView1.Rows.Count - 1]
-                        .DefaultCellStyle.BackColor = Color.LightGreen;
+                    row.DefaultCellStyle.BackColor = Color.LightGreen;
                 }
             }
         }
@@ -180,39 +146,15 @@ namespace FF12RNGHelper.Forms
         private void UpdateStealDirectionsData()
         {
             StealDirections directions = _futureRng.GetStealDirections();
-            tbRare.Text = ConvertStealDirectionsToText(
+            tbRare.Text = FormUtils.ConvertDirectionsToText(
                 directions.AdvanceForRare);
-            tbRareCuffs.Text = ConvertStealDirectionsToText(
+            tbRareCuffs.Text = FormUtils.ConvertDirectionsToText(
                 directions.AdvanceForRareCuffs);
-        }
-
-        private static string ConvertStealDirectionsToText(int index)
-        {
-            const string advanceDirectionsNotFound = @"¯\_(ツ)_/¯";
-
-            return index == -1
-                ? advanceDirectionsNotFound
-                : index.ToString();
-        }
-
-        private void UpdateNextHealData()
-        {
-            tbLastHeal.Text = _rngHelper.GetNextExpectedHealValue().ToString();
-        }
-
-        private void UpdateComboData()
-        {
-            const string safe = "SAFE";
-
-            int attacksUntilCombo = _rngHelper.GetAttacksUntilNextCombo();
-            tbCombo.Text = attacksUntilCombo == -1
-                ? safe
-                : attacksUntilCombo.ToString();
         }
 
         private void HandleImpossibleHealVal()
         {
-            MessageBox.Show(ImpossibleHealMsg);
+            MessageBox.Show(FormConstants.ImpossibleHealMsg);
             SetLastHealFocus();
         }
 
@@ -281,7 +223,7 @@ namespace FF12RNGHelper.Forms
         private void btnClear_Click(object sender, EventArgs e)
         {
             SetContinueButtonsEnabledStatus(false);
-            dataGridView1.Rows.Clear();
+            dataGridView.Rows.Clear();
 
             _rngHelper.Reinitialize();
             SetLastHealFocus();
@@ -294,7 +236,7 @@ namespace FF12RNGHelper.Forms
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(AboutMsg);
+            MessageBox.Show(FormConstants.AboutMsg);
         }
 
         #endregion click methods
@@ -304,13 +246,13 @@ namespace FF12RNGHelper.Forms
             if (cbPlatform.SelectedItem as string == "PS2" && _platform is PlatformType.Ps4)
             {
                 btnContinue.Enabled = false;
-                dataGridView1.Rows.Clear();
+                dataGridView.Rows.Clear();
                 LoadData();
             }
             else if (cbPlatform.SelectedItem as string == "PS4" && _platform is PlatformType.Ps2)
             {
                 btnContinue.Enabled = false;
-                dataGridView1.Rows.Clear();
+                dataGridView.Rows.Clear();
                 LoadData();
             }
         }
@@ -356,27 +298,24 @@ namespace FF12RNGHelper.Forms
 
         private void tbLevel_Validating(object sender, CancelEventArgs e)
         {
-            ValidateIntegerTextBox(tbLevel1);
+            FormUtils.ValidateIntegerTextBox(tbLevel1);
         }
 
         private void tbMagic_Validating(object sender, CancelEventArgs e)
         {
-            ValidateIntegerTextBox(tbMagic1);
+            FormUtils.ValidateIntegerTextBox(tbMagic1);
         }
 
         private void tbLastHeal_Validating(object sender, CancelEventArgs e)
         {
-            ValidateIntegerTextBox(tbLastHeal);
-        }
-
-        private static void ValidateIntegerTextBox(TextBox tb)
-        {
-            if (!int.TryParse(tb.Text, out int tempVal))
-            {
-                tb.Text = IntDefaultValue;
-            }
+            FormUtils.ValidateIntegerTextBox(tbLastHeal);
         }
 
         #endregion text box validation
+
+        private void FormSteal2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            FormUtils.CloseApplication();
+        }
     }
 }

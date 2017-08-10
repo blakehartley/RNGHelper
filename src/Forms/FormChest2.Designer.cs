@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChest2));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stealToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,7 @@
             this.cbSerenity2 = new System.Windows.Forms.CheckBox();
             this.ddlSpellPow2 = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Heal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -122,7 +123,7 @@
             this.tbCombo = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.gbStats.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.groupBoxSearch.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.gbPlatform.SuspendLayout();
@@ -421,25 +422,25 @@
             this.label18.TabIndex = 15;
             this.label18.Text = "Spell:";
             // 
-            // dataGridView1
+            // dataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Position,
             this.Heal,
             this.Percent,
             this.steal,
             this.Contents2});
-            this.dataGridView1.Location = new System.Drawing.Point(428, 27);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(398, 713);
-            this.dataGridView1.TabIndex = 14;
+            this.dataGridView.Location = new System.Drawing.Point(428, 27);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.Size = new System.Drawing.Size(398, 713);
+            this.dataGridView.TabIndex = 14;
             // 
             // Position
             // 
@@ -601,7 +602,7 @@
             this.btnConsume.TabIndex = 16;
             this.btnConsume.Text = "Consume";
             this.btnConsume.UseVisualStyleBackColor = true;
-            this.btnConsume.Click += new System.EventHandler(this.bConsume_Click);
+            this.btnConsume.Click += new System.EventHandler(this.btnConsume_Click);
             // 
             // label23
             // 
@@ -1083,20 +1084,21 @@
             this.Controls.Add(this.gbPlatform);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBoxSearch);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.gbStats);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(557, 601);
             this.Name = "FormChest2";
             this.Text = "FF12 RNG Helper";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChest2_FormClosed);
             this.Load += new System.EventHandler(this.FormChest_Load);
-            this.FormClosed += FormUtils.CloseApplication;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gbStats.ResumeLayout(false);
             this.gbStats.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.groupBoxSearch.ResumeLayout(false);
             this.groupBoxSearch.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -1132,7 +1134,7 @@
         private System.Windows.Forms.Label lblSpellPow;
         private System.Windows.Forms.CheckBox cbSerenity1;
         private System.Windows.Forms.GroupBox gbStats;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Label lblLastHeal;
         private System.Windows.Forms.TextBox tbLastHeal;
         private System.Windows.Forms.Button btnBegin;
