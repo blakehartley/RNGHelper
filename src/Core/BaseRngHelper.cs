@@ -51,7 +51,7 @@ namespace FF12RNGHelper.Core
         protected List<int> HealVals; // List of heal values input by user
         protected CharacterGroup Group = new CharacterGroup();
 
-        private CircularBuffer<uint> SearchBuff; // buffer of PRNG numbers
+        private CircularBuffer<uint> _searchBuff; // buffer of PRNG numbers
         private IRNG _searchRng;
         private PlatformType _platformType = PlatformType.Ps2;
         private bool _foundFirstRngPosition;
@@ -78,12 +78,12 @@ namespace FF12RNGHelper.Core
             Index = 0;
             _foundFirstRngPosition = false;
             Group.ResetIndex();
-            SearchBuff = new CircularBuffer<uint>(SearchBufferSize);
+            _searchBuff = new CircularBuffer<uint>(SearchBufferSize);
             HealVals = new List<int>();
             _searchRng = InitializeRng();
 
             _searchRng.sgenrand();
-            SearchBuff.Add(_searchRng.genrand());
+            _searchBuff.Add(_searchRng.genrand());
         }
 
         #endregion constructors/initilization
@@ -271,7 +271,7 @@ namespace FF12RNGHelper.Core
             Index++;
 
             // Pull an extra PRNG draw to see whether it matches.
-            SearchBuff.Add(_searchRng.genrand());
+            _searchBuff.Add(_searchRng.genrand());
 
             // Otherwise, continue moving through the RNG to find the 
             // next matching position
@@ -294,14 +294,14 @@ namespace FF12RNGHelper.Core
                     // index of first heal:
                     int index0 = Index - HealVals.Count + 1;
 
-                    if (!(match = Group.GetHealValue(SearchBuff[index0 + i]) == HealVals[i]))
+                    if (!(match = Group.GetHealValue(_searchBuff[index0 + i]) == HealVals[i]))
                     {
                         break;
                     }
                 }
                 if (!match)
                 {
-                    SearchBuff.Add(_searchRng.genrand());
+                    _searchBuff.Add(_searchRng.genrand());
                     Index++;
                 }
             }
@@ -342,7 +342,7 @@ namespace FF12RNGHelper.Core
                 Index = Index,
                 // We have to Deep Copy this data
                 HealVals = new List<int>(HealVals),
-                SearchBuff = SearchBuff.DeepClone(),
+                SearchBuff = _searchBuff.DeepClone(),
                 SearchRng = _searchRng.DeepClone()
             };
         }
@@ -354,7 +354,7 @@ namespace FF12RNGHelper.Core
             // Deep copy the data to be safe.
             // TO-DO: Optimize out deep copy
             HealVals = new List<int>(_saveState.HealVals);
-            SearchBuff = _saveState.SearchBuff.DeepClone();
+            _searchBuff = _saveState.SearchBuff.DeepClone();
             _searchRng = _saveState.SearchRng.DeepClone();
         }
 

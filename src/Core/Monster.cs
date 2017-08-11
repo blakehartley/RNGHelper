@@ -1,14 +1,12 @@
-﻿using System.Runtime.InteropServices;
-
-namespace FF12RNGHelper.Core
+﻿namespace FF12RNGHelper.Core
 {
     public class Monster
     {
         public static long RareSpawnValue = 4294967296;
 
-        private double _minChanceFraction;
-        private double _maxChanceFraction;
-        private int _rngPosition;
+        private readonly double _minChanceFraction;
+        private readonly double _maxChanceFraction;
+        private readonly int _rngPosition;
 
         // Monster state
         private bool _spawned;

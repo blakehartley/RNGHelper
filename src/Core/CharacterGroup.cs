@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FF12RNGHelper.Core
 {
@@ -9,13 +10,13 @@ namespace FF12RNGHelper.Core
     public class CharacterGroup
     {
         // private members
-        private List<Character> characters;
-        private int charIndex;
+        private readonly List<Character> _characters;
+        private int _charIndex;
 
         public CharacterGroup()
         {
-            characters = new List<Character>();
-            charIndex = 0;
+            _characters = new List<Character>();
+            _charIndex = 0;
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public void ClearCharacters()
         {
-            characters.Clear();
+            _characters.Clear();
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public int CharacterCount()
         {
-            return characters.Count;
+            return _characters.Count;
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace FF12RNGHelper.Core
         /// <param name="newCharacter">The character to add</param>
         public void AddCharacter(Character newCharacter)
         {
-            characters.Add(newCharacter);
+            _characters.Add(newCharacter);
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public void ResetIndex()
         {
-            charIndex = 0;
+            _charIndex = 0;
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public int GetIndex()
         {
-            return charIndex;
+            return _charIndex;
         }
 
         /// <summary>
@@ -66,8 +67,11 @@ namespace FF12RNGHelper.Core
         /// <param name="i"></param>
         public void SetIndex(int i)
         {
-            var check = characters[i];
-            charIndex = i;
+            if (i >= _characters.Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            _charIndex = i;
         }
 
         /// <summary>
@@ -75,7 +79,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public void IncrimentIndex()
         {
-            charIndex = (charIndex + 1) % CharacterCount();
+            _charIndex = (_charIndex + 1) % CharacterCount();
         }
 
         /// <summary>
@@ -84,7 +88,7 @@ namespace FF12RNGHelper.Core
         /// <param name="rngValue">RNG value supplied by PRNG</param>
         public int GetHealValue(uint rngValue)
         {
-            int healValue = characters[charIndex].GetHealValue(rngValue);
+            int healValue = _characters[_charIndex].GetHealValue(rngValue);
             IncrimentIndex();
             return healValue;
         }
@@ -95,7 +99,7 @@ namespace FF12RNGHelper.Core
         /// <param name="rngValue">RNG value supplied by PRNG</param>
         public int PeekHealValue(uint rngValue)
         {
-            return characters[charIndex].GetHealValue(rngValue);
+            return _characters[_charIndex].GetHealValue(rngValue);
         }
 
         /// <summary>
@@ -104,7 +108,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public int HealMax()
         {
-            return characters[charIndex].HealMax();
+            return _characters[_charIndex].HealMax();
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace FF12RNGHelper.Core
         /// </summary>
         public int HealMin()
         {
-            return characters[charIndex].HealMin();
+            return _characters[_charIndex].HealMin();
         }
 
         /// <summary>

@@ -10,35 +10,35 @@ namespace UnitTests
         public void TestGetRngPosition()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.AreEqual(4, chest.getRNGPosition());
+            Assert.AreEqual(4, chest.GetRngPosition());
         }
 
         [TestMethod]
         public void TestCheckIfGil_Success()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.IsTrue(chest.checkIfGil(25));
+            Assert.IsTrue(chest.CheckIfGil(25));
         }
 
         [TestMethod]
         public void TestCheckIfGil_Failure()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.IsFalse(chest.checkIfGil(75));
+            Assert.IsFalse(chest.CheckIfGil(75));
         }
 
         [TestMethod]
         public void TestCheckIfFirstItem_Success()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.IsTrue(chest.checkIfFirstItem(25));
+            Assert.IsTrue(chest.CheckIfFirstItem(25));
         }
 
         [TestMethod]
         public void TestCheckIfFirstItem_Failure()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.IsFalse(chest.checkIfFirstItem(75));
+            Assert.IsFalse(chest.CheckIfFirstItem(75));
         }
 
         #region GetGilAmount
@@ -47,35 +47,35 @@ namespace UnitTests
         public void TestGetGilAmount_1()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.AreEqual(76, chest.getGilAmount(75));
+            Assert.AreEqual(76, chest.GetGilAmount(75));
         }
 
         [TestMethod]
         public void TestGetGilAmount_2()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.AreEqual(100, chest.getGilAmount(99));
+            Assert.AreEqual(100, chest.GetGilAmount(99));
         }
 
         [TestMethod]
         public void TestGetGilAmount_3()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.AreEqual(1, chest.getGilAmount(100));
+            Assert.AreEqual(1, chest.GetGilAmount(100));
         }
 
         [TestMethod]
         public void TestGetGilAmount_4()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.AreEqual(2, chest.getGilAmount(101));
+            Assert.AreEqual(2, chest.GetGilAmount(101));
         }
 
         [TestMethod]
         public void TestGetGilAmount_5()
         {
             Chest chest = new Chest(50, 5, 50, 50, 100, false);
-            Assert.AreEqual(63, chest.getGilAmount(1372235862));
+            Assert.AreEqual(63, chest.GetGilAmount(1372235862));
         }
 
         #endregion GetGilAmount

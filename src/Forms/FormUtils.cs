@@ -26,7 +26,7 @@ namespace FF12RNGHelper.Forms
 
         public static void ValidateIntegerTextBox(TextBox tb)
         {
-            if (!int.TryParse(tb.Text, out int tempVal))
+            if (!int.TryParse(tb.Text, out int _))
             {
                 tb.Text = FormConstants.IntDefaultValue;
             }

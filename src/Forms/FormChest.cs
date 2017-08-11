@@ -257,12 +257,12 @@ namespace FF12RNGHelper.Forms
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = randToPercent(firstRNGVal_temp);
 
                 // Check if the chests are in a position offset by a fixed amount
-                if (chest1.checkSpawn(firstRNGVal_temp))
+                if (chest1.CheckSpawn(firstRNGVal_temp))
                 {
                     handleChestSpawn(chest1, loopIndex, 3, ref chestFoundPos1, ref chestSpawn1);
                 }
 
-                if (chest2.checkSpawn(firstRNGVal_temp))
+                if (chest2.CheckSpawn(firstRNGVal_temp))
                 {
                     handleChestSpawn(chest2, loopIndex, 4, ref chestFoundPos2, ref chestSpawn2);
                 }
@@ -270,7 +270,7 @@ namespace FF12RNGHelper.Forms
                 // This is a big conditional to see what is in both chests.
                 // There may be a better way, but this was fast to write and doesn't call the RNG.
                 // Calculate the contents of the chest. First, gil:
-                if (chest1.checkIfGil(firstRNGVal_temp))
+                if (chest1.CheckIfGil(firstRNGVal_temp))
                 {
                     handleGilReward(chest1, secondRNGVal_temp, 3);
                 }
@@ -280,7 +280,7 @@ namespace FF12RNGHelper.Forms
                     handleItemReward(chest1, secondRNGVal_temp, loopIndex, 3, checkBox1, ref chestItemPos1, ref chestFound1);
                 }
 
-                if (chest2.checkIfGil(firstRNGVal_temp))
+                if (chest2.CheckIfGil(firstRNGVal_temp))
                 {
                     handleGilReward(chest2, secondRNGVal_temp, 4);
                 }
@@ -333,12 +333,12 @@ namespace FF12RNGHelper.Forms
         private void handleChestSpawn(Chest chest, int loopIndex, int column,
             ref int chestFoundPosition, ref bool chestSpawn)
         {
-            int chestFirstChance = _healVals.Count + chest.getRNGPosition();
+            int chestFirstChance = _healVals.Count + chest.GetRngPosition();
 
             dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Style.Font = new Font(dataGridView1.CurrentCell.InheritedStyle.Font, FontStyle.Bold);
             if (loopIndex >= chestFirstChance && !chestSpawn)
             {
-                chestFoundPosition = loopIndex - _healVals.Count - chest.getRNGPosition();
+                chestFoundPosition = loopIndex - _healVals.Count - chest.GetRngPosition();
                 chestSpawn = true;
             }
         }
@@ -346,7 +346,7 @@ namespace FF12RNGHelper.Forms
         private void handleItemReward(Chest chest, uint PRNG, int loopIndex, int column, CheckBox checkBox,
             ref int itemPosition, ref bool chestFound)
         {
-            if (chest.checkIfFirstItem(PRNG))
+            if (chest.CheckIfFirstItem(PRNG))
             {
                 handleItemRewardHelper("Item 1", loopIndex, column, checkBox, true, ref itemPosition, ref chestFound);
             }
@@ -371,7 +371,7 @@ namespace FF12RNGHelper.Forms
 
         private void handleGilReward(Chest chest, uint PRNG, int column)
         {
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = chest.getGilAmount(PRNG);
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[column].Value = chest.GetGilAmount(PRNG);
         }
 
         double randToPercent(uint toConvert)
