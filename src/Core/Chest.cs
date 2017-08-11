@@ -85,27 +85,27 @@ namespace FF12RNGHelper.Core
             _chestItemPos = -1;
         }
 
-        public int getRNGPosition()
+        public int GetRngPosition()
         {
             return _rngPosition - 1;
         }
 
-        public bool checkSpawn(uint prng)
+        public bool CheckSpawn(uint prng)
         {
             return CheckChest(prng, _spawnChance);
         }
 
-        public bool checkIfGil(uint prng)
+        public bool CheckIfGil(uint prng)
         {
             return CheckChest(prng, _gilChance);
         }
 
-        public bool checkIfFirstItem(uint prng)
+        public bool CheckIfFirstItem(uint prng)
         {
             return CheckChest(prng, _itemChance);
         }
 
-        public int getGilAmount(uint prng)
+        public int GetGilAmount(uint prng)
         {
             return 1 + (int) (prng % _gilAmount);
         }

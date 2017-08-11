@@ -107,7 +107,7 @@ namespace FF12RNGHelper.Core
                 {
                     Chest chest = _chests.ElementAt(i);
                     ChestReward reward = newRngInstance.ChestRewards.ElementAt(i);
-                    if (chest.checkSpawn(firstRngValTemp))
+                    if (chest.CheckSpawn(firstRngValTemp))
                     {
                         HandleChestSpawn(chest, reward);
                     }
@@ -119,7 +119,7 @@ namespace FF12RNGHelper.Core
                     Chest chest = _chests.ElementAt(i);
                     ChestReward reward = newRngInstance.ChestRewards.ElementAt(i);
                     // Check if gil
-                    if (chest.checkIfGil(firstRngValTemp))
+                    if (chest.CheckIfGil(firstRngValTemp))
                     {
                         HandleGilReward(chest, reward, secondRngValTemp);
                     }
@@ -162,12 +162,12 @@ namespace FF12RNGHelper.Core
 
         private void HandleChestSpawn(Chest chest, ChestReward chestReward)
         {
-            int chestFirstChance = HealVals.Count + chest.getRNGPosition();
+            int chestFirstChance = HealVals.Count + chest.GetRngPosition();
 
             chestReward.ChestWillSpawn = true;
             if (LoopIndex >= chestFirstChance && !chest.HasChestSpawned())
             {
-                chest.SetChestFoundPosition(LoopIndex - HealVals.Count - chest.getRNGPosition());
+                chest.SetChestFoundPosition(LoopIndex - HealVals.Count - chest.GetRngPosition());
                 chest.SetChestSpawned();
             }
         }
@@ -175,13 +175,13 @@ namespace FF12RNGHelper.Core
         private void HandleGilReward(Chest chest, ChestReward chestReward, uint prng)
         {
             chestReward.Reward = RewardType.Gil;
-            chestReward.GilAmount = chest.getGilAmount(prng);
+            chestReward.GilAmount = chest.GetGilAmount(prng);
         }
 
         private void HandleItemReward(Chest chest, ChestReward chestReward,
             uint prng)
         {
-            if (chest.checkIfFirstItem(prng))
+            if (chest.CheckIfFirstItem(prng))
             {
                 HandleItemRewardHelper(chest, chestReward,
                     RewardType.Item1, true);
