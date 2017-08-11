@@ -68,6 +68,8 @@
             this.toolStripStatusLabelPercent = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbPlatform = new System.Windows.Forms.GroupBox();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.cbPlatform = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -492,6 +494,8 @@
             // 
             // gbPlatform
             // 
+            this.gbPlatform.Controls.Add(this.btnLoad);
+            this.gbPlatform.Controls.Add(this.btnSave);
             this.gbPlatform.Controls.Add(this.cbPlatform);
             this.gbPlatform.Location = new System.Drawing.Point(13, 27);
             this.gbPlatform.Name = "gbPlatform";
@@ -499,6 +503,28 @@
             this.gbPlatform.TabIndex = 2;
             this.gbPlatform.TabStop = false;
             this.gbPlatform.Text = "Platform";
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoad.Location = new System.Drawing.Point(310, 14);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(94, 25);
+            this.btnLoad.TabIndex = 26;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Location = new System.Drawing.Point(210, 13);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(94, 26);
+            this.btnSave.TabIndex = 25;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // cbPlatform
             // 
@@ -1062,6 +1088,8 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox tbCombo;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
