@@ -80,7 +80,9 @@
             this.toolStripStatusLabelPercent = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbPlatform = new System.Windows.Forms.GroupBox();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.cbPlatform = new System.Windows.Forms.ComboBox();
+            this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cbWantItem1First = new System.Windows.Forms.CheckBox();
@@ -369,9 +371,9 @@
             "Cura",
             "Curaga",
             "Curaja",
-            "Cura IZJS/ZA",
-            "Curaga IZJS/ZA",
-            "Curaja IZJS/ZA"});
+            "Cura IZJS/TZA",
+            "Curaga IZJS/TZA",
+            "Curaja IZJS/TZA"});
             this.ddlSpellPow3.Location = new System.Drawing.Point(45, 77);
             this.ddlSpellPow3.Name = "ddlSpellPow3";
             this.ddlSpellPow3.Size = new System.Drawing.Size(118, 21);
@@ -405,9 +407,9 @@
             "Cura",
             "Curaga",
             "Curaja",
-            "Cura IZJS/ZA",
-            "Curaga IZJS/ZA",
-            "Curaja IZJS/ZA"});
+            "Cura IZJS/TZA",
+            "Curaga IZJS/TZA",
+            "Curaja IZJS/TZA"});
             this.ddlSpellPow2.Location = new System.Drawing.Point(45, 48);
             this.ddlSpellPow2.Name = "ddlSpellPow2";
             this.ddlSpellPow2.Size = new System.Drawing.Size(118, 21);
@@ -646,13 +648,26 @@
             // 
             // gbPlatform
             // 
+            this.gbPlatform.Controls.Add(this.btnLoad);
             this.gbPlatform.Controls.Add(this.cbPlatform);
+            this.gbPlatform.Controls.Add(this.btnSave);
             this.gbPlatform.Location = new System.Drawing.Point(13, 27);
             this.gbPlatform.Name = "gbPlatform";
             this.gbPlatform.Size = new System.Drawing.Size(410, 49);
             this.gbPlatform.TabIndex = 2;
             this.gbPlatform.TabStop = false;
             this.gbPlatform.Text = "Platform";
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoad.Location = new System.Drawing.Point(310, 15);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(94, 25);
+            this.btnLoad.TabIndex = 24;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // cbPlatform
             // 
@@ -666,6 +681,17 @@
             this.cbPlatform.Size = new System.Drawing.Size(87, 21);
             this.cbPlatform.TabIndex = 10;
             this.cbPlatform.SelectionChangeCommitted += new System.EventHandler(this.cbPlatform_SelectionChangeCommitted);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Location = new System.Drawing.Point(210, 14);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(94, 26);
+            this.btnSave.TabIndex = 23;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // groupBox1
             // 
@@ -1215,6 +1241,8 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox tbCombo;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnLoad;
     }
 }
 

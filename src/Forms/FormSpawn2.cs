@@ -15,7 +15,7 @@ namespace FF12RNGHelper.Forms
         private SpawnFutureRng _futureRng;
         private readonly CharacterGroup _group = new CharacterGroup();
         private readonly List<Monster> _monsters = new List<Monster>();
-        private PlatformType _platform = PlatformType.Ps2;
+        private PlatformType _platform = FormUtils.GetDefaultPlatform();
 
         #endregion internal state
 
@@ -340,6 +340,16 @@ namespace FF12RNGHelper.Forms
         private void FormSpawn2_FormClosed(object sender, FormClosedEventArgs e)
         {
             FormUtils.CloseApplication();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            FormManager.SaveForm(this, new FormSpawnLoader());
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            FormManager.LoadForm(this, new FormSpawnLoader());
         }
     }
 }

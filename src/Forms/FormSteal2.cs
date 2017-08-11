@@ -14,7 +14,7 @@ namespace FF12RNGHelper.Forms
         private StealRngHelper _rngHelper;
         private StealFutureRng _futureRng;
         private readonly CharacterGroup _group = new CharacterGroup();
-        private PlatformType _platform = PlatformType.Ps2;
+        private PlatformType _platform = FormUtils.GetDefaultPlatform();
 
         #endregion internal state
 
@@ -316,6 +316,16 @@ namespace FF12RNGHelper.Forms
         private void FormSteal2_FormClosed(object sender, FormClosedEventArgs e)
         {
             FormUtils.CloseApplication();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            FormManager.SaveForm(this, new FormStealLoader());
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            FormManager.LoadForm(this, new FormStealLoader());
         }
     }
 }

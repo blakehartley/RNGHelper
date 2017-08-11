@@ -220,9 +220,9 @@
             "Cura",
             "Curaga",
             "Curaja",
-            "Cura IZJS/ZA",
-            "Curaga IZJS/ZA",
-            "Curaja IZJS/ZA"});
+            "Cura IZJS/TZA",
+            "Curaga IZJS/TZA",
+            "Curaja IZJS/TZA"});
             this.ddlSpellPow1.Location = new System.Drawing.Point(45, 18);
             this.ddlSpellPow1.Name = "ddlSpellPow1";
             this.ddlSpellPow1.Size = new System.Drawing.Size(118, 21);
@@ -369,9 +369,9 @@
             "Cura",
             "Curaga",
             "Curaja",
-            "Cura IZJS/ZA",
-            "Curaga IZJS/ZA",
-            "Curaja IZJS/ZA"});
+            "Cura IZJS/TZA",
+            "Curaga IZJS/TZA",
+            "Curaja IZJS/TZA"});
             this.ddlSpellPow3.Location = new System.Drawing.Point(45, 77);
             this.ddlSpellPow3.Name = "ddlSpellPow3";
             this.ddlSpellPow3.Size = new System.Drawing.Size(118, 21);

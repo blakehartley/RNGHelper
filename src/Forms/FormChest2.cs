@@ -16,7 +16,7 @@ namespace FF12RNGHelper.Forms
         private ChestFutureRng _futureRng;
         private readonly CharacterGroup _group = new CharacterGroup();
         private readonly List<Chest> _chests = new List<Chest>();
-        private PlatformType _platform = PlatformType.Ps2;
+        private PlatformType _platform = FormUtils.GetDefaultPlatform();
 
         #endregion internal state
 
@@ -355,6 +355,16 @@ namespace FF12RNGHelper.Forms
         private void FormChest2_FormClosed(object sender, FormClosedEventArgs e)
         {
             FormUtils.CloseApplication();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            FormManager.SaveForm(this, new FormChestLoader());
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            FormManager.LoadForm(this, new FormChestLoader());
         }
     }
 }

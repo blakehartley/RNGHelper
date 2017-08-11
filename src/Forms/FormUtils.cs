@@ -63,6 +63,11 @@ namespace FF12RNGHelper.Forms
             group.AddCharacter(new Character(level, magic, spell,
                 serenityBox.Checked));
         }
+
+        public static PlatformType GetDefaultPlatform()
+        {
+            return PlatformType.Ps2;
+        }
     }
 
     public static class FormConstants
@@ -74,6 +79,12 @@ namespace FF12RNGHelper.Forms
             "FF12 RNG Helper v1.02\nSo many features, so little time...";
 
         public const string Safe = "SAFE";
+
+        public const string MalformedError = "Document is malformed";
+
+        public const string FormError = "Invalid Form";
+
+        public const string FileError = "Invalid {0} RNG Save File";
 
         public const string IntDefaultValue = "0";
 
@@ -89,6 +100,25 @@ namespace FF12RNGHelper.Forms
                 {"Cura IZJS/TZA", Spells.CuraIzjsTza},
                 {"Curaga IZJS/TZA", Spells.CuragaIzjsTza},
                 {"Curaja IZJS/TZA", Spells.CurajaIzjsTza},
+            };
+
+        public static readonly Dictionary<string, int> NameToIndexMap =
+            new Dictionary<string, int>
+            {
+                {"Cure", 0},
+                {"Cura", 1},
+                {"Curaga", 2},
+                {"Curaja", 3},
+                {"Cura IZJS/TZA", 4},
+                {"Curaga IZJS/TZA", 5},
+                {"Curaja IZJS/TZA", 6},
+            };
+
+        public static readonly Dictionary<string, int> PlatformToIndex =
+            new Dictionary<string, int>
+            {
+                {PlatformType.Ps2.ToString().ToUpper(), 0},
+                {PlatformType.Ps4.ToString().ToUpper(), 1}
             };
     }
 }
