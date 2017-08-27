@@ -268,16 +268,6 @@ namespace FF12RNGHelper.Forms
             SetLastHealFocus();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(FormConstants.AboutMsg);
-        }
-
         #endregion click methods
 
         private void cbPlatform_SelectionChangeCommitted(object sender, EventArgs e)
@@ -316,22 +306,6 @@ namespace FF12RNGHelper.Forms
             _rngHelper.CalculateRng(numRows);
             DisplayFutureRng();
         }
-
-        #region change form methods
-
-        private void rareGameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new FormSpawn2().Show();
-            Hide();
-        }
-
-        private void stealToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new FormSteal2().Show();
-            Hide();
-        }
-
-        #endregion change form methods
 
         #region text box validation
 

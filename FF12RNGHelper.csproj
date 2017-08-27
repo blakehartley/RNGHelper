@@ -148,6 +148,12 @@
     <Compile Include="src\Core\IDeepClonable.cs" />
     <Compile Include="src\Core\IRNG.cs" />
     <Compile Include="src\Forms\IFormLoader.cs" />
+    <Compile Include="src\Forms\Masterform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\Masterform.Designer.cs">
+      <DependentUpon>Masterform.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Core\RNG1998.cs" />
@@ -183,6 +189,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="src\Forms\Masterform.resx">
+      <DependentUpon>Masterform.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="FF12RNGHelper_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

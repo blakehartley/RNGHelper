@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChest2));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stealToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rareGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbLevel1 = new System.Windows.Forms.TextBox();
             this.tbMagic1 = new System.Windows.Forms.TextBox();
             this.ddlSpellPow1 = new System.Windows.Forms.ComboBox();
@@ -123,7 +116,6 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.tbCombo = new System.Windows.Forms.TextBox();
-            this.menuStrip1.SuspendLayout();
             this.gbStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.groupBoxSearch.SuspendLayout();
@@ -136,64 +128,6 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(838, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stealToolStripMenuItem,
-            this.rareGameToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // stealToolStripMenuItem
-            // 
-            this.stealToolStripMenuItem.Name = "stealToolStripMenuItem";
-            this.stealToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.stealToolStripMenuItem.Text = "Steal";
-            this.stealToolStripMenuItem.Click += new System.EventHandler(this.stealToolStripMenuItem_Click);
-            // 
-            // rareGameToolStripMenuItem
-            // 
-            this.rareGameToolStripMenuItem.Name = "rareGameToolStripMenuItem";
-            this.rareGameToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.rareGameToolStripMenuItem.Text = "Rare Game";
-            this.rareGameToolStripMenuItem.Click += new System.EventHandler(this.rareGameToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.aboutToolStripMenuItem.Text = "About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // tbLevel1
             // 
@@ -281,7 +215,7 @@
             this.gbStats.Controls.Add(this.tbLevel1);
             this.gbStats.Controls.Add(this.lblMagic);
             this.gbStats.Controls.Add(this.tbMagic1);
-            this.gbStats.Location = new System.Drawing.Point(13, 82);
+            this.gbStats.Location = new System.Drawing.Point(13, 58);
             this.gbStats.Name = "gbStats";
             this.gbStats.Size = new System.Drawing.Size(171, 108);
             this.gbStats.TabIndex = 1;
@@ -439,9 +373,9 @@
             this.Percent,
             this.steal,
             this.Contents2});
-            this.dataGridView.Location = new System.Drawing.Point(428, 27);
+            this.dataGridView.Location = new System.Drawing.Point(428, 3);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(398, 713);
+            this.dataGridView.Size = new System.Drawing.Size(398, 715);
             this.dataGridView.TabIndex = 14;
             // 
             // Position
@@ -543,7 +477,7 @@
             this.groupBoxSearch.Controls.Add(this.btnContinue);
             this.groupBoxSearch.Controls.Add(this.lblLastHeal);
             this.groupBoxSearch.Controls.Add(this.btnBegin);
-            this.groupBoxSearch.Location = new System.Drawing.Point(13, 443);
+            this.groupBoxSearch.Location = new System.Drawing.Point(13, 419);
             this.groupBoxSearch.Name = "groupBoxSearch";
             this.groupBoxSearch.Size = new System.Drawing.Size(410, 122);
             this.groupBoxSearch.TabIndex = 2;
@@ -623,7 +557,7 @@
             this.toolStripProgressBarPercent,
             this.toolStripStatusLabelPercent,
             this.toolStripStatusLabelProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 743);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 721);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(838, 22);
             this.statusStrip1.TabIndex = 5;
@@ -651,7 +585,7 @@
             this.gbPlatform.Controls.Add(this.btnLoad);
             this.gbPlatform.Controls.Add(this.cbPlatform);
             this.gbPlatform.Controls.Add(this.btnSave);
-            this.gbPlatform.Location = new System.Drawing.Point(13, 27);
+            this.gbPlatform.Location = new System.Drawing.Point(13, 3);
             this.gbPlatform.Name = "gbPlatform";
             this.gbPlatform.Size = new System.Drawing.Size(410, 49);
             this.gbPlatform.TabIndex = 2;
@@ -707,7 +641,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(13, 196);
+            this.groupBox1.Location = new System.Drawing.Point(13, 172);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(204, 172);
             this.groupBox1.TabIndex = 15;
@@ -831,7 +765,7 @@
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.textBox10);
-            this.groupBox2.Location = new System.Drawing.Point(219, 196);
+            this.groupBox2.Location = new System.Drawing.Point(219, 172);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(204, 172);
             this.groupBox2.TabIndex = 16;
@@ -989,7 +923,7 @@
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.tbAppear1);
             this.groupBox3.Controls.Add(this.tbItem1);
-            this.groupBox3.Location = new System.Drawing.Point(13, 374);
+            this.groupBox3.Location = new System.Drawing.Point(13, 350);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(204, 68);
             this.groupBox3.TabIndex = 20;
@@ -1001,7 +935,7 @@
             this.groupBox4.Controls.Add(this.label16);
             this.groupBox4.Controls.Add(this.tbAppear2);
             this.groupBox4.Controls.Add(this.tbItem2);
-            this.groupBox4.Location = new System.Drawing.Point(219, 374);
+            this.groupBox4.Location = new System.Drawing.Point(219, 350);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(204, 68);
             this.groupBox4.TabIndex = 21;
@@ -1060,7 +994,7 @@
             this.groupBox5.Controls.Add(this.ddlSpellPow2);
             this.groupBox5.Controls.Add(this.cbSerenity2);
             this.groupBox5.Controls.Add(this.label21);
-            this.groupBox5.Location = new System.Drawing.Point(187, 82);
+            this.groupBox5.Location = new System.Drawing.Point(187, 58);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(236, 108);
             this.groupBox5.TabIndex = 22;
@@ -1070,7 +1004,7 @@
             // 
             this.groupBox6.Controls.Add(this.label25);
             this.groupBox6.Controls.Add(this.tbCombo);
-            this.groupBox6.Location = new System.Drawing.Point(13, 571);
+            this.groupBox6.Location = new System.Drawing.Point(13, 547);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(204, 40);
             this.groupBox6.TabIndex = 21;
@@ -1100,7 +1034,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 765);
+            this.ClientSize = new System.Drawing.Size(838, 743);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -1112,16 +1046,12 @@
             this.Controls.Add(this.groupBoxSearch);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.gbStats);
-            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(557, 601);
             this.Name = "FormChest2";
             this.Text = "FF12 RNG Helper";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChest2_FormClosed);
             this.Load += new System.EventHandler(this.FormChest_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.gbStats.ResumeLayout(false);
             this.gbStats.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
@@ -1148,10 +1078,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.TextBox tbLevel1;
         private System.Windows.Forms.TextBox tbMagic1;
         private System.Windows.Forms.ComboBox ddlSpellPow1;
@@ -1166,15 +1092,12 @@
         private System.Windows.Forms.Button btnBegin;
         private System.Windows.Forms.Button btnContinue;
         private System.Windows.Forms.GroupBox groupBoxSearch;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarPercent;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelPercent;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelProgress;
         private System.Windows.Forms.GroupBox gbPlatform;
         private System.Windows.Forms.ComboBox cbPlatform;
-        private System.Windows.Forms.ToolStripMenuItem stealToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
@@ -1225,7 +1148,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox tbMagic2;
-        private System.Windows.Forms.ToolStripMenuItem rareGameToolStripMenuItem;
         private System.Windows.Forms.TextBox tbConsume;
         private System.Windows.Forms.Button btnConsume;
         private System.Windows.Forms.Label label23;
