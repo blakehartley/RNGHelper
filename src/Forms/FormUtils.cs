@@ -46,8 +46,6 @@ namespace FF12RNGHelper.Forms
 
         public static void UpdateComboData(IRngHelper helper, TextBox combo)
         {
-            
-
             int attacksUntilCombo = helper.GetAttacksUntilNextCombo();
             combo.Text = attacksUntilCombo == -1
                 ? FormConstants.Safe
@@ -76,7 +74,7 @@ namespace FF12RNGHelper.Forms
             "Impossible Heal Value Entered";
 
         public const string AboutMsg =
-            "FF12 RNG Helper v1.02\nSo many features, so little time...";
+            "FF12 RNG Helper v3.2\nSo many features, so little time...";
 
         public const string Safe = "SAFE";
 
