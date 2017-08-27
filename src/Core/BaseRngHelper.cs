@@ -187,6 +187,7 @@ namespace FF12RNGHelper.Core
 
             for (int position = 1; position <= positionsToConsume; position++)
             {
+                Group.IncrimentIndex();
                 FindRngPositionHelper(GetNextExpectedHealValue());
                 // Don't calculate future RNG during the final iteration.
                 // This is the callers responsibility
